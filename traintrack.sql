@@ -20,158 +20,158 @@ use traintrack;
 -- _____________ 
 
 create table acquisto (
-     CodOrdine char(1) not null,
-     CodServizio char(1) not null,
+     CodOrdine int not null,
+     CodServizio int not null,
      constraint IDacquisto primary key (CodServizio, CodOrdine));
 
 create table attivazione (
-     CodNotifica char(1) not null,
-     CF char(1) not null,
+     CodNotifica int not null,
+     CF char(16) not null,
      constraint IDattivazione primary key (CF, CodNotifica));
 
 create table BUONOSCONTO (
-     CodBuonoSconto char(1) not null,
-     Importo char(1) not null,
-     DataInizioValidità char(1) not null,
-     DataScadenza char(1) not null,
-     DataUtilizzo char(1),
-     CF char(1) not null,
+     CodBuonoSconto int not null,
+     Importo float(6) not null,
+     DataInizioValidità date not null,
+     DataScadenza date not null,
+     DataUtilizzo date,
+     CF char(16) not null,
      constraint IDBUONOSCONTO primary key (CodBuonoSconto));
 
 create table CARROZZA (
-     CodTreno char(1) not null,
-     NumeroC char(1) not null,
+     CodTreno int not null,
+     NumeroC smallint not null,
      constraint IDCARROZZA_ID primary key (CodTreno, NumeroC));
 
 create table CHECKIN (
-     CodCheckIn char(1) not null,
-     Data  char(1) not null,
-     Ora char(1) not null,
-     CodServizio char(1) not null,
-     CF char(1) not null,
-     CodPercorso char(1) not null,
-     CodTreno char(1),
-     NumeroC char(1),
+     CodCheckIn int not null,
+     Data  date not null,
+     Ora  timestamp not null,
+     CodServizio int not null,
+     CF char(16) not null,
+     CodPercorso int not null,
+     CodTreno int,
+     NumeroC smallint,
      Lettera char(1),
-     NumeroP char(1),
+     NumeroP smallint,
      constraint IDCHECKIN primary key (CodCheckIn));
 
 create table composizione (
-     CodTabellone char(1) not null,
-     CodPercorso char(1) not null,
+     CodTabellone int not null,
+     CodPercorso int not null,
      constraint IDcomposizione primary key (CodTabellone, CodPercorso));
 
 create table FILA (
-     CodTreno char(1) not null,
-     NumeroC char(1) not null,
+     CodTreno int not null,
+     NumeroC smallint not null,
      Lettera char(1) not null,
      constraint IDFILA_ID primary key (CodTreno, NumeroC, Lettera));
 
 create table mediante (
-     CodStazione char(1) not null,
-     CodPercorso char(1) not null,
-     Ordine char(1) not null,
+     CodStazione int not null,
+     CodPercorso int not null,
+     Ordine text(1000) not null,
      constraint IDmediante primary key (CodStazione, CodPercorso));
 
 create table NOTIFICA (
-     CodNotifica char(1) not null,
-     Descrizione char(1) not null,
-     CodPercorso char(1) not null,
+     CodNotifica int not null,
+     Descrizione text(500) not null,
+     CodPercorso int not null,
      constraint IDNOTIFICA primary key (CodNotifica));
 
 create table ORDINE (
-     CodOrdine char(1) not null,
-     DataPagamento char(1) not null,
-     OraPagamento char(1) not null,
-     CF char(1) not null,
+     CodOrdine int not null,
+     DataPagamento date not null,
+     OraPagamento timestamp not null,
+     CF char(16) not null,
      constraint IDORDINE_ID primary key (CodOrdine));
 
 create table PERCORSO (
-     CodPercorso char(1) not null,
-     CF char(1) not null,
-     CodTreno char(1) not null,
-     TempoPercorrenza char(1) not null,
+     CodPercorso int not null,
+     CF char(16) not null,
+     CodTreno int not null,
+     TempoPercorrenza time not null,
      constraint IDPERCORSO_ID primary key (CodPercorso),
      constraint IDPERCORSO_1 unique (CodTreno, CodPercorso),
      constraint IDPERCORSO_2 unique (CF, CodPercorso));
 
 create table PERSONA (
-     CF char(1) not null,
-     Nome char(1) not null,
-     Cognome char(1) not null,
-     Indirizzo char(1) not null,
-     Telefono char(1),
-     Email char(1) not null,
-     Password char(1),
-     SpesaTotale char(1),
-     TipoPersona char(1) not null,
-     TipoCliente char(1),
+     CF char(16) not null,
+     Nome varchar(20) not null,
+     Cognome varchar(20) not null,
+     Indirizzo varchar(30) not null,
+     Telefono int,
+     Email varchar(30) not null,
+     Password varchar(20),
+     SpesaTotale float(10) default 0,
+     TipoPersona varchar(10) not null,
+     TipoCliente varchar(10),
      constraint IDPERSONA primary key (CF));
 
 create table POSTO (
-     CodTreno char(1) not null,
-     NumeroC char(1) not null,
+     CodTreno int not null,
+     NumeroC smallint not null,
      Lettera char(1) not null,
-     NumeroP char(1) not null,
+     NumeroP smallint not null,
      constraint IDPOSTO primary key (CodTreno, NumeroC, Lettera, NumeroP));
 
 create table RESO (
-     CodReso char(1) not null,
-     CodOrdine char(1) not null,
-     Motivazione char(1) not null,
-     Data char(1) not null,
-     CF char(1) not null,
+     CodReso int not null,
+     CodOrdine int not null,
+     Motivazione text(500) not null,
+     Data date not null,
+     CF char(16) not null,
      constraint IDRESO primary key (CodReso),
      constraint FKcorrelazione_ID unique (CodOrdine));
 
 create table sequenza (
-     Suc_CodStazione char(1) not null,
-     CodStazione char(1) not null,
+     Suc_CodStazione int not null,
+     CodStazione int not null,
      constraint IDsequenza primary key (CodStazione, Suc_CodStazione));
 
 create table SERVIZIO (
-     CodServizio char(1) not null,
-     StazionePartenza char(1) not null,
-     StazioneArrivo char(1) not null,
-     NomePasseggero char(1) not null,
-     CognomePasseggero char(1) not null,
-     TipoTreno char(1) not null,
-     DataPartenza char(1) not null,
-     OrarioPartenza char(1),
-     TipoPasseggero char(1),
-     Supplemento char(1),
-     Prezzo char(1),
-     Durata char(1),
-     Chilometraggio char(1),
-     CodPercorso char(1) not null,
+     CodServizio int not null,
+     StazionePartenza varchar(20) not null,
+     StazioneArrivo varchar(20) not null,
+     NomePasseggero varchar(20) not null,
+     CognomePasseggero varchar(20) not null,
+     TipoTreno varchar(10) not null,
+     DataPartenza date not null,
+     OrarioPartenza timestamp,
+     TipoPasseggero varchar(10) default "adulto",
+     Supplemento boolean default false,
+     Prezzo float(6),
+     Durata time,
+     Chilometraggio smallint,
+     CodPercorso int not null,
      constraint IDBIGLIETTO primary key (CodServizio));
 
 create table STAZIONE (
-     CodStazione char(1) not null,
-     Nome char(1) not null,
+     CodStazione int not null,
+     Nome varchar(20) not null,
      constraint IDSTAZIONE_ID primary key (CodStazione));
 
 create table TABELLONE (
-     CodTabellone char(1) not null,
-     OrarioPartenzaPrevisto char(1) not null,
-     OrarioArrivoPrevisto char(1) not null,
-     OrarioArrivoReale char(1) not null,
-     OrarioPartenzaReale char(1) not null,
-     StatoTreno char(1) not null,
-     Binario char(1) not null,
+     CodTabellone int not null,
+     OrarioPartenzaPrevisto timestamp not null,
+     OrarioArrivoPrevisto timestamp not null,
+     OrarioArrivoReale timestamp not null,
+     OrarioPartenzaReale timestamp not null,
+     StatoTreno varchar(20) not null,
+     Binario smallint not null,
      constraint IDTABELLONE primary key (CodTabellone));
 
 create table TIPOABBONAMENTO (
-     Durata char(1) not null,
-     Chilometraggio char(1) not null,
-     Prezzo char(1) not null,
+     Durata time not null,
+     Chilometraggio smallint not null,
+     Prezzo float(6) not null,
      constraint IDTIPOABBONAMENTO primary key (Durata, Chilometraggio));
 
 create table TRENO (
-     CodTreno char(1) not null,
-     PostiTotali char(1) not null,
-     Tipo char(1) not null,
-     Classe char(1),
+     CodTreno int not null,
+     PostiTotali smallint not null,
+     Tipo varchar(10) not null,
+     Classe varchar(20) default "2 classe",
      constraint IDTRENO primary key (CodTreno));
 
 
