@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBConnection {
     
     public Connection getMySQLConnection(){
-        final String dbName = "train_track";
+        final String dbName = "traintrack";
 
         final String driver = "com.mysql.cj.jdbc.Driver";
         final String dbUri = "jdbc:mysql://localhost:3306/" + dbName + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
