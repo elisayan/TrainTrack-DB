@@ -1,5 +1,5 @@
 package view;
 
-public class View {
-    
+public interface View {
+    void switchScene(final String path);
 }
