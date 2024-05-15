@@ -3,7 +3,7 @@ package view.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class HomeSceneController extends AbstractScenController{
+public class HomeSceneController extends AbstractSceneController{
     @FXML
     private Button login;
 
