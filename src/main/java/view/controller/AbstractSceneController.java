@@ -2,7 +2,7 @@ package view.controller;
 
 import view.View;
 
-public abstract class AbstractScenController implements SceneController{
+public abstract class AbstractSceneController implements SceneController{
     protected View view;
 
     public void initialize (View view) {
