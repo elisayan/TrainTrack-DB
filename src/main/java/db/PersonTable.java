@@ -15,7 +15,7 @@ public class PersonTable {
 
     public PersonTable() {
         this.dataSource = new DBConnection();
-        this.tableName = "persona";
+        this.tableName = "persone";
     }
 
     public boolean loginUser(final String email, final String password) {
