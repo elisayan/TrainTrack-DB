@@ -1,13 +1,13 @@
 package model;
 
-public class User {
+public class Person {
 
     private String email;
     private String password;
     private String name;
     private String surname;
     private String cf;
-    private String phone;
+    private int phone;
     private String address;
     private float totalExspense;
     private String personType;
@@ -45,11 +45,11 @@ public class User {
         this.cf = cf;
     }
 
-    public String getPhone() {
+    public int getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(int phone) {
         this.phone = phone;
     }
 
