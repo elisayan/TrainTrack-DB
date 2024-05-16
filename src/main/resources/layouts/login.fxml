@@ -8,18 +8,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.Login">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.LoginSceneController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="40.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="HOME">
+                  <Button mnemonicParsing="false" onMouseClicked="#homeClicked" text="HOME">
                      <HBox.margin>
                         <Insets left="35.0" top="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="SIGN UP">
+                  <Button mnemonicParsing="false" onMouseClicked="#signClicked" text="SIGN UP">
                      <HBox.margin>
                         <Insets left="410.0" right="35.0" top="20.0" />
                      </HBox.margin>
@@ -36,7 +36,7 @@
                   <Insets bottom="20.0" left="150.0" right="150.0" />
                </VBox.margin>
             </PasswordField>
-            <Button mnemonicParsing="false" text="LOG-IN">
+            <Button mnemonicParsing="false" onMouseClicked="#loginClicked" text="LOG-IN">
                <VBox.margin>
                   <Insets left="270.0" right="270.0" />
                </VBox.margin>

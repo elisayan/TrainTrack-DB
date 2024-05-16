@@ -13,7 +13,7 @@ public class PersonTable {
     private final String tableName;
     private Person person;
 
-    public PersonTable(DBConnection dataSource, String tableName) {
+    public PersonTable() {
         this.dataSource = new DBConnection();
         this.tableName = "persona";
     }
