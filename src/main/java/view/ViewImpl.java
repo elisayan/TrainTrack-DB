@@ -35,7 +35,7 @@ public class ViewImpl extends Application implements View {
             final Parent root = loader.load(this.getClass().getResourceAsStream(PATH + filePath));
             final SceneController controller = loader.<SceneController>getController();
             //controller.setRoot(root);
-            controller.initialize(this);
+            controller.initialize(this, null);
             if (this.stage.getScene() == null) {
                 this.stage.setScene(new Scene(root));
             } else {

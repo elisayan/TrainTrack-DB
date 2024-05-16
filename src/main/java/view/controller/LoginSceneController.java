@@ -11,10 +11,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Person;
-
+import view.View;
 
 public class LoginSceneController extends AbstractSceneController {
-    
+
     @FXML
     private Button login;
 
@@ -37,31 +37,33 @@ public class LoginSceneController extends AbstractSceneController {
 
     private Map<TextField, PasswordField> loginMap;
 
-    public void loginClicked(){
+    @FXML
+    public void loginClicked() {
         this.view.switchScene("home.fxml");
     }
 
-    public void homeClicked(){
-        this.view.switchScene("home.fxml");
-    }
-
-    public void signClicked(){
+    @FXML
+    public void signClicked() {
         this.view.switchScene("signup.fxml");
     }
 
-    public void init(final Optional<Person> person){
+    public void init(final Optional<Person> person) {
         controller = new LoginController(this);
-        
+
         final TextField emailField = new TextField();
         final PasswordField passwordField = new PasswordField();
 
         loginMap = new HashMap<>();
 
-        loginMap.put(emailField, passwordField);        
+        loginMap.put(emailField, passwordField);
     }
 
     @FXML
-    public void loginUser(){
+    public void loginUser() {
 
+    }
+
+    public void goForeward(final Person person){
+        this.getController();
     }
 }
