@@ -21,5 +21,7 @@ public class Controller {
         this.model.setUser(person);
     }
 
-    
+    public void goToTheNextDataScene(String path){
+        this.view.switchScene(path);
+    }
 }
