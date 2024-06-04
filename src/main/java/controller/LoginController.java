@@ -13,8 +13,10 @@ public class LoginController {
     }
     
     public void loginPerson(final String email, final String password){
-        if (model.loginUser(email, password)) {
-            
+        if (this.model.loginUser(email, password)) {
+            this.view.goForeward(this.model.getCurrentPerson());
+        } else{
+            this.view.LoginFailed();
         }
     }
 }
