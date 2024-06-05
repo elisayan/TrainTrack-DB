@@ -16,7 +16,7 @@ public class LoginController {
         if (this.model.loginUser(email, password)) {
             this.view.goForeward(this.model.getCurrentPerson());
         } else{
-            this.view.LoginFailed();
+            this.view.loginFailed();
         }
     }
 }

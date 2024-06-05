@@ -7,36 +7,35 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.SignUpSceneController">
    <children>
-      <VBox layoutX="133.0" layoutY="79.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox layoutX="133.0" layoutY="79.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="40.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="HOME">
+                  <Button mnemonicParsing="false" onMouseClicked="#homeClicked" text="HOME">
                      <HBox.margin>
                         <Insets left="40.0" top="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" text="LOG-IN">
+                  <Button mnemonicParsing="false" onMouseClicked="#loginClicked" text="LOG-IN">
                      <HBox.margin>
                         <Insets left="410.0" top="20.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <TextField promptText="NOME">
+            <TextField promptText="NAME">
                <VBox.margin>
                   <Insets bottom="10.0" left="150.0" right="150.0" top="30.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="COGNOME">
+            <TextField promptText="SURNAME">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="CODICE FISCALE">
+            <TextField promptText="TAX CODE">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
@@ -51,17 +50,17 @@
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="TELEFONO">
+            <TextField promptText="PHONE">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="INDIRIZZO">
+            <TextField promptText="ADDRESS">
                <VBox.margin>
                   <Insets bottom="20.0" left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" text="SIGN UP">
+            <Button mnemonicParsing="false" onMouseClicked="#signClicked" text="SIGN UP">
                <VBox.margin>
                   <Insets bottom="30.0" left="269.0" right="269.0" />
                </VBox.margin>

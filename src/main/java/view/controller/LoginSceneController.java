@@ -2,8 +2,6 @@ package view.controller;
 
 import java.util.*;
 
-import com.google.protobuf.Message;
-
 import controller.LoginController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -61,11 +59,11 @@ public class LoginSceneController extends AbstractSceneController {
         loginMap.put(emailField, passwordField);
     }
 
-    public void goForeward(final Person person){
+    public void goForeward(final Person person) {
         this.getController().savePerson(person);
         this.getController().goToTheNextDataScene("home.fxml");
     }
 
-    public void LoginFailed(){
+    public void loginFailed() {
     }
 }
