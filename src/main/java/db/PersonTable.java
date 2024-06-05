@@ -18,6 +18,48 @@ public class PersonTable {
         this.tableName = "Persone";
     }
 
+    public boolean signUpPerson(final Person person) {
+        final Connection connection = dataSource.getMySQLConnection();
+
+        Optional<PreparedStatement> statement = Optional.empty();
+        final String insert = "insert into " + tableName
+                + " where (Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        if (this.findPerson(person.getEmail()) != null) {
+            return false;
+        }
+
+        try {
+            statement = Optional.of(connection.prepareStatement(insert));
+            statement.get().setString(1, person.getName());
+            statement.get().setString(2, person.getSurname());
+            statement.get().setString(3, person.getCf());
+            statement.get().setString(4, person.getAddress());
+            statement.get().setInt(5, person.getPhone());
+            statement.get().setString(6, person.getEmail());
+            statement.get().setString(7, person.getPassword());
+            statement.get().setFloat(8, person.getTotalExspense());
+            statement.get().setString(9, person.getPersonType());
+            statement.get().setString(10, person.getClientType());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (!statement.isEmpty()) {
+                    statement.get().close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        this.person = person;
+        return true;
+    }
+
     public boolean loginUser(final String email, final String password) {
         Person person = null;
         final Connection connection = dataSource.getMySQLConnection();
@@ -85,11 +127,11 @@ public class PersonTable {
                 person.setPersonType(resultSet.getString("TipoPersona"));
                 person.setPhone(resultSet.getInt("Telefono"));
                 person.setSurname(resultSet.getString("Cognome"));
-                person.setTotalExspense(resultSet.getFloat("SpesaTotale"));                
+                person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally{
+        } finally {
             try {
                 if (!statement.isEmpty()) {
                     statement.get().close();
@@ -106,7 +148,7 @@ public class PersonTable {
         return person;
     }
 
-    public Person getCurrentPerson(){
+    public Person getCurrentPerson() {
         return this.person;
     }
 }

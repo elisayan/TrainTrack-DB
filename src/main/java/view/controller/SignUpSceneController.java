@@ -63,4 +63,13 @@ public class SignUpSceneController extends AbstractSceneController {
         this.view.switchScene("home.fxml");
     }
 
+    public void goForeward(final Person person) {
+        this.getController().savePerson(person);
+        this.getController().goToTheNextDataScene("home.fxml");
+    }
+
+    public void singUpFailed(){
+        
+    }
+
 }
