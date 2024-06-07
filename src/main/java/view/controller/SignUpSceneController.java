@@ -89,11 +89,11 @@ public class SignUpSceneController extends AbstractSceneController {
                 }
                 System.out.println(person);
                 this.controller.signUpPerson(person);
+                this.view.switchScene("home.fxml");
             });
         } else {
             errorLabel.setText(MessageError.EMPTY_FIELD.toString());
-        }
-        this.view.switchScene("home.fxml");
+        }        
     }
 
     public void goForeward(final Person person) {
@@ -103,7 +103,7 @@ public class SignUpSceneController extends AbstractSceneController {
     }
 
     public void singUpFailed() {
-
+        errorLabel.setText(MessageError.ALREADY_EXIST.toString());
     }
 
 }

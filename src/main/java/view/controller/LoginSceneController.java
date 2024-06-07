@@ -77,7 +77,7 @@ public class LoginSceneController extends AbstractSceneController {
     }
 
     public void loginFailed() {
-        errorLabel.setText(MessageError.ERROR.toString());
+        errorLabel.setText(MessageError.INCORRECT_INPUT.toString());
     }
 
 }
