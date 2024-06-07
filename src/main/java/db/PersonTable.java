@@ -15,7 +15,7 @@ public class PersonTable {
 
     public PersonTable() {
         this.dataSource = new DBConnection();
-        this.tableName = "Persone";
+        this.tableName = "Persona";
     }
 
     public boolean signUpPerson(final Person person) {

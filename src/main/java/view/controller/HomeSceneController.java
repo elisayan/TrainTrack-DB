@@ -1,23 +1,38 @@
 package view.controller;
 
-import java.util.Optional;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import model.Person;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class HomeSceneController extends AbstractSceneController{
+public class HomeSceneController extends AbstractSceneController {
     @FXML
-    private Button login;
+    private Button loginButton;
 
     @FXML
-    public void loginClicked(){
+    private HBox hBox;
+
+    @FXML
+    private VBox vBox;
+
+    @FXML
+    private Button homeButton;
+
+    @FXML
+    private Button purchaseButton;
+
+    @FXML
+    private Button timetableButton;
+
+    @FXML
+    private Button rankingButton;
+
+    @FXML
+    private Label welcomeLabel;
+
+    @FXML
+    public void loginClicked() {
         this.view.switchScene("login.fxml");
-    }
-
-    @Override
-    public void init(Optional<Person> person) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'init'");
     }
 }
