@@ -1,17 +1,17 @@
 package view.controller;
 
+import controller.Controller;
 import controller.LoginController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Person;
+import view.View;
 
 public class LoginSceneController extends AbstractSceneController {
 
@@ -44,15 +44,11 @@ public class LoginSceneController extends AbstractSceneController {
 
     private LoginController controller;
 
-    private EventHandler<MouseEvent> login =(l)->{
-        if (!this.isFieldsEmpty()) {
-            Platform.runLater(()->{
-                this.controller.loginPerson(emailField.getText(), passwordField.getText());
-            });
-        } else{
-            errorLabel.setText(MessageError.EMPTY_FIELD.toString());
-        }
-    };
+    @Override
+    public void initialize(View view, Controller controller) {
+        super.initialize(view, controller);
+        this.controller = new LoginController(this, this.getController());
+    }
 
     private boolean isFieldsEmpty() {
         return emailField.getText().isBlank() || passwordField.getText().isBlank();
@@ -60,9 +56,14 @@ public class LoginSceneController extends AbstractSceneController {
 
     @FXML
     public void loginClicked() {
-        loginButton = new Button();
-        loginButton.setOnMouseClicked(login);
-        this.view.switchScene("home.fxml");
+        if (!this.isFieldsEmpty()) {
+            Platform.runLater(() -> {
+                this.controller.loginPerson(emailField.getText(), passwordField.getText());
+                this.view.switchScene("home.fxml");
+            });
+        } else {
+            errorLabel.setText(MessageError.EMPTY_FIELD.toString());
+        }
     }
 
     @FXML
@@ -78,4 +79,5 @@ public class LoginSceneController extends AbstractSceneController {
     public void loginFailed() {
         errorLabel.setText(MessageError.ERROR.toString());
     }
+
 }

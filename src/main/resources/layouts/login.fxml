@@ -15,34 +15,34 @@
          <children>
             <HBox prefHeight="40.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" onMouseClicked="#homeClicked" text="HOME">
+                  <Button fx:id="homeButton" mnemonicParsing="false" onMouseClicked="#homeClicked" text="HOME">
                      <HBox.margin>
                         <Insets left="35.0" top="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseClicked="#signClicked" text="SIGN UP">
+                  <Button fx:id="signButton" mnemonicParsing="false" onMouseClicked="#signClicked" text="SIGN UP">
                      <HBox.margin>
                         <Insets left="410.0" right="35.0" top="20.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <Label>
+            <Label fx:id="errorLabel">
                <VBox.margin>
                   <Insets left="270.0" right="270.0" />
                </VBox.margin>
             </Label>
-            <TextField promptText="E-MAIL">
+            <TextField fx:id="emailField" promptText="E-MAIL">
                <VBox.margin>
                   <Insets bottom="20.0" left="150.0" right="150.0" top="120.0" />
                </VBox.margin>
             </TextField>
-            <PasswordField prefWidth="100.0" promptText="PASSWORD">
+            <PasswordField fx:id="passwordField" prefWidth="100.0" promptText="PASSWORD">
                <VBox.margin>
                   <Insets bottom="20.0" left="150.0" right="150.0" />
                </VBox.margin>
             </PasswordField>
-            <Button mnemonicParsing="false" onMouseClicked="#loginClicked" text="LOG-IN">
+            <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#loginClicked" text="LOG-IN">
                <VBox.margin>
                   <Insets left="270.0" right="270.0" />
                </VBox.margin>
