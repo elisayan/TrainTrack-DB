@@ -1,13 +1,12 @@
 package view.controller;
 
-import java.util.Optional;
-
+import controller.SignUpController;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.input.*;
 import model.Person;
 
 public class SignUpSceneController extends AbstractSceneController {
@@ -39,6 +38,9 @@ public class SignUpSceneController extends AbstractSceneController {
     private TextField addressText;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private VBox vBox;
 
     @FXML
@@ -47,10 +49,27 @@ public class SignUpSceneController extends AbstractSceneController {
     @FXML
     private AnchorPane pane;
 
-    @Override
-    public void init(Optional<Person> person) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'init'");
+    private SignUpController controller;
+
+    private final EventHandler<MouseEvent> signUp = (l)->{
+        if (!this.checkEmptyFields()) {
+            Platform.runLater(()->{
+                final Person person = new Person();
+                person.setAddress(addressText.getText());
+                person.setCf(codeText.getText());
+                person.setEmail(emailText.getText());
+                person.setPassword(passwordText.getText());
+                person.setPhone(Integer.parseInt(phoneText.getText()));
+                person.setSurname(surnameText.getText());
+                this.controller.signUpPerson(person);
+            });
+        } else{
+            errorLabel.setText(MessageError.ERROR.toString());
+        }
+    };
+
+    private boolean checkEmptyFields(){
+        return false;
     }
 
     @FXML
@@ -59,13 +78,14 @@ public class SignUpSceneController extends AbstractSceneController {
     }
 
     @FXML
-    public void signClicked() {
+    public void signUpClicked() {
         this.view.switchScene("home.fxml");
     }
 
     public void goForeward(final Person person) {
         this.getController().savePerson(person);
-        this.getController().goToTheNextDataScene("home.fxml");
+        this.signUpClicked();
+        //this.getController().goToTheNextDataScene("home.fxml");
     }
 
     public void singUpFailed(){
