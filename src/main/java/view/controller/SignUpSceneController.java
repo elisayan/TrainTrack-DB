@@ -49,26 +49,44 @@ public class SignUpSceneController extends AbstractSceneController {
     @FXML
     private AnchorPane pane;
 
+    private String typeClient;
+
     private SignUpController controller;
 
-    private final EventHandler<MouseEvent> signUp = (l)->{
-        if (!this.checkEmptyFields()) {
-            Platform.runLater(()->{
+    private final EventHandler<MouseEvent> signUp = (l) -> {
+        if (!this.isFieldsEmpty()) {
+            Platform.runLater(() -> {
                 final Person person = new Person();
-                person.setAddress(addressText.getText());
+                person.setName(nameText.getText());
+                person.setSurname(surnameText.getText());
                 person.setCf(codeText.getText());
                 person.setEmail(emailText.getText());
-                person.setPassword(passwordText.getText());
-                person.setPhone(Integer.parseInt(phoneText.getText()));
-                person.setSurname(surnameText.getText());
+                person.setPassword(passwordText.getText());                
+                person.setAddress(addressText.getText());
+                person.setClientType(typeClient);
+                person.setPersonType("Client");
+                if(!phoneText.getText().isBlank()){
+                    person.setPhone(Integer.parseInt(phoneText.getText()));
+                }
                 this.controller.signUpPerson(person);
             });
-        } else{
-            errorLabel.setText(MessageError.ERROR.toString());
+        } else {
+            errorLabel.setText(MessageError.EMPTY_FIELD.toString());
         }
     };
 
-    private boolean checkEmptyFields(){
+    private boolean isFieldsEmpty() {        
+        if (passwordText.getText().isBlank()) {
+            typeClient = "Guest";
+        } else {
+            typeClient = "User";
+        }
+
+        if (nameText.getText().isBlank() || surnameText.getText().isBlank() || codeText.getText().isBlank()
+                || emailText.getText().isBlank() || addressText.getText().isBlank()) {
+            return true;
+        }        
+
         return false;
     }
 
@@ -79,17 +97,19 @@ public class SignUpSceneController extends AbstractSceneController {
 
     @FXML
     public void signUpClicked() {
+        signButton = new Button();
+        signButton.setOnMouseClicked(signUp);
         this.view.switchScene("home.fxml");
     }
 
     public void goForeward(final Person person) {
         this.getController().savePerson(person);
         this.signUpClicked();
-        //this.getController().goToTheNextDataScene("home.fxml");
+        // this.getController().goToTheNextDataScene("home.fxml");
     }
 
-    public void singUpFailed(){
-        
+    public void singUpFailed() {
+
     }
 
 }

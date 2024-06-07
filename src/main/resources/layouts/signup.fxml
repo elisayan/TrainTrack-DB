@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -25,22 +26,27 @@
                   </Button>
                </children>
             </HBox>
-            <TextField promptText="NAME">
+            <Label alignment="CENTER" contentDisplay="CENTER">
+               <VBox.margin>
+                  <Insets left="270.0" />
+               </VBox.margin>
+            </Label>
+            <TextField promptText="NAME*">
                <VBox.margin>
                   <Insets bottom="10.0" left="150.0" right="150.0" top="30.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="SURNAME">
+            <TextField promptText="SURNAME*">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="TAX CODE">
+            <TextField promptText="TAX CODE*">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="E-MAIL">
+            <TextField promptText="E-MAIL*">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
@@ -55,12 +61,12 @@
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="ADDRESS">
+            <TextField promptText="ADDRESS*">
                <VBox.margin>
                   <Insets bottom="20.0" left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" onMouseClicked="#signUp" text="SIGN UP">
+            <Button mnemonicParsing="false" onMouseClicked="#signUpClicked" text="SIGN UP">
                <VBox.margin>
                   <Insets bottom="30.0" left="269.0" right="269.0" />
                </VBox.margin>
