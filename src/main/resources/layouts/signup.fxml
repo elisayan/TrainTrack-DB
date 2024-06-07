@@ -60,7 +60,7 @@
                   <Insets bottom="20.0" left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" onMouseClicked="#signClicked" text="SIGN UP">
+            <Button mnemonicParsing="false" onMouseClicked="#signUp" text="SIGN UP">
                <VBox.margin>
                   <Insets bottom="30.0" left="269.0" right="269.0" />
                </VBox.margin>
