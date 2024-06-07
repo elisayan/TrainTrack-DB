@@ -13,6 +13,10 @@ public class Person {
     private String personType;
     private String clientType;
 
+    public Person() {
+        this.totalExspense = 0;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -91,6 +95,13 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Person [email=" + email + ", password=" + password + ", name=" + name + ", surname=" + surname + ", cf="
+                + cf + ", phone=" + phone + ", address=" + address + ", totalExspense=" + totalExspense
+                + ", personType=" + personType + ", clientType=" + clientType + "]";
     }
 
 }
