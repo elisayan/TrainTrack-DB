@@ -11,7 +11,6 @@ import model.Person;
 public class PersonTable {
     private final DBConnection dataSource;
     private final String tableName;
-    private Person person;
 
     public PersonTable() {
         this.dataSource = new DBConnection();
@@ -23,12 +22,11 @@ public class PersonTable {
 
         Optional<PreparedStatement> statement = Optional.empty();
         final String insert = "insert into " + tableName
-                + " where (Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "(Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if (this.findPerson(person.getEmail()) != null) {
             return false;
         }
-
         try {
             statement = Optional.of(connection.prepareStatement(insert));
             statement.get().setString(1, person.getName());
@@ -41,7 +39,7 @@ public class PersonTable {
             statement.get().setFloat(8, person.getTotalExspense());
             statement.get().setString(9, person.getPersonType());
             statement.get().setString(10, person.getClientType());
-
+            return statement.get().execute();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -56,8 +54,7 @@ public class PersonTable {
                 e.printStackTrace();
             }
         }
-        this.person = person;
-        return true;
+        return false;
     }
 
     public boolean loginUser(final String email, final String password) {
@@ -83,7 +80,6 @@ public class PersonTable {
                 person.setEmail(result.getString("Email"));
                 person.setPassword(result.getString("Password"));
                 person.setTotalExspense(result.getFloat("SpesaTotale"));
-                this.person = person;
                 return true;
             }
         } catch (SQLException e) {
@@ -146,9 +142,5 @@ public class PersonTable {
         }
 
         return person;
-    }
-
-    public Person getCurrentPerson() {
-        return this.person;
     }
 }
