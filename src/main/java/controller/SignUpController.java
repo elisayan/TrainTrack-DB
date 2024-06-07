@@ -13,13 +13,11 @@ public class SignUpController {
         this.model = new PersonTable();
     }
 
-    public boolean signUpPerson(final Person person) {
+    public void signUpPerson(final Person person) {
         if (this.model.signUpPerson(person)) {
             this.view.goForeward(person);
-            return true;
+        } else {
+            this.view.singUpFailed();
         }
-        
-        this.view.singUpFailed();
-        return false;
     }
 }

@@ -2,11 +2,9 @@ package view.controller;
 
 import controller.SignUpController;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.input.*;
 import model.Person;
 
 public class SignUpSceneController extends AbstractSceneController {
@@ -17,25 +15,25 @@ public class SignUpSceneController extends AbstractSceneController {
     private Button loginButton;
 
     @FXML
-    private TextField nameText;
+    private TextField nameField;
 
     @FXML
-    private TextField surnameText;
+    private TextField surnameField;
 
     @FXML
-    private TextField codeText;
+    private TextField codeField;
 
     @FXML
-    private TextField emailText;
+    private TextField emailField;
 
     @FXML
-    private TextField passwordText;
+    private TextField passwordField;
 
     @FXML
-    private TextField phoneText;
+    private TextField phoneField;
 
     @FXML
-    private TextField addressText;
+    private TextField addressField;
 
     @FXML
     private Label errorLabel;
@@ -51,39 +49,17 @@ public class SignUpSceneController extends AbstractSceneController {
 
     private String typeClient;
 
-    private SignUpController controller;
-
-    private final EventHandler<MouseEvent> signUp = (l) -> {
-        if (!this.isFieldsEmpty()) {
-            Platform.runLater(() -> {
-                final Person person = new Person();
-                person.setName(nameText.getText());
-                person.setSurname(surnameText.getText());
-                person.setCf(codeText.getText());
-                person.setEmail(emailText.getText());
-                person.setPassword(passwordText.getText());                
-                person.setAddress(addressText.getText());
-                person.setClientType(typeClient);
-                person.setPersonType("Client");
-                if(!phoneText.getText().isBlank()){
-                    person.setPhone(Integer.parseInt(phoneText.getText()));
-                }
-                this.controller.signUpPerson(person);
-            });
-        } else {
-            errorLabel.setText(MessageError.EMPTY_FIELD.toString());
-        }
-    };
+    private SignUpController controller = new SignUpController(this);
 
     private boolean isFieldsEmpty() {        
-        if (passwordText.getText().isBlank()) {
+        if (passwordField.getText().isBlank()) {
             typeClient = "Guest";
         } else {
             typeClient = "User";
         }
 
-        if (nameText.getText().isBlank() || surnameText.getText().isBlank() || codeText.getText().isBlank()
-                || emailText.getText().isBlank() || addressText.getText().isBlank()) {
+        if (nameField.getText().isBlank() || surnameField.getText().isBlank() || codeField.getText().isBlank()
+                || emailField.getText().isBlank() || addressField.getText().isBlank()) {
             return true;
         }        
 
@@ -97,15 +73,33 @@ public class SignUpSceneController extends AbstractSceneController {
 
     @FXML
     public void signUpClicked() {
-        signButton = new Button();
-        signButton.setOnMouseClicked(signUp);
+        if (!this.isFieldsEmpty()) {
+            Platform.runLater(() -> {
+                final Person person = new Person();
+                person.setName(nameField.getText());
+                person.setSurname(surnameField.getText());
+                person.setCf(codeField.getText());
+                person.setEmail(emailField.getText());
+                person.setPassword(passwordField.getText());                
+                person.setAddress(addressField.getText());
+                person.setClientType(typeClient);
+                person.setPersonType("Client");                
+                if(!phoneField.getText().isBlank()){
+                    person.setPhone(Integer.parseInt(phoneField.getText()));
+                }
+                System.out.println(person);
+                this.controller.signUpPerson(person);
+            });
+        } else {
+            errorLabel.setText(MessageError.EMPTY_FIELD.toString());
+        }
         this.view.switchScene("home.fxml");
     }
 
     public void goForeward(final Person person) {
         this.getController().savePerson(person);
-        this.signUpClicked();
-        // this.getController().goToTheNextDataScene("home.fxml");
+        this.getController().goToTheNextDataScene("home.fxml");
+        
     }
 
     public void singUpFailed() {

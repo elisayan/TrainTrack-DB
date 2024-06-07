@@ -19,7 +19,7 @@
                         <Insets left="40.0" top="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseClicked="#loginClicked" text="LOG-IN">
+                  <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#loginClicked" text="LOG-IN">
                      <HBox.margin>
                         <Insets left="410.0" top="20.0" />
                      </HBox.margin>
@@ -31,42 +31,42 @@
                   <Insets left="270.0" />
                </VBox.margin>
             </Label>
-            <TextField promptText="NAME*">
+            <TextField fx:id="nameField" promptText="NAME*">
                <VBox.margin>
                   <Insets bottom="10.0" left="150.0" right="150.0" top="30.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="SURNAME*">
+            <TextField fx:id="surnameField" promptText="SURNAME*">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="TAX CODE*">
+            <TextField fx:id="codeField" promptText="TAX CODE*">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="E-MAIL*">
+            <TextField fx:id="emailField" promptText="E-MAIL*">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="PASSWORD">
+            <TextField fx:id="passwordField" promptText="PASSWORD">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="PHONE">
+            <TextField fx:id="phoneField" promptText="PHONE">
                <VBox.margin>
                   <Insets left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <TextField promptText="ADDRESS*">
+            <TextField fx:id="addressField" promptText="ADDRESS*">
                <VBox.margin>
                   <Insets bottom="20.0" left="150.0" right="150.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" onMouseClicked="#signUpClicked" text="SIGN UP">
+            <Button fx:id="signButton" mnemonicParsing="false" onMouseClicked="#signUpClicked" text="SIGN UP">
                <VBox.margin>
                   <Insets bottom="30.0" left="269.0" right="269.0" />
                </VBox.margin>
