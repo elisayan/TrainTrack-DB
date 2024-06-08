@@ -13,7 +13,7 @@ public class DBConnection {
         final String dbUri = "jdbc:mysql://localhost:3306/" + dbName + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 
         final String userName = "root";
-        final String password = "password";
+        final String password = "";
 
         Connection connection = null;
         try {

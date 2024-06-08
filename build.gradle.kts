@@ -37,7 +37,7 @@ dependencies {
     // implementation("com.google.guava:guava:28.1-jre")
 
     // JavaFX: comment out if you do not need them
-    val javaFxVersion = 15
+    val javaFxVersion = 21
     for (platform in supportedPlatforms) {
         for (module in javaFXModules) {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
@@ -46,6 +46,8 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("com.hynnet:sqljdbc4-chs:4.0.2206.100")
     implementation("net.sourceforge.jtds:jtds:1.3.1")
+    //implementation("org.openjfx:javafx-controls:21")
+    //implementation("org.openjfx:javafx-fxml:21")
     val jUnitVersion = "5.10.2"
     // JUnit API and testing engine
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")

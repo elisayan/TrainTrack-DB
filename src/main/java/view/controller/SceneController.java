@@ -1,8 +1,13 @@
 package view.controller;
 
+import controller.Controller;
 import javafx.scene.Parent;
 import view.View;
 
 public interface SceneController {
-    public void initialize (View view);
+    void initialize(View view, Controller controller);
+
+    void setRoot(Parent root);
+
+    Parent getRoot();
 }
