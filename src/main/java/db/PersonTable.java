@@ -24,9 +24,10 @@ public class PersonTable {
         final String insert = "insert into " + tableName
                 + "(Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        if (this.findPerson(person.getEmail()) != null) {
+        if (!this.findPerson(person.getEmail()).isEmpty()) {
             return false;
         }
+
         try {
             statement = Optional.of(connection.prepareStatement(insert));
             statement.get().setString(1, person.getName());
@@ -39,7 +40,8 @@ public class PersonTable {
             statement.get().setFloat(8, person.getTotalExspense());
             statement.get().setString(9, person.getPersonType());
             statement.get().setString(10, person.getClientType());
-            return statement.get().execute();
+            statement.get().execute();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -100,7 +102,7 @@ public class PersonTable {
         return false;
     }
 
-    public Person findPerson(final String email) {
+    public Optional<Person> findPerson(final String email) {
         Person person = null;
         final Connection connection = this.dataSource.getMySQLConnection();
 
@@ -141,6 +143,6 @@ public class PersonTable {
             }
         }
 
-        return person;
+        return Optional.ofNullable(person);
     }
 }

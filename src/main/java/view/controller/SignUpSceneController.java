@@ -87,9 +87,7 @@ public class SignUpSceneController extends AbstractSceneController {
                 if(!phoneField.getText().isBlank()){
                     person.setPhone(Integer.parseInt(phoneField.getText()));
                 }
-                System.out.println(person);
                 this.controller.signUpPerson(person);
-                this.view.switchScene("home.fxml");
             });
         } else {
             errorLabel.setText(MessageError.EMPTY_FIELD.toString());
@@ -98,8 +96,7 @@ public class SignUpSceneController extends AbstractSceneController {
 
     public void goForeward(final Person person) {
         this.getController().savePerson(person);
-        this.getController().goToTheNextDataScene("home.fxml");
-        
+        this.getController().goToTheNextDataScene("home.fxml");        
     }
 
     public void singUpFailed() {

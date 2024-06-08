@@ -59,7 +59,6 @@ public class LoginSceneController extends AbstractSceneController {
         if (!this.isFieldsEmpty()) {
             Platform.runLater(() -> {
                 this.controller.loginPerson(emailField.getText(), passwordField.getText());
-                this.view.switchScene("home.fxml");
             });
         } else {
             errorLabel.setText(MessageError.EMPTY_FIELD.toString());
