@@ -79,4 +79,7 @@ public class LoginSceneController extends AbstractSceneController {
         errorLabel.setText(MessageError.INCORRECT_INPUT.toString());
     }
 
+    public void userNotexist(){
+        errorLabel.setText(MessageError.USER_NOT_EXIST.toString());
+    }
 }

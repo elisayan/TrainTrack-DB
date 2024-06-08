@@ -13,11 +13,13 @@ public class LoginController {
         this.model = new PersonTable();
         this.controller = controller;
     }
-    
-    public void loginPerson(final String email, final String password){
+
+    public void loginPerson(final String email, final String password) {
         if (this.model.loginUser(email, password)) {
             this.view.goForeward(model.findPerson(email).get());
-        } else{
+        } else if (model.findPerson(email).isEmpty()) {
+            this.view.userNotexist();
+        } else {
             this.view.loginFailed();
         }
     }

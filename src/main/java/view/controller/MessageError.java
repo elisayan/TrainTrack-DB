@@ -7,6 +7,8 @@ public enum MessageError {
 
     INCORRECT_INPUT("Email or Password incorrect"),
 
+    USER_NOT_EXIST("User doesn't exist"),
+
     ERROR("Error");
 
     private String message;
