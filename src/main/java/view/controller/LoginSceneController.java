@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Person;
@@ -34,7 +35,7 @@ public class LoginSceneController extends AbstractSceneController {
     private Label errorLabel;
 
     @FXML
-    private AnchorPane pane;
+    private BorderPane pane;
 
     @FXML
     private VBox vBox;
@@ -79,7 +80,7 @@ public class LoginSceneController extends AbstractSceneController {
         errorLabel.setText(MessageError.INCORRECT_INPUT.toString());
     }
 
-    public void userNotexist(){
+    public void userNotexist() {
         errorLabel.setText(MessageError.USER_NOT_EXIST.toString());
     }
 }

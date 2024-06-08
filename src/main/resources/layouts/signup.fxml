@@ -4,78 +4,77 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.SignUpSceneController">
-   <children>
-      <VBox layoutX="133.0" layoutY="79.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.SignUpSceneController">
+   <top>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="615.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox prefHeight="40.0" prefWidth="200.0">
-               <children>
-                  <Button mnemonicParsing="false" onMouseClicked="#homeClicked" text="HOME">
-                     <HBox.margin>
-                        <Insets left="40.0" top="20.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#loginClicked" text="LOG-IN">
-                     <HBox.margin>
-                        <Insets left="410.0" top="20.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER">
-               <VBox.margin>
-                  <Insets left="250.0" />
-               </VBox.margin>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#homeClicked" text="Home">
+               <HBox.margin>
+                  <Insets left="15.0" top="7.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="loginButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#loginClicked" text="Log-in">
+               <HBox.margin>
+                  <Insets top="7.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="13.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="227.0" textAlignment="CENTER">
                <font>
-                  <Font size="14.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
-            <TextField fx:id="nameField" promptText="NAME*">
+            <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="NAME*">
                <VBox.margin>
-                  <Insets bottom="10.0" left="150.0" right="150.0" top="30.0" />
+                  <Insets left="226.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="surnameField" promptText="SURNAME*">
+            <TextField fx:id="surnameField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="SURNAME*">
                <VBox.margin>
-                  <Insets left="150.0" right="150.0" />
+                  <Insets left="226.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="codeField" promptText="TAX CODE*">
+            <TextField fx:id="codeField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="TAX CODE*">
                <VBox.margin>
-                  <Insets left="150.0" right="150.0" top="10.0" />
+                  <Insets left="226.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="emailField" promptText="E-MAIL*">
+            <TextField fx:id="emailField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="E-MAIL*">
                <VBox.margin>
-                  <Insets left="150.0" right="150.0" top="10.0" />
+                  <Insets left="226.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="passwordField" promptText="PASSWORD">
+            <TextField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="PASSWORD">
                <VBox.margin>
-                  <Insets left="150.0" right="150.0" top="10.0" />
+                  <Insets left="226.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="phoneField" promptText="PHONE">
+            <TextField fx:id="phoneField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="PHONE">
                <VBox.margin>
-                  <Insets left="150.0" right="150.0" top="10.0" />
+                  <Insets left="226.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="addressField" promptText="ADDRESS*">
+            <TextField fx:id="addressField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="ADDRESS*">
                <VBox.margin>
-                  <Insets bottom="20.0" left="150.0" right="150.0" top="10.0" />
+                  <Insets left="226.0" />
                </VBox.margin>
             </TextField>
-            <Button fx:id="signButton" mnemonicParsing="false" onMouseClicked="#signUpClicked" text="SIGN UP">
+            <Button fx:id="signButton" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#signUpClicked" text="Sign up">
                <VBox.margin>
-                  <Insets bottom="30.0" left="269.0" right="269.0" />
+                  <Insets left="346.0" />
                </VBox.margin>
             </Button>
          </children>
       </VBox>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>

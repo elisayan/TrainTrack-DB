@@ -45,13 +45,13 @@ public class SignUpSceneController extends AbstractSceneController {
     private HBox hBox;
 
     @FXML
-    private AnchorPane pane;
+    private BorderPane pane;
 
     private String typeClient;
 
     private SignUpController controller = new SignUpController(this);
 
-    private boolean isFieldsEmpty() {        
+    private boolean isFieldsEmpty() {
         if (passwordField.getText().isBlank()) {
             typeClient = "Guest";
         } else {
@@ -61,7 +61,7 @@ public class SignUpSceneController extends AbstractSceneController {
         if (nameField.getText().isBlank() || surnameField.getText().isBlank() || codeField.getText().isBlank()
                 || emailField.getText().isBlank() || addressField.getText().isBlank()) {
             return true;
-        }        
+        }
 
         return false;
     }
@@ -80,23 +80,23 @@ public class SignUpSceneController extends AbstractSceneController {
                 person.setSurname(surnameField.getText());
                 person.setCf(codeField.getText());
                 person.setEmail(emailField.getText());
-                person.setPassword(passwordField.getText());                
+                person.setPassword(passwordField.getText());
                 person.setAddress(addressField.getText());
                 person.setClientType(typeClient);
-                person.setPersonType("Client");                
-                if(!phoneField.getText().isBlank()){
+                person.setPersonType("Client");
+                if (!phoneField.getText().isBlank()) {
                     person.setPhone(Integer.parseInt(phoneField.getText()));
                 }
                 this.controller.signUpPerson(person);
             });
         } else {
             errorLabel.setText(MessageError.EMPTY_FIELD.toString());
-        }        
+        }
     }
 
     public void goForeward(final Person person) {
         this.getController().savePerson(person);
-        this.getController().goToTheNextDataScene("login.fxml");        
+        this.getController().goToTheNextDataScene("login.fxml");
     }
 
     public void singUpFailed() {

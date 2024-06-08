@@ -31,7 +31,7 @@ public abstract class AbstractSceneController implements SceneController {
     }
 
     @FXML
-    public void homeClicked(){
+    public void homeClicked() {
         this.view.switchScene("home.fxml");
     }
 
