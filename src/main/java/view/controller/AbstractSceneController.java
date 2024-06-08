@@ -21,7 +21,6 @@ public abstract class AbstractSceneController implements SceneController {
     }
 
     protected Controller getController() {
-
         return controller;
     }
 

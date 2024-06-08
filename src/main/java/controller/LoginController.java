@@ -16,7 +16,7 @@ public class LoginController {
     
     public void loginPerson(final String email, final String password){
         if (this.model.loginUser(email, password)) {
-            this.view.goForeward(controller.getCurrentPerson());
+            this.view.goForeward(model.findPerson(email).get());
         } else{
             this.view.loginFailed();
         }

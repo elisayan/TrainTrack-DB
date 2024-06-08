@@ -1,10 +1,13 @@
 package view.controller;
 
+import controller.Controller;
+import controller.LoginController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import view.View;
 
 public class HomeSceneController extends AbstractSceneController {
     @FXML
@@ -34,5 +37,13 @@ public class HomeSceneController extends AbstractSceneController {
     @FXML
     public void loginClicked() {
         this.view.switchScene("login.fxml");
+    }
+
+    @FXML
+    public void initialize(View view, Controller controller) {
+        super.initialize(view, controller);
+        if (controller.getCurrentPerson() != null) {
+            welcomeLabel.setText("Hello " + controller.getCurrentPerson().getName() + "!");
+        }
     }
 }

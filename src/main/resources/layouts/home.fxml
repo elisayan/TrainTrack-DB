@@ -11,20 +11,20 @@
    <center>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Purchase" />
-            <Button mnemonicParsing="false" text="Timetable" />
-            <Button mnemonicParsing="false" text="Ranking" />
+            <Button fx:id="purchaseButton" mnemonicParsing="false" text="Purchase" />
+            <Button fx:id="timetableButton" mnemonicParsing="false" text="Timetable" />
+            <Button fx:id="rankingButton" mnemonicParsing="false" text="Ranking" />
          </children>
       </VBox>
    </center>
    <top>
       <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Home">
+            <Button fx:id="homeButton" mnemonicParsing="false" text="Home">
                <HBox.margin>
                   <Insets top="7.0" />
                </HBox.margin></Button>
-            <Label text="Welcome!">
+            <Label fx:id="welcomeLabel" text="Welcome!">
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin></Label>
