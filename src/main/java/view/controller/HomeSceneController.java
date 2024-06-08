@@ -45,5 +45,4 @@ public class HomeSceneController extends AbstractSceneController {
         if (controller.getCurrentPerson() != null) {
             welcomeLabel.setText("Hello " + controller.getCurrentPerson().getName() + "!");
         }
-    }
 }
