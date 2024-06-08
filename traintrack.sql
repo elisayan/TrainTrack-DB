@@ -26,8 +26,8 @@ create table Acquisto (
 
 create table Attivazione (
      CodNotifica char(10) not null,
-     CF char(10) not null,
-     constraint IDAttivazione primary key (CF, CodNotifica));
+     Email char(10) not null,
+     constraint IDAttivazione primary key (Email, CodNotifica));
 
 create table BuonoSconto (
      CodBuonoSconto char(10) not null,
@@ -35,7 +35,7 @@ create table BuonoSconto (
      DataInizioValidita date not null,
      DataScadenza date not null,
      DataUtilizzo date,
-     CF char(10) not null,
+     Email char(10) not null,
      constraint IDBuonoSconto primary key (CodBuonoSconto));
 
 create table Carrozza (
@@ -48,7 +48,7 @@ create table CheckIn (
      Data  date not null,
      Ora date not null,
      CodServizio int not null,
-     CF char(10) not null,
+     Email char(10) not null,
      CodTreno char(10),
      NumeroCarrozza char(1),
      Lettera char(1),
@@ -82,17 +82,17 @@ create table Ordine (
      CodOrdine char(10) not null,
      DataPagamento date not null,
      OraPagamento date not null,
-     CF char(10) not null,
+     Email char(10) not null,
      constraint IDORDINE_ID primary key (CodOrdine));
 
 create table Percorso (
      CodPercorso char(10) not null,
      CodTreno char(10) not null,
-     CF char(10) not null,
+     Email char(10) not null,
      TempoPercorrenza date not null,
      constraint IDPERCORSO_ID primary key (CodPercorso),
      constraint IDPERCORSO_1 unique (CodTreno, CodPercorso),
-     constraint IDPercorso_2 unique (CF, CodPercorso));
+     constraint IDPercorso_2 unique (Email, CodPercorso));
 
 create table Persona (
      CF char(10) not null,
@@ -105,7 +105,7 @@ create table Persona (
      SpesaTotale float(10),
      TipoPersona char(10) not null,
      TipoCliente char(10),
-     constraint IDPERSONA primary key (CF));
+     constraint IDPERSONA primary key (Email));
 
 create table Posto (
      CodTreno char(10) not null,
@@ -120,7 +120,7 @@ create table Reso (
      CodOrdine char(10) not null,
      Motivazione varchar(30) not null,
      Data date not null,
-     CF char(10) not null,
+     Email char(10) not null,
      constraint IDRESO primary key (CodReso),
      constraint FKCorrelazione_ID unique (CodOrdine));
 
@@ -189,16 +189,16 @@ alter table Acquisto add constraint FKAcq_Ser
      references Servizio (CodServizio);
 
 alter table Attivazione add constraint FKAtt_Per
-     foreign key (CF)
-     references Persona (CF);
+     foreign key (Email)
+     references Persona (Email);
 
 alter table Attivazione add constraint FKAtt_Not
      foreign key (CodNotifica)
      references Notifica (CodNotifica);
 
 alter table BuonoSconto add constraint FKPosseduto
-     foreign key (CF)
-     references Persona (CF);
+     foreign key (Email)
+     references Persona (Email);
 
 -- Not implemented
 -- alter table Carrozza add constraint IDCarrozza_CHK
@@ -214,8 +214,8 @@ alter table CheckIn add constraint FKValidizione
      references Servizio (CodServizio);
 
 alter table CheckIn add constraint FKFatto
-     foreign key (CF)
-     references Persona (CF);
+     foreign key (Email)
+     references Persona (Email);
 
 alter table CheckIn add constraint FKScelta_FK
      foreign key (CodTreno, NumeroCarrozza, Lettera, NumeroPosto)
@@ -260,8 +260,8 @@ alter table Notifica add constraint FKRiferimento
 --                  where Acquisto.CodOrdine = CodOrdine)); 
 
 alter table Ordine add constraint FKEffettua
-     foreign key (CF)
-     references Persona (CF);
+     foreign key (Email)
+     references Persona (Email);
 
 -- Not implemented
 -- alter table Percorso add constraint IDPERCORSO_CHK
@@ -283,8 +283,8 @@ alter table Percorso add constraint FKSegue
      references Treno (CodTreno);
 
 alter table Percorso add constraint FKCondotto
-     foreign key (CF)
-     references Persona (CF);
+     foreign key (Email)
+     references Persona (Email);
 
 alter table Posto add constraint FKSuddivisione
      foreign key (CodTreno, NumeroCarrozza, Lettera)
@@ -295,8 +295,8 @@ alter table Reso add constraint FKCorrelazione_FK
      references Ordine (CodOrdine);
 
 alter table Reso add constraint FKAnnullamento
-     foreign key (CF)
-     references Persona (CF);
+     foreign key (Email)
+     references Persona (Email);
 
 alter table Sequenza add constraint FKPrecedente
      foreign key (CodStazione)
