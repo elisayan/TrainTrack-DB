@@ -1,7 +1,6 @@
 package view.controller;
 
 import controller.Controller;
-import controller.LoginController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,6 +36,11 @@ public class HomeSceneController extends AbstractSceneController {
     @FXML
     public void loginClicked() {
         this.view.switchScene("login.fxml");
+    }
+
+    @FXML
+    private void rankingClicked(){
+        this.view.switchScene("rankingHome.fxml");
     }
 
     @FXML
