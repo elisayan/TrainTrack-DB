@@ -4,7 +4,7 @@ import java.util.TimeZone;
 
 public class Journey {
     private int journeyID;
-    private String cf;
+    private String email;
     private int trainID;
     private TimeZone travelTime;
 
@@ -16,12 +16,12 @@ public class Journey {
         this.journeyID = journeyID;
     }
 
-    public String getCf() {
-        return cf;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCf(String cf) {
-        this.cf = cf;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getTrainID() {
