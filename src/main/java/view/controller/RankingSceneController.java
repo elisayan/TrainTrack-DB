@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -34,22 +35,22 @@ public class RankingSceneController extends AbstractSceneController {
     private HBox hBox;
 
     @FXML
-    private Label delaysLabel;
+    private TableView<Journey> table;
 
     @FXML
-    private TableView<Journey> table;
+    private Label delaysLabel;
 
     @FXML
     private TableColumn<Journey, Integer> delaysJourneyId;
 
     @FXML
-    private TableColumn<Journey,String> delaysDeparture;
+    private TableColumn<Journey, String> delaysDeparture;
 
     @FXML
-    private TableColumn<Journey,String> delaysArrival;
+    private TableColumn<Journey, String> delaysArrival;
 
     @FXML
-    private TableColumn<Journey,Integer> delaysAverage;
+    private TableColumn<Journey, Integer> delaysAverage;
 
     @FXML
     private Label earlyLabel;
@@ -58,13 +59,13 @@ public class RankingSceneController extends AbstractSceneController {
     private TableColumn<Journey, Integer> earlyJourneyId;
 
     @FXML
-    private TableColumn<Journey,String> earlyDeparture;
+    private TableColumn<Journey, String> earlyDeparture;
 
     @FXML
-    private TableColumn<Journey,String> earlyArrival;
+    private TableColumn<Journey, String> earlyArrival;
 
     @FXML
-    private TableColumn<Journey,Integer> earlyAverage;
+    private TableColumn<Journey, Float> earlyAverage;
 
     @FXML
     private void loginClicked() {
@@ -81,4 +82,9 @@ public class RankingSceneController extends AbstractSceneController {
         this.view.switchScene("expensesRanking.fxml");
     }
 
+    @FXML
+    private void initializeDelayTable(){
+        delaysJourneyId.setCellValueFactory(new PropertyValueFactory<>("journeyID"));
+        
+    }
 }

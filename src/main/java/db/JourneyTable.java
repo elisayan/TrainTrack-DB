@@ -9,5 +9,7 @@ public class JourneyTable {
         this.tableName = "Percorso";
     }
 
-    
+    public String getTopFiveDelayJourney(){
+        return null;
+    }
 }
