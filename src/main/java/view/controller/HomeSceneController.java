@@ -40,6 +40,11 @@ public class HomeSceneController extends AbstractSceneController {
     }
 
     @FXML
+    public void timetableClicked() {
+        this.view.switchScene("timetable.fxml");
+    }
+
+    @FXML
     public void initialize(View view, Controller controller) {
         super.initialize(view, controller);
         if (controller.getCurrentPerson() != null) {
