@@ -34,7 +34,7 @@ public class PersonTable {
             statement.get().setString(2, person.getSurname());
             statement.get().setString(3, person.getCf());
             statement.get().setString(4, person.getAddress());
-            statement.get().setInt(5, person.getPhone());
+            statement.get().setString(5, person.getPhone());
             statement.get().setString(6, person.getEmail());
             statement.get().setString(7, person.getPassword());
             statement.get().setFloat(8, person.getTotalExspense());
@@ -78,7 +78,7 @@ public class PersonTable {
                 person.setName(result.getString("Nome"));
                 person.setSurname(result.getString("Cognome"));
                 person.setAddress(result.getString("Indirizzo"));
-                person.setPhone(result.getInt("Telefono"));
+                person.setPhone(result.getString("Telefono"));
                 person.setEmail(result.getString("Email"));
                 person.setPassword(result.getString("Password"));
                 person.setTotalExspense(result.getFloat("SpesaTotale"));
@@ -123,7 +123,7 @@ public class PersonTable {
                 person.setName(resultSet.getString("Nome"));
                 person.setPassword(resultSet.getString("Password"));
                 person.setPersonType(resultSet.getString("TipoPersona"));
-                person.setPhone(resultSet.getInt("Telefono"));
+                person.setPhone(resultSet.getString("Telefono"));
                 person.setSurname(resultSet.getString("Cognome"));
                 person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
             }
