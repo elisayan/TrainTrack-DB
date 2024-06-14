@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -38,7 +37,7 @@
                   </Button>
                </children>
             </HBox>
-            <GridPane gridLinesVisible="true">
+            <GridPane fx:id="timetableGridPane" gridLinesVisible="true">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -63,14 +62,6 @@
                   <Insets left="40.0" right="40.0" top="40.0" />
                </VBox.margin>
                <children>
-                  <CheckBox fx:id="notification3CheckBox" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <CheckBox fx:id="notification1CheckBox" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <CheckBox fx:id="notification2CheckBox" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <CheckBox fx:id="notification4CheckBox" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <CheckBox fx:id="notification5CheckBox" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <CheckBox fx:id="notification6CheckBox" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <CheckBox fx:id="notification7CheckBox" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <CheckBox fx:id="notification8CheckBox" mnemonicParsing="false" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                   <Label fx:id="idjourneyLabel" text="ID JOURNEY" GridPane.halignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -101,59 +92,11 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="idjourney1Label" text="%key.unspecified" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="idjourney2Label" text="%key.unspecified" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Label fx:id="idjourney3Label" text="%key.unspecified" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Label fx:id="idjourney4Label" text="%key.unspecified" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Label fx:id="idjourney5Label" text="%key.unspecified" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <Label fx:id="idjourney6Label" text="%key.unspecified" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <Label fx:id="idjourney7Label" text="%key.unspecified" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <Label fx:id="idjourney8Label" text="%key.unspecified" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <Label fx:id="departure1Label" text="%key.unspecified" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="departure2Label" text="%key.unspecified" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Label fx:id="departure3Label" text="%key.unspecified" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Label fx:id="departure4Label" text="%key.unspecified" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Label fx:id="departure5Label" text="%key.unspecified" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <Label fx:id="departure6Label" text="%key.unspecified" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <Label fx:id="departure7Label" text="%key.unspecified" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <Label fx:id="departure8Label" text="%key.unspecified" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <Label fx:id="destination1Label" text="%key.unspecified" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="destination2Label" text="%key.unspecified" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Label fx:id="destination3Label" text="%key.unspecified" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Label fx:id="destination4Label" text="%key.unspecified" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Label fx:id="destination5Label" text="%key.unspecified" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <Label fx:id="destination6Label" text="%key.unspecified" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <Label fx:id="destination7Label" text="%key.unspecified" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <Label fx:id="destination8Label" text="%key.unspecified" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <Label fx:id="platform1Label" text="%key.unspecified" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="status1Label" text="%key.unspecified" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="platform2Label" text="%key.unspecified" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Label fx:id="status2Label" text="%key.unspecified" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Label fx:id="platform3Label" text="%key.unspecified" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Label fx:id="status3Label" text="%key.unspecified" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Label fx:id="platform4Label" text="%key.unspecified" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Label fx:id="status4Label" text="%key.unspecified" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Label fx:id="platform5Label" text="%key.unspecified" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <Label fx:id="status5Label" text="%key.unspecified" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <Label fx:id="platform6Label" text="%key.unspecified" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <Label fx:id="platform7Label" text="%key.unspecified" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <Label fx:id="platform8Label" text="%key.unspecified" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                  <Label fx:id="status6Label" text="%key.unspecified" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <Label fx:id="status7Label" text="%key.unspecified" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <Label fx:id="status8Label" text="%key.unspecified" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                   <Label fx:id="timeLabel" text="TIME" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="time1Label" text="%key.unspecified" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="time2Label" text="%key.unspecified" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <Label fx:id="time3Label" text="%key.unspecified" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Label fx:id="time4Label" text="%key.unspecified" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                  <Label fx:id="time5Label" text="%key.unspecified" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <Label fx:id="time6Label" text="%key.unspecified" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                  <Label fx:id="time7Label" text="%key.unspecified" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                  <Label fx:id="time8Label" text="%key.unspecified" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                </children>
             </GridPane>
          </children>
