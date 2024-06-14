@@ -3,9 +3,9 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.2              
 -- * Generator date: Sep 14 2021              
--- * Generation date: Thu Jun 13 15:02:55 2024 
+-- * Generation date: Fri Jun 14 22:52:51 2024 
 -- * LUN file: C:\Users\jiaax\Downloads\traintrack-raffinato.lun 
--- * Schema: traintrackRelazionale/1-1-1 
+-- * Schema: traintrackRelazionale/1-1-2 
 -- ********************************************* 
 
 
@@ -25,9 +25,23 @@ create table Acquisto (
      constraint IDAcquisto primary key (CodServizio, CodOrdine));
 
 create table Attivazione (
-     CF varchar(50) not null,
+     Email varchar(50) not null,
      CodNotifica varchar(50) not null,
-     constraint IDAttivazione primary key (CF, CodNotifica));
+     constraint IDAttivazione primary key (Email, CodNotifica));
+
+create table Attraversato (
+     CodPercorso varchar(50) not null,
+     CodStazione varchar(50) not null,
+     Data date not null,
+     Ordine char(10) not null,
+     OrarioPartenzaPrevisto time not null,
+     OrarioArrivoPrevisto time not null,
+     OrarioArrivoReale time not null,
+     OrarioPartenzaReale time not null,
+     Binario int not null,
+     StatoArrivo varchar(50) not null,
+     StatoPartenza varchar(50) not null,
+     constraint IDAttraversato primary key (CodPercorso, CodStazione, Data));
 
 create table BuonoSconto (
      CodBuonoSconto varchar(50) not null,
@@ -36,40 +50,30 @@ create table BuonoSconto (
      DataScadenza date not null,
      DataUtilizzo date,
      Email varchar(50) not null,
-     constraint IDBuonoSconto primary key (CodBuonoSconto));
+     constraint IDBUONOSCONTO primary key (CodBuonoSconto));
 
 create table Carrozza (
-     CodTreno char(10) not null,
+     CodTreno varchar(50) not null,
      NumeroCarrozza char(10) not null,
      constraint IDCarrozza_ID primary key (CodTreno, NumeroCarrozza));
 
 create table CheckIn (
      CodCheckIn varchar(50) not null,
      Data  date not null,
-     Ora date not null,
+     Ora time not null,
+     CodServizio varchar(50) not null,
      Email varchar(50) not null,
-     CodServizio char(50) not null,
-     Val_CodServizio char(50) not null,
-     constraint IDCheckIn primary key (CodCheckIn));
+     CodTreno varchar(50),
+     NumeroCarrozza char(10),
+     Lettera char(1),
+     NumeroPosto char(10),
+     constraint IDCHECKIN primary key (CodCheckIn));
 
 create table Fila (
-     CodTreno char(10) not null,
+     CodTreno varchar(50) not null,
      NumeroCarrozza char(10) not null,
      Lettera char(1) not null,
      constraint IDFila_ID primary key (CodTreno, NumeroCarrozza, Lettera));
-
-create table Mediante (
-     CodPercorso varchar(50) not null,
-     CodStazione varchar(50) not null,
-     Ordine bigint not null,
-     OrarioPartenzaPrevisto date not null,
-     OrarioArrivoPrevisto date not null,
-     OrarioArrivoReale date not null,
-     OrarioPartenzaReale date not null,
-     Binario int not null,
-     StatoArrivo varchar(50) not null,
-     StatoPartenza varchar(50) not null,
-     constraint IDMediante primary key (CodStazione, CodPercorso));
 
 create table Notifica (
      CodNotifica varchar(50) not null,
@@ -80,14 +84,14 @@ create table Notifica (
 create table Ordine (
      CodOrdine varchar(50) not null,
      DataPagamento date not null,
-     OraPagamento date not null,
+     OraPagamento time not null,
      Email varchar(50) not null,
      constraint IDORDINE_ID primary key (CodOrdine));
 
 create table Percorso (
      CodPercorso varchar(50) not null,
      Email varchar(50) not null,
-     CodTreno varchar(50) not null,
+     CodTreno char(10) not null,
      TempoPercorrenza varchar(50) not null,
      constraint IDPERCORSO_ID primary key (CodPercorso),
      constraint IDPERCORSO_1 unique (CodTreno, CodPercorso),
@@ -97,9 +101,9 @@ create table Persona (
      Email varchar(50) not null,
      Nome varchar(50) not null,
      Cognome varchar(50) not null,
-     CF varchar(50) not null,
      Indirizzo varchar(50) not null,
      Telefono varchar(50),
+     CF varchar(50) not null,
      Password varchar(50),
      SpesaTotale float(50),
      TipoPersona varchar(50) not null,
@@ -111,9 +115,7 @@ create table Posto (
      NumeroCarrozza char(10) not null,
      Lettera char(1) not null,
      NumeroPosto char(10) not null,
-     CodCheckIn varchar(50),
-     constraint IDPosto primary key (CodTreno, NumeroCarrozza, Lettera, NumeroPosto),
-     constraint FKScelta_ID unique (CodCheckIn));
+     constraint IDPosto primary key (CodTreno, NumeroCarrozza, Lettera, NumeroPosto));
 
 create table Reso (
      CodReso varchar(50) not null,
@@ -125,9 +127,9 @@ create table Reso (
      constraint FKCorrelazione_ID unique (CodOrdine));
 
 create table Sequenza (
-     Suc_CodStazione varchar(50) not null,
+     Pre_CodStazione varchar(50) not null,
      CodStazione varchar(50) not null,
-     constraint IDSequenza primary key (CodStazione, Suc_CodStazione));
+     constraint IDSequenza primary key (Pre_CodStazione, CodStazione));
 
 create table Servizio (
      CodServizio varchar(50) not null,
@@ -137,7 +139,7 @@ create table Servizio (
      CognomePasseggero varchar(50) not null,
      TipoTreno char(10) not null,
      DataPartenza date not null,
-     OrarioPartenza date,
+     OrarioPartenza time,
      TipoPasseggero varchar(50),
      Supplemento varchar(50),
      Prezzo float(10),
@@ -155,7 +157,7 @@ create table TipoAbbonamento (
      Durata varchar(50) not null,
      Chilometraggio int not null,
      Prezzo float(10) not null,
-     constraint IDTipoAbbonamento primary key (Durata, Chilometraggio));
+     constraint IDTIPOABBONAMENTO primary key (Durata, Chilometraggio));
 
 create table Treno (
      CodTreno varchar(50) not null,
@@ -181,8 +183,16 @@ alter table Attivazione add constraint FKAtt_Not
      references Notifica (CodNotifica);
 
 alter table Attivazione add constraint FKAtt_Per
-     foreign key (CF)
+     foreign key (Email)
      references Persona (Email);
+
+alter table Attraversato add constraint FKSituata
+     foreign key (CodStazione)
+     references Stazione (CodStazione);
+
+alter table Attraversato add constraint FKInclude
+     foreign key (CodPercorso)
+     references Percorso (CodPercorso);
 
 alter table BuonoSconto add constraint FKPosseduto
      foreign key (Email)
@@ -197,13 +207,21 @@ alter table Carrozza add constraint FKCostituito
      foreign key (CodTreno)
      references Treno (CodTreno);
 
+alter table CheckIn add constraint FKValidizione
+     foreign key (CodServizio)
+     references Servizio (CodServizio);
+
 alter table CheckIn add constraint FKFatto
      foreign key (Email)
      references Persona (Email);
 
-alter table CheckIn add constraint FKValidazione
-     foreign key (Val_CodServizio)
-     references Servizio (CodServizio);
+alter table CheckIn add constraint FKScelta_FK
+     foreign key (CodTreno, NumeroCarrozza, Lettera, NumeroPosto)
+     references Posto (CodTreno, NumeroCarrozza, Lettera, NumeroPosto);
+
+alter table CheckIn add constraint FKScelta_CHK
+     check((CodTreno is not null and NumeroCarrozza is not null and Lettera is not null and NumeroPosto is not null)
+           or (CodTreno is null and NumeroCarrozza is null and Lettera is null and NumeroPosto is null)); 
 
 -- Not implemented
 -- alter table Fila add constraint IDFila_CHK
@@ -213,14 +231,6 @@ alter table CheckIn add constraint FKValidazione
 alter table Fila add constraint FKOrganizzazione
      foreign key (CodTreno, NumeroCarrozza)
      references Carrozza (CodTreno, NumeroCarrozza);
-
-alter table Mediante add constraint FKMed_Sta
-     foreign key (CodStazione)
-     references Stazione (CodStazione);
-
-alter table Mediante add constraint FKMed_Per
-     foreign key (CodPercorso)
-     references Percorso (CodPercorso);
 
 alter table Notifica add constraint FKRiferimento
      foreign key (CodPercorso)
@@ -237,13 +247,13 @@ alter table Ordine add constraint FKEffettua
 
 -- Not implemented
 -- alter table Percorso add constraint IDPERCORSO_CHK
---     check(exists(select * from Notifica
---                  where Notifica.CodPercorso = CodPercorso)); 
+--     check(exists(select * from Attraversato
+--                  where Attraversato.CodPercorso = CodPercorso)); 
 
 -- Not implemented
 -- alter table Percorso add constraint IDPERCORSO_CHK
---     check(exists(select * from Mediante
---                  where Mediante.CodPercorso = CodPercorso)); 
+--     check(exists(select * from Notifica
+--                  where Notifica.CodPercorso = CodPercorso)); 
 
 alter table Percorso add constraint FKCondotto
      foreign key (Email)
@@ -252,10 +262,6 @@ alter table Percorso add constraint FKCondotto
 alter table Percorso add constraint FKSegue
      foreign key (CodTreno)
      references Treno (CodTreno);
-
-alter table Posto add constraint FKScelta_FK
-     foreign key (CodCheckIn)
-     references CheckIn (CodCheckIn);
 
 alter table Posto add constraint FKSuddivisione
      foreign key (CodTreno, NumeroCarrozza, Lettera)
@@ -269,12 +275,12 @@ alter table Reso add constraint FKCorrelazione_FK
      foreign key (CodOrdine)
      references Ordine (CodOrdine);
 
-alter table Sequenza add constraint FKPrecedente
+alter table Sequenza add constraint FKSuccessivo
      foreign key (CodStazione)
      references Stazione (CodStazione);
 
-alter table Sequenza add constraint FKSuccessivo
-     foreign key (Suc_CodStazione)
+alter table Sequenza add constraint FKPrecedente
+     foreign key (Pre_CodStazione)
      references Stazione (CodStazione);
 
 alter table Servizio add constraint FKTipologia_FK
@@ -291,8 +297,8 @@ alter table Servizio add constraint FKRiguarda
 
 -- Not implemented
 -- alter table Stazione add constraint IDSTAZIONE_CHK
---     check(exists(select * from Mediante
---                  where Mediante.CodStazione = CodStazione)); 
+--     check(exists(select * from Attraversato
+--                  where Attraversato.CodStazione = CodStazione)); 
 
 
 -- Index Section
