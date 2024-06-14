@@ -1,40 +1,33 @@
 package model;
 
 public class Train {
-    private String codTreno;
-    private int postiTotali;
-    private String tipo;
-    private String classe;
+    private String trainID;
+    private int totalSeats;
+    private String type;
+    private String trainClass;
 
-    public String getCodTreno() {
-        return codTreno;
+    public String getTrainID() {
+        return trainID;
     }
-
-    public void setCodTreno(String codTreno) {
-        this.codTreno = codTreno;
+    public void setTrainID(String trainID) {
+        this.trainID = trainID;
     }
-
-    public int getPostiTotali() {
-        return postiTotali;
+    public int getTotalSeats() {
+        return totalSeats;
     }
-
-    public void setPostiTotali(int postiTotali) {
-        this.postiTotali = postiTotali;
+    public void setTotalSeats(int totalSeats) {
+        this.totalSeats = totalSeats;
     }
-
-    public String getTipo() {
-        return tipo;
+    public String getType() {
+        return type;
     }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setType(String type) {
+        this.type = type;
     }
-
-    public String getClasse() {
-        return classe;
+    public String getTrainClass() {
+        return trainClass;
     }
-
-    public void setClasse(String classe) {
-        this.classe = classe;
+    public void setTrainClass(String trainClass) {
+        this.trainClass = trainClass;
     }
 }

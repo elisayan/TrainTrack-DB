@@ -1,18 +1,25 @@
 package model;
 
-import java.util.TimeZone;
 
 public class Journey {
-    private int journeyID;
+    private String journeyID;
     private String email;
-    private int trainID;
-    private TimeZone travelTime;
+    private String trainID;
+    private String travelTime;
 
-    public int getJourneyID() {
+    public String getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(String travelTime) {
+        this.travelTime = travelTime;
+    }
+
+    public String getJourneyID() {
         return journeyID;
     }
 
-    public void setJourneyID(int journeyID) {
+    public void setJourneyID(String journeyID) {
         this.journeyID = journeyID;
     }
 
@@ -24,19 +31,12 @@ public class Journey {
         this.email = email;
     }
 
-    public int getTrainID() {
+    public String getTrainID() {
         return trainID;
     }
 
-    public void setTrainID(int trainID) {
+    public void setTrainID(String trainID) {
         this.trainID = trainID;
     }
 
-    public TimeZone getTravelTime() {
-        return travelTime;
-    }
-
-    public void setTravelTime(TimeZone travelTime) {
-        this.travelTime = travelTime;
-    }
 }
