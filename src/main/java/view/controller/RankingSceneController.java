@@ -6,66 +6,75 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import model.Journey;
 
 public class RankingSceneController extends AbstractSceneController {
 
     @FXML
+    private Label expenseLabel;
+
+    @FXML
+    private TableColumn<?, ?> expenseRankingColumn;
+
+    @FXML
+    private TableColumn<?, ?> expensesColumn;
+
+    @FXML
+    private TableView<?> expensesTable;
+
+    @FXML
+    private TableColumn<?, ?> firstNameColumn;
+
+    @FXML
     private Button homeButton;
+
+    @FXML
+    private TableColumn<?, ?> lastNameColumn;
 
     @FXML
     private Button loginButton;
 
     @FXML
-    private Button journeyButton;
+    private TableColumn<?, ?> delayAverageColumn;
 
     @FXML
-    private Button expensesButton;
+    private TableColumn<?, ?> delayDepartureColumn;
 
     @FXML
-    private BorderPane pane;
+    private TableColumn<?, ?> delayDestinationColumn;
 
     @FXML
-    private VBox vBox;
+    private TableColumn<?, ?> delayJourneyIDColumn;
 
     @FXML
-    private HBox hBox;
+    private Label delayLabel;
 
     @FXML
-    private TableView<Journey> table;
+    private TableColumn<?, ?> delayRankingColumn;
 
     @FXML
-    private Label delaysLabel;
+    private TableView<?> delayTable;
 
     @FXML
-    private TableColumn<Journey, Integer> delaysJourneyId;
+    private TableColumn<?, ?> earlyAverageColumn;
 
     @FXML
-    private TableColumn<Journey, String> delaysDeparture;
+    private TableColumn<?, ?> earlyDepartureColumn;
 
     @FXML
-    private TableColumn<Journey, String> delaysArrival;
+    private TableColumn<?, ?> earlyDestinantionColumn;
 
     @FXML
-    private TableColumn<Journey, Integer> delaysAverage;
+    private TableColumn<?, ?> earlyJourneyIDColumn;
 
     @FXML
     private Label earlyLabel;
 
     @FXML
-    private TableColumn<Journey, Integer> earlyJourneyId;
+    private TableColumn<?, ?> earlyRankingColumn;
 
     @FXML
-    private TableColumn<Journey, String> earlyDeparture;
-
-    @FXML
-    private TableColumn<Journey, String> earlyArrival;
-
-    @FXML
-    private TableColumn<Journey, Float> earlyAverage;
+    private TableView<?> earlyTable;
 
     @FXML
     private void loginClicked() {
@@ -84,7 +93,7 @@ public class RankingSceneController extends AbstractSceneController {
 
     @FXML
     private void initializeDelayTable(){
-        delaysJourneyId.setCellValueFactory(new PropertyValueFactory<>("journeyID"));
+        delayJourneyIDColumn.setCellValueFactory(new PropertyValueFactory<>("journeyID"));
         
     }
 }
