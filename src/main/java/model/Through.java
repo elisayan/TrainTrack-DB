@@ -1,10 +1,11 @@
 package model;
 
-import java.time.LocalTime;
+import java.time.*;
 
 public class Through {
     private String journeyID;
     private String stationID;
+    private LocalDate date;
     private int order;
     private LocalTime scheduledArrivalTime;
     private LocalTime scheduledDepartureTime;
@@ -28,6 +29,14 @@ public class Through {
 
     public void setStationID(String stationID) {
         this.stationID = stationID;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public int getOrder() {

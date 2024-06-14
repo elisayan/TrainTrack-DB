@@ -1,11 +1,11 @@
 package db;
 
-public class StationTable {
+public class ThroughTable {
     private final DBConnection dataSource;
     private final String tableName;
 
-    public StationTable() {
+    public ThroughTable() {
         this.dataSource = new DBConnection();
-        this.tableName = "Stazione";
+        this.tableName = "Attraversato";
     }
 }
