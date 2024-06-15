@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
+import java.util.*;
 
 import model.Person;
 
@@ -19,11 +19,11 @@ public class PersonTable {
 
     public boolean signUpPerson(Person person) {
         String insert = "INSERT INTO " + tableName +
-                        " (Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                " (Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getMySQLConnection();
-             PreparedStatement statement = connection.prepareStatement(insert)) {
+                PreparedStatement statement = connection.prepareStatement(insert)) {
 
             statement.setString(1, person.getName());
             statement.setString(2, person.getSurname());
@@ -49,7 +49,7 @@ public class PersonTable {
         String query = "SELECT * FROM " + tableName + " WHERE Email=? AND Password=?";
 
         try (Connection connection = dataSource.getMySQLConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, email);
             statement.setString(2, password);
@@ -79,7 +79,7 @@ public class PersonTable {
         String query = "SELECT * FROM " + tableName + " WHERE Email=?";
 
         try (Connection connection = dataSource.getMySQLConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
@@ -105,4 +105,26 @@ public class PersonTable {
         return Optional.empty();
     }
 
+    public List<Person> getTopFiveSpenders() {
+        List<Person> topSpenders = new LinkedList<>();
+        String query = "SELECT Nome, Cognome, SpesaTotale FROM " + tableName
+                + " WHERE SpesaTotale >= 1000 ORDER BY SpesaTotale DESC LIMIT 5";
+
+        try (Connection connection = dataSource.getMySQLConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Person person = new Person();
+                person.setName(resultSet.getString("Nome"));
+                person.setSurname(resultSet.getString("Cognome"));
+                person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
+                topSpenders.add(person);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topSpenders;
+    }
 }

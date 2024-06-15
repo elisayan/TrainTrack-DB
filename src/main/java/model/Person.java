@@ -12,6 +12,15 @@ public class Person {
     private float totalExspense;
     private String personType;
     private String clientType;
+    private int rank;
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 
     public Person() {
         this.totalExspense = 0;

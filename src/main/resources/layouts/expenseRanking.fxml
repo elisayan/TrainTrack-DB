@@ -29,22 +29,19 @@
       </HBox>
    </top>
    <center>
-      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="expenseLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="EXPENSES">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
-               <VBox.margin>
-                  <Insets bottom="20.0" top="25.0" />
-               </VBox.margin>
             </Label>
             <TableView fx:id="expensesTable" prefHeight="274.0" prefWidth="670.0">
                <columns>
                   <TableColumn fx:id="expenseRankingColumn" prefWidth="100.0" text="RANKING" />
                   <TableColumn fx:id="firstNameColumn" prefWidth="165.0" text="FIRST NAME" />
                   <TableColumn fx:id="lastNameColumn" prefWidth="165.0" text="LAST NAME" />
-                  <TableColumn fx:id="expensesColumn" minWidth="0.0" prefWidth="238.0" text="EXPENSES" />
+                  <TableColumn fx:id="expensesColumn" minWidth="0.0" prefWidth="238.39999999999998" text="EXPENSES" />
                </columns>
                <VBox.margin>
                   <Insets left="40.0" right="40.0" />
