@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableCell;
 
 public class JourneyRankingSceneController extends AbstractSceneController {
 
@@ -81,18 +82,56 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         this.delayAverageColumn.setCellValueFactory(new PropertyValueFactory<>("mediaMinutiRitardo"));
         this.delayRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
-        this.delayAverageColumn.setCellFactory(column -> new FormattedTableCell<>());
-
         this.earlyJourneyIDColumn.setCellValueFactory(new PropertyValueFactory<>("codPercorso"));
         this.earlyDepartureColumn.setCellValueFactory(new PropertyValueFactory<>("stazionePartenzaNome"));
         this.earlyDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
         this.earlyAverageColumn.setCellValueFactory(new PropertyValueFactory<>("mediaMinutiAnticipo"));
         this.earlyRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
-        this.earlyAverageColumn.setCellFactory(column -> new FormattedTableCell<>());
+        centerTableColumn(delayJourneyIDColumn);
+        centerTableColumn(delayDepartureColumn);
+        centerTableColumn(delayDestinationColumn);
+        centerTableColumn(delayRankingColumn);
+        centerTableColumn(earlyJourneyIDColumn);
+        centerTableColumn(earlyDepartureColumn);
+        centerTableColumn(earlyDestinationColumn);
+        centerTableColumn(earlyRankingColumn);
+
+        formatAverageColumn(delayAverageColumn);
+        formatAverageColumn(earlyAverageColumn);
 
         populateDelayTable();
         populateEarlyTable();
+    }
+
+    private <S, T> void centerTableColumn(TableColumn<S, T> column) {
+        column.setCellFactory(tc -> new TableCell<S, T>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item.toString());
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+    }
+
+    private <S> void formatAverageColumn(TableColumn<S, Float> column) {
+        column.setCellFactory(tc -> new TableCell<S, Float>() {
+            @Override
+            protected void updateItem(Float item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(String.format("%.2f min", item));
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
     }
 
     private void populateDelayTable() {
