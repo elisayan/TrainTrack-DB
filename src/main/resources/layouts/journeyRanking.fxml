@@ -15,7 +15,7 @@
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" />
-            <Label fx:id="delayLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="DELAYS" textAlignment="CENTER">
+            <Label fx:id="delayLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Top Delayed Journeys" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -35,7 +35,7 @@
                   <Insets left="40.0" right="40.0" />
                </VBox.margin>
             </TableView>
-            <Label fx:id="earlyLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="EARLY ARRIVALS">
+            <Label fx:id="earlyLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Top Early Journeys">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
