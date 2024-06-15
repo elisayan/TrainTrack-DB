@@ -2,10 +2,9 @@ package view.controller;
 
 import db.ThroughTable;
 import model.DelayInfo;
+import model.EarlyInfo;
 
 import java.util.*;
-
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,25 +37,25 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     private TableView<DelayInfo> delayTable;
 
     @FXML
-    private TableColumn<?, ?> earlyDestinationColumn;
+    private TableColumn<EarlyInfo, String> earlyDestinationColumn;
 
     @FXML
-    private TableColumn<?, ?> earlyAverageColumn;
+    private TableColumn<EarlyInfo, Float> earlyAverageColumn;
 
     @FXML
-    private TableColumn<?, ?> earlyDepartureColumn;
+    private TableColumn<EarlyInfo, String> earlyDepartureColumn;
 
     @FXML
-    private TableColumn<?, ?> earlyJourneyIDColumn;
+    private TableColumn<EarlyInfo, String> earlyJourneyIDColumn;
 
     @FXML
     private Label earlyLabel;
 
     @FXML
-    private TableColumn<?, ?> earlyRankingColumn;
+    private TableColumn<EarlyInfo, Integer> earlyRankingColumn;
 
     @FXML
-    private TableView<?> earlyTable;
+    private TableView<EarlyInfo> earlyTable;
 
     @FXML
     private Button homeButton;
@@ -81,12 +80,18 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         this.delayDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
         this.delayAverageColumn.setCellValueFactory(new PropertyValueFactory<>("mediaMinutiRitardo"));
         this.delayRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
+
+        this.earlyJourneyIDColumn.setCellValueFactory(new PropertyValueFactory<>("codPercorso"));
+        this.earlyDepartureColumn.setCellValueFactory(new PropertyValueFactory<>("stazionePartenzaNome"));
+        this.earlyDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
+        this.earlyAverageColumn.setCellValueFactory(new PropertyValueFactory<>("mediaMinutiAnticipo"));
+        this.earlyRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
         populateDelayTable();
+        populateEarlyTable();
     }
 
     private void populateDelayTable() {
         List<DelayInfo> delayInfos = getDelayInfos();
-        System.out.println(delayInfos.toString());
         delayTable.getItems().setAll(delayInfos);
     }
 
@@ -99,5 +104,21 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         }
 
         return delays;
+    }
+
+    private void populateEarlyTable() {
+        List<EarlyInfo> earlyInfos = getEarlyInfos();
+        earlyTable.getItems().setAll(earlyInfos);
+    }
+
+    private List<EarlyInfo> getEarlyInfos() {
+        ThroughTable throughTable = new ThroughTable();
+        List<EarlyInfo> early = throughTable.topFiveEarlyJourney();
+
+        for (int i = 0; i < early.size(); i++) {
+            early.get(i).setRank(i + 1);
+        }
+
+        return early;
     }
 }

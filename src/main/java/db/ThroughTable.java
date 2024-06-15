@@ -1,6 +1,7 @@
 package db;
 
 import model.DelayInfo;
+import model.EarlyInfo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,6 +27,19 @@ public class ThroughTable {
             e.printStackTrace();
         }
         return delays;
+    }
+
+    public List<EarlyInfo> topFiveEarlyJourney() {
+        List<EarlyInfo> early = new ArrayList<>();
+        try (Connection connection = dataSource.getMySQLConnection()) {
+            Map<String, String> departureStations = getDepartureStations(connection);
+            Map<String, String> destinationStations = getDestinationStations(connection);
+            early = getEarlyInfos(connection, departureStations, destinationStations);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return early;
     }
 
     private Map<String, String> getDepartureStations(Connection connection) throws SQLException {
@@ -86,5 +100,32 @@ public class ThroughTable {
             }
         }
         return delays;
+    }
+
+    private List<EarlyInfo> getEarlyInfos(Connection connection, Map<String, String> departureStations,
+            Map<String, String> destinationStations) throws SQLException {
+        String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoPrevisto, OrarioArrivoReale)) AS MediaMinutiAnticipo "
+                +
+                "FROM Attraversato " +
+                "WHERE StatoArrivo = 'anticipo' " +
+                "GROUP BY CodPercorso " +
+                "ORDER BY MediaMinutiAnticipo DESC " +
+                "LIMIT 5";
+
+        List<EarlyInfo> early = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String codPercorso = rs.getString("CodPercorso");
+                float mediaMinutiAnticipo = rs.getFloat("MediaMinutiAnticipo");
+                String stazionePartenzaNome = departureStations.get(codPercorso);
+                String stazioneDestinazioneNome = destinationStations.get(codPercorso);
+
+                early.add(
+                        new EarlyInfo(codPercorso, stazionePartenzaNome, stazioneDestinazioneNome,
+                                mediaMinutiAnticipo));
+            }
+        }
+        return early;
     }
 }
