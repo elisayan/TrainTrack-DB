@@ -22,12 +22,6 @@ public class ThroughTable {
             Map<String, String> destinationStations = getDestinationStations(connection);
             delays = getDelayInfos(connection, departureStations, destinationStations);
 
-            // Sort and limit to top 5
-            delays.sort(Comparator.comparing(DelayInfo::getMediaMinutiRitardo).reversed());
-            if (delays.size() > 5) {
-                delays = delays.subList(0, 5);
-            }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -36,12 +30,12 @@ public class ThroughTable {
 
     private Map<String, String> getDepartureStations(Connection connection) throws SQLException {
         String query = "SELECT a.CodPercorso, a.CodStazione AS StazionePartenza, s.nome " +
-                       "FROM Attraversato a, stazione s " +
-                       "WHERE s.CodStazione = a.CodStazione AND a.Ordine = '1'";
+                "FROM Attraversato a, stazione s " +
+                "WHERE s.CodStazione = a.CodStazione AND a.Ordine = '1'";
 
         Map<String, String> departureStations = new HashMap<>();
         try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+                ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String codPercorso = rs.getString("CodPercorso");
                 String nome = rs.getString("nome");
@@ -53,12 +47,12 @@ public class ThroughTable {
 
     private Map<String, String> getDestinationStations(Connection connection) throws SQLException {
         String query = "SELECT a.CodPercorso, a.CodStazione AS StazioneDestinazione, s.nome " +
-                       "FROM Attraversato a, stazione s " +
-                       "WHERE s.CodStazione = a.CodStazione AND a.Ordine = (SELECT MAX(Ordine) FROM Attraversato WHERE CodPercorso = a.CodPercorso)";
+                "FROM Attraversato a, stazione s " +
+                "WHERE s.CodStazione = a.CodStazione AND a.Ordine = (SELECT MAX(Ordine) FROM Attraversato WHERE CodPercorso = a.CodPercorso)";
 
         Map<String, String> destinationStations = new HashMap<>();
         try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+                ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String codPercorso = rs.getString("CodPercorso");
                 String nome = rs.getString("nome");
@@ -68,22 +62,27 @@ public class ThroughTable {
         return destinationStations;
     }
 
-    private List<DelayInfo> getDelayInfos(Connection connection, Map<String, String> departureStations, Map<String, String> destinationStations) throws SQLException {
-        String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoPrevisto, OrarioArrivoReale)) AS MediaMinutiRitardo " +
-                       "FROM Attraversato " +
-                       "WHERE StatoArrivo = 'ritardo' " +
-                       "GROUP BY CodPercorso";
+    private List<DelayInfo> getDelayInfos(Connection connection, Map<String, String> departureStations,
+            Map<String, String> destinationStations) throws SQLException {
+        String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoPrevisto, OrarioArrivoReale)) AS MediaMinutiRitardo "
+                +
+                "FROM Attraversato " +
+                "WHERE StatoArrivo = 'ritardo' " +
+                "GROUP BY CodPercorso " +
+                "ORDER BY MediaMinutiRitardo DESC " +
+                "LIMIT 5";
 
         List<DelayInfo> delays = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+                ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String codPercorso = rs.getString("CodPercorso");
                 float mediaMinutiRitardo = rs.getFloat("MediaMinutiRitardo");
                 String stazionePartenzaNome = departureStations.get(codPercorso);
                 String stazioneDestinazioneNome = destinationStations.get(codPercorso);
 
-                delays.add(new DelayInfo(codPercorso, stazionePartenzaNome, stazioneDestinazioneNome, mediaMinutiRitardo));
+                delays.add(
+                        new DelayInfo(codPercorso, stazionePartenzaNome, stazioneDestinazioneNome, mediaMinutiRitardo));
             }
         }
         return delays;
