@@ -17,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class JourneyRankingSceneController extends AbstractSceneController {
 
     @FXML
-    private TableColumn<DelayInfo, String> delayArrivalColumn;
+    private TableColumn<DelayInfo, String> delayDestinationColumn;
 
     @FXML
     private TableColumn<DelayInfo, Float> delayAverageColumn;
@@ -38,7 +38,7 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     private TableView<DelayInfo> delayTable;
 
     @FXML
-    private TableColumn<?, ?> earlyArrivalColumn;
+    private TableColumn<?, ?> earlyDestinationColumn;
 
     @FXML
     private TableColumn<?, ?> earlyAverageColumn;
@@ -78,7 +78,7 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     public void initialize() {
         this.delayJourneyIDColumn.setCellValueFactory(new PropertyValueFactory<>("codPercorso"));
         this.delayDepartureColumn.setCellValueFactory(new PropertyValueFactory<>("stazionePartenzaNome"));
-        this.delayArrivalColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
+        this.delayDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
         this.delayAverageColumn.setCellValueFactory(new PropertyValueFactory<>("mediaMinutiRitardo"));
         this.delayRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
         populateDelayTable();
@@ -86,6 +86,7 @@ public class JourneyRankingSceneController extends AbstractSceneController {
 
     private void populateDelayTable() {
         List<DelayInfo> delayInfos = getDelayInfos();
+        System.out.println(delayInfos.toString());
         delayTable.getItems().setAll(delayInfos);
     }
 

@@ -29,6 +29,6 @@ public class RankingHomeSceneController extends AbstractSceneController {
 
     @FXML
     private void expensesClicked() {
-        this.view.switchScene("expensesRanking.fxml");
+        this.view.switchScene("expenseRanking.fxml");
     }
 }
