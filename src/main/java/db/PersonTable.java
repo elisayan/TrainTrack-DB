@@ -17,105 +17,75 @@ public class PersonTable {
         this.tableName = "Persona";
     }
 
-    public boolean signUpPerson(final Person person) {
-        final Connection connection = dataSource.getMySQLConnection();
+    public boolean signUpPerson(Person person) {
+        String insert = "INSERT INTO " + tableName +
+                        " (Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Optional<PreparedStatement> statement = Optional.empty();
-        final String insert = "insert into " + tableName
-                + "(Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = dataSource.getMySQLConnection();
+             PreparedStatement statement = connection.prepareStatement(insert)) {
 
-        if (!this.findPerson(person.getEmail()).isEmpty()) {
-            return false;
-        }
+            statement.setString(1, person.getName());
+            statement.setString(2, person.getSurname());
+            statement.setString(3, person.getCf());
+            statement.setString(4, person.getAddress());
+            statement.setInt(5, person.getPhone());
+            statement.setString(6, person.getEmail());
+            statement.setString(7, person.getPassword());
+            statement.setFloat(8, person.getTotalExspense());
+            statement.setString(9, person.getPersonType());
+            statement.setString(10, person.getClientType());
 
-        try {
-            statement = Optional.of(connection.prepareStatement(insert));
-            statement.get().setString(1, person.getName());
-            statement.get().setString(2, person.getSurname());
-            statement.get().setString(3, person.getCf());
-            statement.get().setString(4, person.getAddress());
-            statement.get().setInt(5, person.getPhone());
-            statement.get().setString(6, person.getEmail());
-            statement.get().setString(7, person.getPassword());
-            statement.get().setFloat(8, person.getTotalExspense());
-            statement.get().setString(9, person.getPersonType());
-            statement.get().setString(10, person.getClientType());
-            statement.get().execute();
-            return true;
+            int rowsInserted = statement.executeUpdate();
+            return rowsInserted > 0;
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (!statement.isEmpty()) {
-                    statement.get().close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         return false;
     }
 
-    public boolean loginUser(final String email, final String password) {
-        Person person = null;
-        final Connection connection = dataSource.getMySQLConnection();
+    public boolean loginUser(String email, String password) {
+        String query = "SELECT * FROM " + tableName + " WHERE Email=? AND Password=?";
 
-        Optional<PreparedStatement> statement = Optional.empty();
-        final String query = "select * from " + tableName + " where Email=? and Password=? ";
+        try (Connection connection = dataSource.getMySQLConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
-        try {
-            statement = Optional.of(connection.prepareStatement(query));
-            statement.get().setString(1, email);
-            statement.get().setString(2, password);
-            final ResultSet result = statement.get().executeQuery();
-
-            if (result.next()) {
-                person = new Person();
-                person.setCf(result.getString("CF"));
-                person.setName(result.getString("Nome"));
-                person.setSurname(result.getString("Cognome"));
-                person.setAddress(result.getString("Indirizzo"));
-                person.setPhone(result.getInt("Telefono"));
-                person.setEmail(result.getString("Email"));
-                person.setPassword(result.getString("Password"));
-                person.setTotalExspense(result.getFloat("SpesaTotale"));
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (!statement.isEmpty()) {
-                    statement.get().close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return false;
-    }
-
-    public Optional<Person> findPerson(final String email) {
-        Person person = null;
-        final Connection connection = this.dataSource.getMySQLConnection();
-
-        Optional<PreparedStatement> statement = Optional.empty();
-        final String query = "select * from " + tableName + " where Email=?";
-
-        try {
-            statement = Optional.of(connection.prepareStatement(query));
-            statement.get().setString(1, email);
-            final ResultSet resultSet = statement.get().executeQuery();
+            statement.setString(1, email);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                person = new Person();
+                // Creazione dell'oggetto Person solo se le credenziali sono corrette
+                Person person = new Person();
+                person.setCf(resultSet.getString("CF"));
+                person.setName(resultSet.getString("Nome"));
+                person.setSurname(resultSet.getString("Cognome"));
+                person.setAddress(resultSet.getString("Indirizzo"));
+                person.setPhone(resultSet.getInt("Telefono"));
+                person.setEmail(resultSet.getString("Email"));
+                person.setPassword(resultSet.getString("Password"));
+                person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Optional<Person> findPerson(String email) {
+        String query = "SELECT * FROM " + tableName + " WHERE Email=?";
+
+        try (Connection connection = dataSource.getMySQLConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Person person = new Person();
                 person.setAddress(resultSet.getString("Indirizzo"));
                 person.setCf(resultSet.getString("CF"));
                 person.setClientType(resultSet.getString("TipoCliente"));
@@ -126,23 +96,13 @@ public class PersonTable {
                 person.setPhone(resultSet.getInt("Telefono"));
                 person.setSurname(resultSet.getString("Cognome"));
                 person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
+                return Optional.of(person);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (!statement.isEmpty()) {
-                    statement.get().close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
-
-        return Optional.ofNullable(person);
+        return Optional.empty();
     }
+
 }

@@ -81,11 +81,16 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         this.delayAverageColumn.setCellValueFactory(new PropertyValueFactory<>("mediaMinutiRitardo"));
         this.delayRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
+        this.delayAverageColumn.setCellFactory(column -> new FormattedTableCell<>());
+
         this.earlyJourneyIDColumn.setCellValueFactory(new PropertyValueFactory<>("codPercorso"));
         this.earlyDepartureColumn.setCellValueFactory(new PropertyValueFactory<>("stazionePartenzaNome"));
         this.earlyDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
         this.earlyAverageColumn.setCellValueFactory(new PropertyValueFactory<>("mediaMinutiAnticipo"));
         this.earlyRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
+
+        this.earlyAverageColumn.setCellFactory(column -> new FormattedTableCell<>());
+
         populateDelayTable();
         populateEarlyTable();
     }
