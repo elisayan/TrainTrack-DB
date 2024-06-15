@@ -5,6 +5,8 @@ import model.DelayInfo;
 
 import java.util.*;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,13 +17,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class JourneyRankingSceneController extends AbstractSceneController {
 
     @FXML
-    private TableColumn<?, ?> delayArrivalColumn;
+    private TableColumn<DelayInfo, String> delayArrivalColumn;
 
     @FXML
     private TableColumn<DelayInfo, Float> delayAverageColumn;
 
     @FXML
-    private TableColumn<?, ?> delayDepartureColumn;
+    private TableColumn<DelayInfo, String> delayDepartureColumn;
 
     @FXML
     private TableColumn<DelayInfo, String> delayJourneyIDColumn;
@@ -30,7 +32,7 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     private Label delayLabel;
 
     @FXML
-    private TableColumn<?, ?> delayRankingColumn;
+    private TableColumn<DelayInfo, Integer> delayRankingColumn;
 
     @FXML
     private TableView<DelayInfo> delayTable;
@@ -75,7 +77,10 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     @FXML
     public void initialize() {
         this.delayJourneyIDColumn.setCellValueFactory(new PropertyValueFactory<>("codPercorso"));
+        this.delayDepartureColumn.setCellValueFactory(new PropertyValueFactory<>("stazionePartenzaNome"));
+        this.delayArrivalColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
         this.delayAverageColumn.setCellValueFactory(new PropertyValueFactory<>("mediaMinutiRitardo"));
+        this.delayRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
         populateDelayTable();
     }
 
@@ -86,6 +91,12 @@ public class JourneyRankingSceneController extends AbstractSceneController {
 
     private List<DelayInfo> getDelayInfos() {
         ThroughTable throughTable = new ThroughTable();
-        return throughTable.topFiveDelayJourney();
+        List<DelayInfo> delays = throughTable.topFiveDelayJourney();
+
+        for (int i = 0; i < delays.size(); i++) {
+            delays.get(i).setRank(i + 1);
+        }
+
+        return delays;
     }
 }

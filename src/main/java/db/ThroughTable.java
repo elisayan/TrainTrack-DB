@@ -22,42 +22,107 @@ public class ThroughTable {
     // early average
 
     public List<DelayInfo> topFiveDelayJourney() {
-        final Connection connection = dataSource.getMySQLConnection();
+        List<DelayInfo> delayInfos = new LinkedList<>();
+        try (Connection connection = dataSource.getMySQLConnection()) {
+            Map<String, String> departureStations = getDepartureStations(connection);
+            Map<String, String> destinationStations = getArrivalStations(connection);
+            Map<String, String> stationNames = getStationNames(connection);
+            List<DelayInfo> delays = getDelays(connection);
 
-        Optional<PreparedStatement> statement = Optional.empty();
-        final String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoPrevisto, OrarioArrivoReale)) AS MediaMinutiRitardo " +
-                             "FROM " + tableName + " " +
-                             "WHERE StatoArrivo='ritardo' " +
-                             "GROUP BY CodPercorso " +
-                             "ORDER BY MediaMinutiRitardo DESC " +
-                             "LIMIT 5";
+            for (DelayInfo delay : delays) {
+                String departureCodice = departureStations.get(delay.getCodPercorso());
+                String destinationCodice = destinationStations.get(delay.getCodPercorso());
+                String departureNome = stationNames.get(departureCodice);
+                String destinationNome = stationNames.get(destinationCodice);
+                
+                delay.setStazionePartenzaCodice(departureCodice);
+                delay.setStazionePartenzaNome(departureNome);
+                delay.setStazioneDestinazioneCodice(destinationCodice);
+                delay.setStazioneDestinazioneNome(destinationNome);
 
-        List<DelayInfo> topFiveDelays = new LinkedList<>();
-
-        try {
-            statement = Optional.of(connection.prepareStatement(query));
-            final ResultSet resultset = statement.get().executeQuery();
-
-            while (resultset.next()) {
-                String codPercorso = resultset.getString("CodPercorso");
-                float mediaMinutiRitardo = resultset.getFloat("MediaMinutiRitardo");
-                topFiveDelays.add(new DelayInfo(codPercorso, mediaMinutiRitardo));
+                delayInfos.add(new DelayInfo(delay.getCodPercorso(), departureCodice, departureNome, destinationCodice, destinationNome, delay.getMediaMinutiRitardo()));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (!statement.isEmpty()) {
-                    statement.get().close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+        }
+        return delayInfos;
+    }
+
+    private Map<String, String> getDepartureStations(Connection connection) {
+        Map<String, String> departureStations = new HashMap<>();
+        String query = "SELECT CodPercorso, CodStazione AS StazionePartenza " +
+                "FROM " + tableName + " " +
+                "WHERE Ordine = '1'";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String codPercorso = resultSet.getString("CodPercorso");
+                String stazionePartenza = resultSet.getString("StazionePartenza");
+                departureStations.put(codPercorso, stazionePartenza);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return departureStations;
+    }
+
+    private Map<String, String> getArrivalStations(Connection connection) {
+        Map<String, String> destinationStations = new HashMap<>();
+        String query = "SELECT CodPercorso, CodStazione AS StazioneDestinazione " +
+                "FROM " + tableName + " " +
+                "WHERE Ordine = (SELECT MAX(Ordine) FROM " + tableName + " WHERE CodPercorso = " + tableName
+                + ".CodPercorso)";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet resultSet = statement.executeQuery();) {
+            while (resultSet.next()) {
+                String codPercorso = resultSet.getString("CodPercorso");
+                String stazioneDestinazione = resultSet.getString("StazioneDestinazione");
+                destinationStations.put(codPercorso, stazioneDestinazione);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return destinationStations;
+    }
+
+    private Map<String, String> getStationNames(Connection connection) throws SQLException {
+        Map<String, String> stationNames = new HashMap<>();
+        String query = "SELECT CodStazione, Nome FROM Stazione";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String codStazione = resultSet.getString("CodStazione");
+                String nome = resultSet.getString("Nome");
+                stationNames.put(codStazione, nome);
             }
         }
-        return topFiveDelays;
+        return stationNames;
     }
+    
+    private List<DelayInfo> getDelays(Connection connection) throws SQLException {
+        List<DelayInfo> delays = new LinkedList<>();
+        String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoPrevisto, OrarioArrivoReale)) AS MediaMinutiRitardo " +
+                       "FROM " + tableName + " " +
+                       "WHERE StatoArrivo = 'ritardo' " +
+                       "GROUP BY CodPercorso " +
+                       "ORDER BY MediaMinutiRitardo DESC " +
+                       "LIMIT 5";
+
+        try (PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String codPercorso = resultSet.getString("CodPercorso");
+                float mediaMinutiRitardo = resultSet.getFloat("MediaMinutiRitardo");
+                delays.add(new DelayInfo(codPercorso, null, null, null, null, mediaMinutiRitardo));
+            }
+        }
+        return delays;
+    }  
 }
