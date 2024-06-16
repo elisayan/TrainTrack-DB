@@ -24,22 +24,21 @@ public class PersonTable {
 
         try (Connection connection = dataSource.getMySQLConnection();
                 PreparedStatement statement = connection.prepareStatement(insert)) {
-          
-            statement.get().setString(1, person.getName());
-            statement.get().setString(2, person.getSurname());
-            statement.get().setString(3, person.getCf());
-            statement.get().setString(4, person.getAddress());
-            statement.get().setString(5, person.getPhone());
-            statement.get().setString(6, person.getEmail());
-            statement.get().setString(7, person.getPassword());
-            statement.get().setFloat(8, person.getTotalExspense());
-            statement.get().setString(9, person.getPersonType());
-            statement.get().setString(10, person.getClientType());
-            statement.get().execute();
+
+            statement.setString(1, person.getName());
+            statement.setString(2, person.getSurname());
+            statement.setString(3, person.getCf());
+            statement.setString(4, person.getAddress());
+            statement.setString(5, person.getPhone());
+            statement.setString(6, person.getEmail());
+            statement.setString(7, person.getPassword());
+            statement.setFloat(8, person.getTotalExspense());
+            statement.setString(9, person.getPersonType());
+            statement.setString(10, person.getClientType());
 
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
-          
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -58,14 +57,14 @@ public class PersonTable {
 
             if (resultSet.next()) {
                 Person person = new Person();
-                person.setCf(result.getString("CF"));
-                person.setName(result.getString("Nome"));
-                person.setSurname(result.getString("Cognome"));
-                person.setAddress(result.getString("Indirizzo"));
-                person.setPhone(result.getString("Telefono"));
-                person.setEmail(result.getString("Email"));
-                person.setPassword(result.getString("Password"));
-                person.setTotalExspense(result.getFloat("SpesaTotale"));
+                person.setCf(resultSet.getString("CF"));
+                person.setName(resultSet.getString("Nome"));
+                person.setSurname(resultSet.getString("Cognome"));
+                person.setAddress(resultSet.getString("Indirizzo"));
+                person.setPhone(resultSet.getString("Telefono"));
+                person.setEmail(resultSet.getString("Email"));
+                person.setPassword(resultSet.getString("Password"));
+                person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
 
                 return true;
             }
