@@ -12,6 +12,8 @@ import model.Person;
 
 import java.util.List;
 
+import controller.ExpenseRankingController;
+
 public class ExpenseRankingSceneController extends AbstractSceneController {
 
     @FXML
@@ -38,6 +40,8 @@ public class ExpenseRankingSceneController extends AbstractSceneController {
     @FXML
     private Button loginButton;
 
+    private ExpenseRankingController controller;
+
     @FXML
     private void loginClicked() {
         this.view.switchScene("login.fxml");
@@ -45,6 +49,7 @@ public class ExpenseRankingSceneController extends AbstractSceneController {
 
     @FXML
     public void initialize() {
+        controller = new ExpenseRankingController(this, this.getController());
         this.firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.expensesColumn.setCellValueFactory(new PropertyValueFactory<>("totalExspense"));
@@ -68,7 +73,7 @@ public class ExpenseRankingSceneController extends AbstractSceneController {
             }
         });
 
-        populateExpensesTable();
+        controller.updateSpendersInfo();
     }
 
     private <T> void centerTableColumn(TableColumn<Person, T> column) {
@@ -86,14 +91,10 @@ public class ExpenseRankingSceneController extends AbstractSceneController {
         });
     }
 
-    private void populateExpensesTable() {
-        PersonTable personTable = new PersonTable();
-        List<Person> topSpenders = personTable.getTopFiveSpenders();
-
+    public void populateExpensesTable(List<Person> topSpenders) {
+        expensesTable.getItems().setAll(topSpenders);
         for (int i = 0; i < topSpenders.size(); i++) {
             topSpenders.get(i).setRank(i + 1);
         }
-
-        expensesTable.getItems().setAll(topSpenders);
     }
 }
