@@ -1,11 +1,11 @@
 package view.controller;
 
-import db.ThroughTable;
 import model.DelayInfo;
 import model.EarlyInfo;
 
 import java.util.*;
 
+import controller.JourneyRankingController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -64,6 +64,8 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     @FXML
     private Button loginButton;
 
+    private JourneyRankingController controller;
+
     @FXML
     private void loginClicked() {
         this.view.switchScene("login.fxml");
@@ -76,6 +78,8 @@ public class JourneyRankingSceneController extends AbstractSceneController {
 
     @FXML
     public void initialize() {
+        this.controller = new JourneyRankingController(this, this.getController());
+
         this.delayJourneyIDColumn.setCellValueFactory(new PropertyValueFactory<>("codPercorso"));
         this.delayDepartureColumn.setCellValueFactory(new PropertyValueFactory<>("stazionePartenzaNome"));
         this.delayDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
@@ -100,8 +104,8 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         formatAverageColumn(delayAverageColumn);
         formatAverageColumn(earlyAverageColumn);
 
-        populateDelayTable();
-        populateEarlyTable();
+        controller.updateDelayInfo();
+        controller.updateEarlyInfo();
     }
 
     private <S, T> void centerTableColumn(TableColumn<S, T> column) {
@@ -134,35 +138,17 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         });
     }
 
-    private void populateDelayTable() {
-        List<DelayInfo> delayInfos = getDelayInfos();
+    public void populateDelayTable(List<DelayInfo> delayInfos) {
         delayTable.getItems().setAll(delayInfos);
-    }
-
-    private List<DelayInfo> getDelayInfos() {
-        ThroughTable throughTable = new ThroughTable();
-        List<DelayInfo> delays = throughTable.topFiveDelayJourney();
-
-        for (int i = 0; i < delays.size(); i++) {
-            delays.get(i).setRank(i + 1);
+        for (int i = 0; i < delayInfos.size(); i++) {
+            delayInfos.get(i).setRank(i + 1);
         }
-
-        return delays;
     }
 
-    private void populateEarlyTable() {
-        List<EarlyInfo> earlyInfos = getEarlyInfos();
+    public void populateEarlyTable(List<EarlyInfo> earlyInfos) {
         earlyTable.getItems().setAll(earlyInfos);
-    }
-
-    private List<EarlyInfo> getEarlyInfos() {
-        ThroughTable throughTable = new ThroughTable();
-        List<EarlyInfo> early = throughTable.topFiveEarlyJourney();
-
-        for (int i = 0; i < early.size(); i++) {
-            early.get(i).setRank(i + 1);
+        for (int i = 0; i < earlyInfos.size(); i++) {
+            earlyInfos.get(i).setRank(i + 1);
         }
-
-        return early;
     }
 }
