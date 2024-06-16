@@ -7,7 +7,7 @@ public class Person {
     private String name;
     private String surname;
     private String cf;
-    private int phone;
+    private String phone;
     private String address;
     private float totalExspense;
     private String personType;
@@ -58,11 +58,11 @@ public class Person {
         this.cf = cf;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

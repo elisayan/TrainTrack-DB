@@ -85,7 +85,7 @@ public class SignUpSceneController extends AbstractSceneController {
                 person.setClientType(typeClient);
                 person.setPersonType("Client");
                 if (!phoneField.getText().isBlank()) {
-                    person.setPhone(Integer.parseInt(phoneField.getText()));
+                    person.setPhone(phoneField.getText());
                 }
                 this.controller.signUpPerson(person);
             });
