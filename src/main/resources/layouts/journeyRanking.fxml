@@ -23,7 +23,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <TableView fx:id="delayTable" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="delayTable" prefHeight="220.0" prefWidth="200.0">
                <columns>
                   <TableColumn fx:id="delayRankingColumn" prefWidth="75.0" text="RANKING" />
                   <TableColumn fx:id="delayJourneyIDColumn" prefWidth="135.20001220703125" text="JOURNEY ID" />
@@ -32,15 +32,15 @@
                   <TableColumn fx:id="delayAverageColumn" minWidth="0.0" prefWidth="119.19998779296873" text="AVERAGE" />
                </columns>
                <VBox.margin>
-                  <Insets left="40.0" right="40.0" />
+                  <Insets bottom="10.0" left="40.0" right="40.0" />
                </VBox.margin>
             </TableView>
-            <Label fx:id="earlyLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Top Early Journeys">
+            <Label fx:id="earlyLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Top Early Journeys UPDATE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
             <TableView fx:id="earlyTable" prefHeight="220.0" prefWidth="200.0">
@@ -49,7 +49,7 @@
                   <TableColumn fx:id="earlyJourneyIDColumn" prefWidth="135.20001220703125" text="JOURNEY ID" />
                   <TableColumn fx:id="earlyDepartureColumn" prefWidth="169.0" text="DEPARTURE" />
                   <TableColumn fx:id="earlyDestinationColumn" prefWidth="169.0" text="DESTINATION" />
-                  <TableColumn fx:id="earlyAverageColumn" minWidth="0.0" prefWidth="119.19998779296873" text="AVERAGE" />
+                  <TableColumn fx:id="earlyAverageColumn" minWidth="0.0" prefWidth="119.19998779296873" sortType="DESCENDING" text="AVERAGE" />
                </columns>
                <VBox.margin>
                   <Insets bottom="20.0" left="40.0" right="40.0" />

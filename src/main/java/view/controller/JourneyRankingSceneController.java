@@ -101,8 +101,8 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         centerTableColumn(earlyDestinationColumn);
         centerTableColumn(earlyRankingColumn);
 
-        formatAverageColumn(delayAverageColumn);
-        formatAverageColumn(earlyAverageColumn);
+        formatAverageColumn(delayAverageColumn, true);
+        formatAverageColumn(earlyAverageColumn, false);
 
         controller.updateDelayInfo();
         controller.updateEarlyInfo();
@@ -123,7 +123,7 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         });
     }
 
-    private <S> void formatAverageColumn(TableColumn<S, Float> column) {
+    private <S> void formatAverageColumn(TableColumn<S, Float> column, boolean isDelay) {
         column.setCellFactory(tc -> new TableCell<S, Float>() {
             @Override
             protected void updateItem(Float item, boolean empty) {
@@ -131,7 +131,8 @@ public class JourneyRankingSceneController extends AbstractSceneController {
                 if (item == null || empty) {
                     setText(null);
                 } else {
-                    setText(String.format("%.2f min", item));
+                    String formattedValue = isDelay ? String.format("+%.2f min", item) : String.format("-%.2f min", item);
+                    setText(formattedValue);
                     setStyle("-fx-alignment: CENTER;");
                 }
             }

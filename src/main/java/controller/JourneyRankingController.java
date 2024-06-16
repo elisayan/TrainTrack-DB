@@ -18,13 +18,13 @@ public class JourneyRankingController {
         this.controller = controller;
     }
 
-    public void updateDelayInfo(){
+    public void updateDelayInfo() {
         List<DelayInfo> delayInfos = model.topFiveDelayJourney();
         view.populateDelayTable(delayInfos);
     }
 
-    public void updateEarlyInfo(){
-        List<EarlyInfo> earlyInfos=model.topFiveEarlyJourney();
+    public void updateEarlyInfo() {
+        List<EarlyInfo> earlyInfos = model.topFiveEarlyJourney();
         view.populateEarlyTable(earlyInfos);
     }
 }

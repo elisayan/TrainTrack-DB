@@ -35,7 +35,6 @@ public class ThroughTable {
             Map<String, String> departureStations = getDepartureStations(connection);
             Map<String, String> destinationStations = getDestinationStations(connection);
             early = getEarlyInfos(connection, departureStations, destinationStations);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,7 +80,7 @@ public class ThroughTable {
         String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoPrevisto, OrarioArrivoReale)) AS MediaMinutiRitardo "
                 +
                 "FROM Attraversato " +
-                "WHERE StatoArrivo = 'ritardo' " +
+                "WHERE TIMESTAMPDIFF(MINUTE, OrarioArrivoPrevisto, OrarioArrivoReale) >= 5 " +
                 "GROUP BY CodPercorso " +
                 "ORDER BY MediaMinutiRitardo DESC " +
                 "LIMIT 5";
@@ -104,14 +103,13 @@ public class ThroughTable {
 
     private List<EarlyInfo> getEarlyInfos(Connection connection, Map<String, String> departureStations,
             Map<String, String> destinationStations) throws SQLException {
-        String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoPrevisto, OrarioArrivoReale)) AS MediaMinutiAnticipo "
+        String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoReale, OrarioArrivoPrevisto)) AS MediaMinutiAnticipo "
                 +
                 "FROM Attraversato " +
-                "WHERE StatoArrivo = 'anticipo' " +
+                "WHERE TIMESTAMPDIFF(MINUTE, OrarioArrivoReale, OrarioArrivoPrevisto) > 5 " +
                 "GROUP BY CodPercorso " +
                 "ORDER BY MediaMinutiAnticipo DESC " +
                 "LIMIT 5";
-
         List<EarlyInfo> early = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(query);
                 ResultSet rs = stmt.executeQuery()) {
@@ -128,4 +126,5 @@ public class ThroughTable {
         }
         return early;
     }
+
 }
