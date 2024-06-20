@@ -26,6 +26,10 @@ public class Controller {
         this.view.switchScene(path);
     }
 
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
     public Person getCurrentPerson() {
         return person;
     }

@@ -1,6 +1,7 @@
 package controller;
 
 import db.PersonTable;
+import model.Person;
 import view.controller.LoginSceneController;
 
 public class LoginController {
@@ -15,7 +16,11 @@ public class LoginController {
     }
 
     public void loginPerson(final String email, final String password) {
+        Person currentPerson = new Person();
         if (this.model.loginUser(email, password)) {
+            currentPerson.setEmail(email);
+            currentPerson.setPassword(password);
+            this.controller.setPerson(currentPerson);
             this.view.goForeward(model.findPerson(email).get());
         } else if (model.findPerson(email).isEmpty()) {
             this.view.userNotexist();

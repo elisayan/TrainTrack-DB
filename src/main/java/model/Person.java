@@ -7,11 +7,20 @@ public class Person {
     private String name;
     private String surname;
     private String cf;
-    private int phone;
+    private String phone;
     private String address;
     private float totalExspense;
     private String personType;
     private String clientType;
+    private int rank;
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
 
     public Person() {
         this.totalExspense = 0;
@@ -49,11 +58,11 @@ public class Person {
         this.cf = cf;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
