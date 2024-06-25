@@ -44,7 +44,7 @@ public class HomeSceneController extends AbstractSceneController {
     }
 
     @FXML
-    private void purchaseClicked(){this.view.switchScene("purchase.fxml");}
+    private void purchaseClicked(){this.view.switchScene("purchaseHome.fxml");}
 
     @FXML
     public void initialize(View view, Controller controller) {
