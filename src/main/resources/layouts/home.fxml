@@ -14,6 +14,8 @@
             <Button fx:id="purchaseButton" mnemonicParsing="false" text="Purchase" />
             <Button fx:id="timetableButton" mnemonicParsing="false" text="Timetable" />
             <Button fx:id="rankingButton" mnemonicParsing="false" onMouseClicked="#rankingClicked" text="Ranking" />
+            <Button fx:id="timetableButton" mnemonicParsing="false" onMouseClicked="#timetableClicked" text="Timetable" />
+            <Button fx:id="rankingButton" mnemonicParsing="false" text="Ranking" />
 
          </children>
       </VBox>
