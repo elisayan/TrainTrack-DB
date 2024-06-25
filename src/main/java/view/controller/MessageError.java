@@ -9,6 +9,8 @@ public enum MessageError {
 
     USER_NOT_EXIST("User doesn't exist"),
 
+    STATION_NOT_EXIST("Station doesn't exist"),
+
     ERROR("Error");
 
     private String message;

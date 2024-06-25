@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -37,6 +38,21 @@
                   </Button>
                </children>
             </HBox>
+            <Label fx:id="errorLabel" />
+            <HBox prefWidth="200.0">
+               <children>
+                  <TextField fx:id="stationField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" promptText="STATION">
+                     <HBox.margin>
+                        <Insets left="260.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#searchClicked" text="SEARCH">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
             <GridPane fx:id="timetableGridPane" gridLinesVisible="true">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -59,7 +75,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <VBox.margin>
-                  <Insets left="40.0" right="40.0" top="40.0" />
+                  <Insets left="40.0" right="40.0" top="20.0" />
                </VBox.margin>
                <children>
                   <Label fx:id="idjourneyLabel" text="ID JOURNEY" GridPane.halignment="CENTER">
