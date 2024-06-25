@@ -4,15 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class PurchaseSceneController  extends AbstractSceneController implements Initializable{
+public class TicketsPurchaseSceneController extends AbstractSceneController implements Initializable{
 
     @FXML
     private CheckBox bikeBox;
@@ -83,20 +80,7 @@ public class PurchaseSceneController  extends AbstractSceneController implements
         trainTypeBox.getItems().addAll("Regionale", "Intercity", "Frecciarossa");
         trainTypeBox.setValue("Regionale");
 
-        LocalTime now = LocalTime.now();
-        int hour = now.getHour();
-        int minute = now.getMinute();
-        int roundedMinute = (minute < 30) ? 30 : 0;
-        if (roundedMinute == 0) {
-            hour++;
-        }
-
-        timeBox.getItems().clear();
-        for (int h = hour; h <= 23; h++) {
-            for (int m = (h == hour) ? roundedMinute : 0; m < 60; m += 30) {
-                timeBox.getItems().add(String.format("%02d:%02d", h, m));
-            }
-        }
+        SubscriptionPurchaseSceneController.initializeTime(timeBox);
     }
 
     public void initialize() {
