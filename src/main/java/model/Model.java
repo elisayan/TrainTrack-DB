@@ -2,14 +2,14 @@ package model;
 
 public class Model{
 
-    private Person user;
+    private Person person;
 
-    public void setUser(final Person user) {
-        this.user = user;
+    public void setPerson(final Person person) {
+        this.person = person;
     }
 
-    public Person getUser() {
-        return this.user;
+    public Person getPerson() {
+        return this.person;
     }
     
 }

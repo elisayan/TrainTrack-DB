@@ -18,16 +18,12 @@ public class Controller {
         this.view.switchScene("home.fxml");
     }
 
-    public void savePerson(Person person) {
-        this.person = person;
-    }
-
     public void goToTheNextDataScene(String path) {
         this.view.switchScene(path);
     }
 
     public void setPerson(Person person) {
-        this.person = person;
+        model.setPerson(person);
     }
 
     public Person getCurrentPerson() {
