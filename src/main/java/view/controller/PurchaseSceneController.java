@@ -1,15 +1,14 @@
 package view.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
-public class PurchaseSceneController extends  AbstractSceneController{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class PurchaseSceneController  extends AbstractSceneController implements Initializable{
 
     @FXML
     private CheckBox bikeBox;
@@ -45,17 +44,39 @@ public class PurchaseSceneController extends  AbstractSceneController{
     private Button searchButton;
 
     @FXML
+    private Label errorLabel;
+
+    @FXML
     private Label searchesLabel;
 
     @FXML
     private Label supplementsLabel;
 
     @FXML
+    private ChoiceBox<?> timeBox;
+
+    @FXML
     private TableColumn<?, ?> timeColumn;
+
+    @FXML
+    private ChoiceBox<String> trainTypeBox;
 
     @FXML
     void loginClicked() {
         this.view.switchScene("login.fxml");
     }
 
+    @FXML
+    void searchClicked(MouseEvent event) {
+        //se nel db trova i treni che combaciano con la partenza, destinazione combaciata, allora setta
+        //l'error label, in messaggio di errore
+        //se trova almeno uno ritorna la lista disponibile, quindi cambia schermata
+        // if (){}
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        trainTypeBox.getItems().addAll("Regionale", "Intercity", "Frecciarossa");
+        trainTypeBox.setValue("Regionale");
+    }
 }

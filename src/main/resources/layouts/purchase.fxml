@@ -18,15 +18,28 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="errorLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" />
             <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <TextField fx:id="departureField" prefWidth="150.0" promptText="DEPARTURE" />
-                  <TextField fx:id="destinationField" prefWidth="150.0" promptText="DESTINATION" />
-                  <ChoiceBox prefWidth="115.0" />
-                  <Button fx:id="searchButton" mnemonicParsing="false" text="Search" />
+                  <TextField fx:id="departureField" prefWidth="150.0" promptText="DEPARTURE">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></TextField>
+                  <TextField fx:id="destinationField" prefWidth="150.0" promptText="DESTINATION">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></TextField>
+                  <ChoiceBox fx:id="trainTypeBox" prefWidth="115.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></ChoiceBox>
+                  <Button fx:id="searchButton" mnemonicParsing="false" onMouseClicked="#searchClicked" text="Search">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></Button>
                </children>
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="14.0">
@@ -38,7 +51,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </DatePicker>
-                        <ChoiceBox prefWidth="175.0">
+                        <ChoiceBox fx:id="timeBox" prefWidth="175.0">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
