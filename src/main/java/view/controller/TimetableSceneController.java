@@ -4,6 +4,7 @@ package view.controller;
 
 import controller.Controller;
 import controller.TimetableController;
+import db.ThroughTable;
 import db.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.JourneyInfo;
 import view.View;
 
 import java.sql.Connection;
@@ -84,7 +86,11 @@ public class TimetableSceneController extends AbstractSceneController {
 
     private TimetableController controller;
 
+    @FXML
     private final DBConnection dataSource = new DBConnection();
+    
+    final private int rows = 9;
+    final private int columns = 7;
 
     @Override
     public void initialize(View view, Controller controller) {
@@ -94,50 +100,37 @@ public class TimetableSceneController extends AbstractSceneController {
 
     @FXML
     public void searchClicked() throws SQLException {
-    String station = stationField.getText().trim();
-
-    final int rows = 9;
-    final int columns = 7;
-
-    
-    cleanGridPane(timetableGridPane);
-    cleanLabel(errorLabel);
-
+    String station = stationField.getText().trim();    
     if (!station.isBlank() && isFieldsExist(station)) {
-        // Recupero dei dati e aggiunta al GridPane
-        populateGridPaneFromDatabase(timetableGridPane, station);
-        centerAllLabels(timetableGridPane);
+        try (Connection conn = dataSource.getMySQLConnection()) {
+            // Pulizia del GridPane
+            cleanGridPane(timetableGridPane);
+            cleanLabel(errorLabel);
+            // Popolamento del GridPane
+            populateGridPaneFromDatabase(timetableGridPane, station);
 
-        for (int i = 1; i < rows; i++) {
-            addCheckBoxIfLabelHasText(timetableGridPane, 0, i, columns - 1);
+            centerAllLabels(timetableGridPane);
+
+            for (int i = 1; i < rows; i++) {
+                addCheckBoxIfLabelHasText(timetableGridPane, 0, i, columns - 1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     } else {
+        cleanGridPane(timetableGridPane);
         errorLabel.setText(MessageError.STATION_NOT_EXIST.toString());
         }
     }
 
-@FXML
-public void cleanGridPane(GridPane gridPane) {
-    // Crea una lista per memorizzare i nodi da rimuovere
-    List<Node> nodesToRemove = new ArrayList<>();
-
-    // Itera su ogni nodo nel GridPane
-    for (Node node : gridPane.getChildren()) {
-        // Ottiene l'indice della riga del nodo
-        Integer rowIndex = GridPane.getRowIndex(node);
-        // Se la riga è null, significa che è la prima riga (indice 0)
-        if (rowIndex == null) {
-            rowIndex = 0;
-        }
-        // Se la riga è maggiore di 0, aggiungi il nodo alla lista da rimuovere
-        if (rowIndex > 0) {
-            nodesToRemove.add(node);
-        }
+    @FXML
+    public void cleanGridPane(GridPane gridPane) {
+        // Remove all children except the headers in the first row
+        gridPane.getChildren().removeIf(node -> {
+            Integer rowIndex = GridPane.getRowIndex(node);
+            return rowIndex != null && rowIndex > 0;
+        });
     }
-
-    // Rimuove i nodi memorizzati nella lista dal GridPane
-    gridPane.getChildren().removeAll(nodesToRemove);
-}
     
 
     @FXML
@@ -166,106 +159,33 @@ public void cleanGridPane(GridPane gridPane) {
         }
     }
 
-
     @FXML
     private void populateGridPaneFromDatabase(GridPane gridPane, String station) throws SQLException {
-        String selectPercorsoQuery = "SELECT a.CodPercorso, a.Binario, a.OrarioPartenzaPrevisto, a.StatoArrivo " + 
-                                     "FROM attraversato a " + 
-                                     "JOIN stazione s ON s.CodStazione = a.CodStazione " + 
-                                     "WHERE s.Nome = ?";
-        String selectStazionePartenzaQuery = "SELECT s.Nome " +
-                                             "FROM stazione s " +
-                                             "JOIN attraversato a ON s.CodStazione = a.CodStazione " +
-                                             "WHERE a.Ordine = '1' AND a.CodPercorso = (" + 
-                                                "SELECT at.CodPercorso " + 
-                                                "FROM attraversato at " + 
-                                                "JOIN stazione s ON s.CodStazione = at.CodStazione " + 
-                                                "WHERE s.Nome = ?)";
-        String selectStazioneArrivoQuery = "SELECT s.Nome " +
-                                           "FROM stazione s " +
-                                           "JOIN attraversato a ON s.CodStazione = a.CodStazione " +
-                                           "WHERE Ordine = (SELECT MAX(Ordine) FROM attraversato aa JOIN percorso p ON p.CodPercorso = aa.CodPercorso) " + 
-                                           "AND a.CodPercorso = ( " + 
-                                                "SELECT at.CodPercorso " + 
-                                                "FROM attraversato at " + 
-                                                "JOIN stazione s ON s.CodStazione = at.CodStazione " + 
-                                                "WHERE s.Nome = ?)";
+        try (Connection conn = dataSource.getMySQLConnection()) {
+            int row = 1;
+            List<JourneyInfo> journeyInfos = ThroughTable.getJourneyInfos(conn, station);
 
+           
+            for (JourneyInfo journeyInfo : journeyInfos) {
+                Label labelPercorso = new Label(journeyInfo.getCodPercorso());
+                Label labelBinario = new Label(String.valueOf(journeyInfo.getBinario()));
+                Label labelOrarioPartenzaPrevisto = new Label(journeyInfo.getOrarioPartenzaPrevisto());
+                Label labelStazionePartenza = new Label(journeyInfo.getStazionePartenzaNome());
+                Label labelStazioneArrivo = new Label(journeyInfo.getStazioneArrivoNome());
+                Label labelStatoArrivo = new Label(journeyInfo.getStatoArrivo());
 
-        try (Connection conn = dataSource.getMySQLConnection();
-             PreparedStatement pstmt = conn.prepareStatement(selectPercorsoQuery)) {
-            
-            // Impostazione del parametro della query
-            pstmt.setString(1, station);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                int row = 1;
-                while (rs.next()) {
-                    String codPercorso = rs.getString("CodPercorso");
-                    int binario = rs.getInt("Binario");
-                    String orarioPartenzaPrevisto = rs.getString("OrarioPartenzaPrevisto");
-                    String statoArrivo = rs.getString("StatoArrivo");
-    
-                    Label labelPercorso = new Label(codPercorso);
-                    Label labelBinario = new Label(String.valueOf(binario));
-                    Label labelOrarioPartenzaPrevisto = new Label(orarioPartenzaPrevisto);
-                    Label labelStatoArrivo = new Label(statoArrivo);
-    
-                    gridPane.add(labelPercorso, 0, row);
-                    gridPane.add(labelBinario, 4, row);
-                    gridPane.add(labelOrarioPartenzaPrevisto, 3, row);
-                    gridPane.add(labelStatoArrivo, 5, row);
-    
-                    row++;
-                }
+                gridPane.add(labelPercorso, 0, row);
+                gridPane.add(labelStazionePartenza, 1, row);
+                gridPane.add(labelStazioneArrivo, 2, row);
+                gridPane.add(labelOrarioPartenzaPrevisto, 3, row);
+                gridPane.add(labelBinario, 4, row);
+                gridPane.add(labelStatoArrivo, 5, row);
+
+                row++;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        try (Connection conn = dataSource.getMySQLConnection();
-             PreparedStatement pstmt = conn.prepareStatement(selectStazioneArrivoQuery)) {
-            
-            // Impostazione del parametro della query
-            pstmt.setString(1, station);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                int row = 1;
-                while (rs.next()) {
-                    String nomeStazioneArrivo = rs.getString("Nome");
-                
-                    Label labelStazioneArrivo = new Label(nomeStazioneArrivo);
-                
-                    gridPane.add(labelStazioneArrivo, 2, row); 
-
-                    row++;
-                }
-            } catch (Exception e) {
-            e.printStackTrace();
-            }
-        }
-
-        try (Connection conn = dataSource.getMySQLConnection();
-             PreparedStatement pstmt = conn.prepareStatement(selectStazionePartenzaQuery)) {
-            
-            // Impostazione del parametro della query
-            pstmt.setString(1, station);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                int row = 1;
-                while (rs.next()) {
-                    String nomeStazionePartenza = rs.getString("Nome");
-                
-                    Label labelStazionePartenza = new Label(nomeStazionePartenza);
-                
-                    gridPane.add(labelStazionePartenza, 1, row); 
-
-                    row++;
-                }
-            } catch (Exception e) {
-            e.printStackTrace();
-            }
-        }    
     }
 
     @FXML

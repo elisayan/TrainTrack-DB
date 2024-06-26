@@ -2,12 +2,16 @@ package db;
 
 import model.DelayInfo;
 import model.EarlyInfo;
+import model.JourneyInfo;
+
+import view.controller.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
 
 public class ThroughTable {
     private final DBConnection dataSource;
@@ -39,6 +43,17 @@ public class ThroughTable {
             e.printStackTrace();
         }
         return early;
+    }
+
+    public List<JourneyInfo> journeyInfo(String station) {
+        List<JourneyInfo> info = new ArrayList<>();
+            try (Connection connection = dataSource.getMySQLConnection()) {
+            List<JourneyInfo> journeyInfos = getJourneyInfos(connection, station);
+            info = journeyInfos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return info;
     }
 
     private Map<String, String> getDepartureStations(Connection connection) throws SQLException {
@@ -127,4 +142,44 @@ public class ThroughTable {
         return early;
     }
 
+    public static List<JourneyInfo> getJourneyInfos(Connection connection, String station) throws SQLException {
+        String selectPercorsoQuery = "SELECT a.CodPercorso, a.Binario, a.OrarioPartenzaPrevisto, " +
+                                     "CASE " +
+                                     "WHEN TIMESTAMPDIFF(MINUTE, a.OrarioArrivoPrevisto, a.OrarioArrivoReale) > 5 THEN 'delayed' " +
+                                     "WHEN TIMESTAMPDIFF(MINUTE, a.OrarioArrivoReale, a.OrarioArrivoPrevisto) > 5 THEN 'early' " +
+                                     "ELSE 'on time' " +
+                                     "END AS StatoArrivo, " +
+                                     "(SELECT s.Nome FROM stazione s JOIN attraversato a2 ON s.CodStazione = a2.CodStazione " +
+                                     "WHERE a2.Ordine = '1' AND a2.CodPercorso = a.CodPercorso LIMIT 1) AS StazionePartenza, " +
+                                     "(SELECT s.Nome FROM stazione s JOIN attraversato a3 ON s.CodStazione = a3.CodStazione " +
+                                     "WHERE a3.CodPercorso = a.CodPercorso ORDER BY a3.Ordine DESC LIMIT 1) AS StazioneArrivo " +
+                                     "FROM attraversato a " +
+                                     "JOIN stazione s ON s.CodStazione = a.CodStazione " +
+                                     "WHERE s.Nome = ?";
+
+
+        List<JourneyInfo> journeyInfos = new ArrayList<>();
+
+        try (PreparedStatement pstmt = connection.prepareStatement(selectPercorsoQuery)) {
+            pstmt.setString(1, station);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    String codPercorso = rs.getString("CodPercorso");
+                    int binario = rs.getInt("Binario");
+                    String orarioPartenzaPrevisto = rs.getString("OrarioPartenzaPrevisto");
+                    String statoArrivo = rs.getString("StatoArrivo");
+                    String stazionePartenza = rs.getString("StazionePartenza");
+                    String stazioneArrivo = rs.getString("StazioneArrivo");
+
+                    JourneyInfo journeyInfo = new JourneyInfo(codPercorso, stazionePartenza, stazioneArrivo, orarioPartenzaPrevisto, binario, statoArrivo);
+                    journeyInfos.add(journeyInfo);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return journeyInfos;
+    }
 }
