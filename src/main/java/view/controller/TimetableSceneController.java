@@ -113,6 +113,7 @@ public class TimetableSceneController extends AbstractSceneController {
 
             for (int i = 1; i < rows; i++) {
                 addCheckBoxIfLabelHasText(timetableGridPane, 0, i, columns - 1);
+                disableCheckBoxIfUserNotLoggedIn(timetableGridPane, i, columns -1, getController());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -221,7 +222,13 @@ public class TimetableSceneController extends AbstractSceneController {
         return null;
     }
 
-
+    @FXML
+    public void disableCheckBoxIfUserNotLoggedIn(GridPane gridPane, int row, int column, Controller controller) {
+        CheckBox checkBox = (CheckBox) getNodeFromGridPane(gridPane, column, row);
+        if (controller.getCurrentPerson() == null) {
+            checkBox.setDisable(true);
+        }
+    }
     
     @FXML
     public void loginClicked() {
