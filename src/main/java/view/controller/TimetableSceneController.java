@@ -1,11 +1,10 @@
 package view.controller;
 
-//import com.mysql.cj.xdevapi.Statement;
-
 import controller.Controller;
 import controller.TimetableController;
 import db.ThroughTable;
 import db.DBConnection;
+import db.AttivationTable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -23,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.JourneyInfo;
+import model.Person;
 import view.View;
 
 import java.sql.Connection;
@@ -33,6 +33,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.*;
+
 
 public class TimetableSceneController extends AbstractSceneController {
     
@@ -85,6 +86,7 @@ public class TimetableSceneController extends AbstractSceneController {
     private HBox hBox;
 
     private TimetableController controller;
+    private AttivationTable attivationTable;
 
     @FXML
     private final DBConnection dataSource = new DBConnection();
@@ -96,6 +98,7 @@ public class TimetableSceneController extends AbstractSceneController {
     public void initialize(View view, Controller controller) {
         super.initialize(view, controller);
         this.controller = new TimetableController(this, this.getController());
+        this.attivationTable = new AttivationTable(); 
     }
 
     @FXML
@@ -114,6 +117,7 @@ public class TimetableSceneController extends AbstractSceneController {
             for (int i = 1; i < rows; i++) {
                 addCheckBoxIfLabelHasText(timetableGridPane, 0, i, columns - 1);
                 disableCheckBoxIfUserNotLoggedIn(timetableGridPane, i, columns -1, getController());
+                setCheckBoxSelected(timetableGridPane, i, columns -1, getController());
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -123,6 +127,33 @@ public class TimetableSceneController extends AbstractSceneController {
         errorLabel.setText(MessageError.STATION_NOT_EXIST.toString());
         }
     }
+
+
+    @FXML
+    public void checkBoxClicked(MouseEvent event) {
+        CheckBox checkBox = (CheckBox) event.getSource();
+        if (checkBox.isSelected()) {
+            int row = GridPane.getRowIndex(checkBox);
+            Label codPercorsoLabel = (Label) getNodeFromGridPane(timetableGridPane, 0, row);
+            String codPercorso = codPercorsoLabel.getText();
+            Person person = getController().getCurrentPerson();
+
+            if (person != null) {
+                attivationTable.subscribeNotification(codPercorso, person);
+            }
+            
+        } else {
+            int row = GridPane.getRowIndex(checkBox);
+            Label codPercorsoLabel = (Label) getNodeFromGridPane(timetableGridPane, 0, row);
+            String codPercorso = codPercorsoLabel.getText();
+            Person person = getController().getCurrentPerson();
+
+            if (person != null) {
+                attivationTable.unsubscribeNotification(codPercorso, person);
+            }
+        }
+    }
+
 
     @FXML
     public void cleanGridPane(GridPane gridPane) {
@@ -208,6 +239,7 @@ public class TimetableSceneController extends AbstractSceneController {
             gridPane.add(checkBox, checkBoxCol, row); 
             GridPane.setHalignment(checkBox, HPos.CENTER);
             GridPane.setValignment(checkBox, VPos.CENTER);
+            checkBox.setOnMouseClicked(this::checkBoxClicked); // Imposta l'handler dell'evento
         }
     }
     @FXML
@@ -230,6 +262,23 @@ public class TimetableSceneController extends AbstractSceneController {
         }
     }
     
+    @FXML
+    public void setCheckBoxSelected(GridPane gridPane, int row, int column, Controller controller) {
+        CheckBox checkBox = (CheckBox) getNodeFromGridPane(gridPane, column, row);
+        if (checkBox != null && controller.getCurrentPerson() != null) {
+            Label codPercorsoLabel = (Label) getNodeFromGridPane(gridPane, 0, row);
+            if (codPercorsoLabel != null) {
+                String codPercorso = codPercorsoLabel.getText();
+                if (codPercorso != null && !codPercorso.isEmpty()) {
+                    if (attivationTable.isSubscribed(codPercorso, controller.getCurrentPerson())) {
+                        checkBox.setSelected(true);
+                    }
+                }
+            }
+        }
+    }
+
+
     @FXML
     public void loginClicked() {
         this.view.switchScene("login.fxml");
