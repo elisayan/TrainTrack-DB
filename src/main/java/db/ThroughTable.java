@@ -3,7 +3,7 @@ package db;
 import model.DelayInfo;
 import model.EarlyInfo;
 import model.JourneyInfo;
-
+import model.Station;
 import view.controller.*;
 
 import java.sql.Connection;
@@ -45,7 +45,7 @@ public class ThroughTable {
         return early;
     }
 
-    public List<JourneyInfo> journeyInfo(String station) {
+    public List<JourneyInfo> journeyInfo(Station station) {
         List<JourneyInfo> info = new ArrayList<>();
             try (Connection connection = dataSource.getMySQLConnection()) {
             List<JourneyInfo> journeyInfos = getJourneyInfos(connection, station);
@@ -142,7 +142,7 @@ public class ThroughTable {
         return early;
     }
 
-    public static List<JourneyInfo> getJourneyInfos(Connection connection, String station) throws SQLException {
+    public static List<JourneyInfo> getJourneyInfos(Connection connection, Station station) throws SQLException {
         String selectPercorsoQuery = "SELECT a.CodPercorso, a.Binario, a.OrarioPartenzaPrevisto, " +
                                      "CASE " +
                                      "WHEN TIMESTAMPDIFF(MINUTE, a.OrarioArrivoPrevisto, a.OrarioArrivoReale) > 5 THEN 'delayed' " +
@@ -155,13 +155,14 @@ public class ThroughTable {
                                      "WHERE a3.CodPercorso = a.CodPercorso ORDER BY a3.Ordine DESC LIMIT 1) AS StazioneArrivo " +
                                      "FROM attraversato a " +
                                      "JOIN stazione s ON s.CodStazione = a.CodStazione " +
-                                     "WHERE s.Nome = ?";
+                                     "WHERE s.Nome = ? " + 
+                                     "LIMIT 8";
 
 
         List<JourneyInfo> journeyInfos = new ArrayList<>();
 
         try (PreparedStatement pstmt = connection.prepareStatement(selectPercorsoQuery)) {
-            pstmt.setString(1, station);
+            pstmt.setString(1, station.getStationName());
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
@@ -182,4 +183,19 @@ public class ThroughTable {
 
         return journeyInfos;
     }
+
+    public boolean isStationExist(Station station) throws SQLException {
+        String query = "SELECT COUNT(*) FROM stazione WHERE Nome = ?";
+        try (Connection connection = dataSource.getMySQLConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, station.getStationName());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+    
 }
