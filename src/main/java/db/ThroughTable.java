@@ -157,6 +157,7 @@ public class ThroughTable {
                                      "JOIN stazione s ON s.CodStazione = a.CodStazione " +
                                      "WHERE s.Nome = ? " +
                                      "AND TIMESTAMP(a.Data, a.OrarioPartenzaReale) > NOW() " +
+                                     "ORDER BY TIMESTAMP(a.Data, a.OrarioPartenzaReale) " +
                                      "LIMIT 8";
 
 
