@@ -155,7 +155,8 @@ public class ThroughTable {
                                      "WHERE a3.CodPercorso = a.CodPercorso ORDER BY a3.Ordine DESC LIMIT 1) AS StazioneArrivo " +
                                      "FROM attraversato a " +
                                      "JOIN stazione s ON s.CodStazione = a.CodStazione " +
-                                     "WHERE s.Nome = ? " + 
+                                     "WHERE s.Nome = ? " +
+                                     "AND TIMESTAMP(a.Data, a.OrarioPartenzaReale) > NOW() " +
                                      "LIMIT 8";
 
 
