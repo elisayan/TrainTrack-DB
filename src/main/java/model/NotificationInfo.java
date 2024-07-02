@@ -1,7 +1,5 @@
 package model;
 
-import java.util.*;
-
 public class NotificationInfo {
     private String codNotifica;
     private String descrizione;

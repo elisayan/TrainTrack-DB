@@ -1,6 +1,7 @@
 package db;
 
 import model.JourneyInfo;
+import model.Notification;
 import model.NotificationInfo;
 
 import view.controller.*;
@@ -23,7 +24,7 @@ public class NotificationTable {
     }
     
     
-    public List<NotificationInfo> getNotificationInfos(Connection connection, String codNotifica) throws SQLException {
+    public List<NotificationInfo> getNotificationInfos(Connection connection, Notification notification) throws SQLException {
         String selectNotificaQuery = "SELECT n.CodNotifica, n.Descrizione, n.CodPercorso, a.email " + 
                                      "FROM notifica n " + 
                                      "JOIN attivazione a ON n.CodNotifica = a.CodNotifica " + 
@@ -32,6 +33,7 @@ public class NotificationTable {
         List<NotificationInfo> notificationInfos = new ArrayList<>();
 
         try (PreparedStatement pstmt = connection.prepareStatement(selectNotificaQuery)) {
+            String codNotifica = notification.getNotificationID();
             pstmt.setString(1, codNotifica);
 
             try (ResultSet rs = pstmt.executeQuery()) {

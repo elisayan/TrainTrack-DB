@@ -1,5 +1,6 @@
 package db;
 
+import model.Journey;
 import model.Person;
 
 import java.sql.Connection;
@@ -18,9 +19,9 @@ public class AttivationTable {
         this.tableName = "Attivazione";
     }
 
-    public void subscribeNotification(String codPercorso, Person person) {
+    public void subscribeNotification(Journey journey, Person person) {
         try (Connection connection = dataSource.getMySQLConnection()) {
-            List<String> notificationCods = getNotificationCods(connection, codPercorso);
+            List<String> notificationCods = getNotificationCods(connection, journey);
            
             String insert = "INSERT INTO " + tableName +
                             " (email, CodNotifica) VALUES (?, ?)";
@@ -39,9 +40,9 @@ public class AttivationTable {
 
     }
 
-    public void unsubscribeNotification(String codPercorso, Person person) {
+    public void unsubscribeNotification(Journey journey, Person person) {
         try (Connection connection = dataSource.getMySQLConnection()) {
-            List<String> notificationCods = getNotificationCods(connection, codPercorso);
+            List<String> notificationCods = getNotificationCods(connection, journey);
 
             String delete = "DELETE FROM " + tableName +
                             " WHERE email = ? AND CodNotifica = ?";
@@ -59,13 +60,13 @@ public class AttivationTable {
         }
     }
 
-    public boolean isSubscribed(String codPercorso, Person person) {
+    public boolean isSubscribed(Journey journey, Person person) {
         String query = "SELECT COUNT(*) FROM " + tableName + " a JOIN notifica n ON a.CodNotifica = n.CodNotifica WHERE a.email = ? AND n.CodPercorso = ?";
 
         try (Connection connection = dataSource.getMySQLConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, person.getEmail());
-            pstmt.setString(2, codPercorso);
+            pstmt.setString(2, journey.getJourneyID());
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -79,7 +80,7 @@ public class AttivationTable {
         return false;
     }
     
-    private List<String> getNotificationCods(Connection connection, String codPercorso) throws SQLException {
+    private List<String> getNotificationCods(Connection connection, Journey journey) throws SQLException {
         String query = "SELECT n.CodNotifica " +
                        "FROM Notifica n " +
                        "WHERE n.CodPercorso = ?";
@@ -87,7 +88,7 @@ public class AttivationTable {
         List<String> notificationCods = new ArrayList<>();
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setString(1, codPercorso);
+            pstmt.setString(1, journey.getJourneyID());
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {

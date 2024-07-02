@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.Journey;
 import model.JourneyInfo;
 import model.Person;
 import model.Station;
@@ -143,14 +144,15 @@ public class TimetableSceneController extends AbstractSceneController {
         Label codPercorsoLabel = (Label) getNodeFromGridPane(timetableGridPane, 0, row);
         String codPercorso = codPercorsoLabel.getText();
         Person person = getController().getCurrentPerson();
-
+        Journey journey = new Journey();
+        journey.setJourneyID(codPercorso);
         if (checkBox.isSelected()) {
             if (person != null) {
-                attivationTable.subscribeNotification(codPercorso, person);
+                attivationTable.subscribeNotification(journey, person);
             }
         } else {
             if (person != null) {
-                attivationTable.unsubscribeNotification(codPercorso, person);
+                attivationTable.unsubscribeNotification(journey, person);
             }
         }
     }
@@ -241,8 +243,10 @@ public class TimetableSceneController extends AbstractSceneController {
             if (codPercorsoLabel != null) {
                 String codPercorso = codPercorsoLabel.getText();
                 Person person = controller.getCurrentPerson();
+                Journey journey = new Journey();
+                journey.setJourneyID(codPercorso);
                 if (person != null) {
-                    checkBox.setSelected(attivationTable.isSubscribed(codPercorso, person));
+                    checkBox.setSelected(attivationTable.isSubscribed(journey, person));
                 }
             }
         }
