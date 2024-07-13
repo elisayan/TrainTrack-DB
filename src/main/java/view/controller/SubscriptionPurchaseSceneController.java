@@ -38,7 +38,7 @@ public class SubscriptionPurchaseSceneController extends AbstractSceneController
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeTime(timeChoice);
+        //initializeTime(timeChoice);
     }
 
     public void initialize() {
