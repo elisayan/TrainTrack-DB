@@ -7,7 +7,6 @@ import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class SubscriptionPurchaseSceneController extends AbstractSceneController implements Initializable {
@@ -40,23 +39,6 @@ public class SubscriptionPurchaseSceneController extends AbstractSceneController
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeTime(timeChoice);
-    }
-
-    static void initializeTime(ChoiceBox<String> timeChoice) {
-        LocalTime now = LocalTime.now();
-        int hour = now.getHour();
-        int minute = now.getMinute();
-        int roundedMinute = (minute < 30) ? 30 : 0;
-        if (roundedMinute == 0) {
-            hour++;
-        }
-
-        timeChoice.getItems().clear();
-        for (int h = hour; h <= 23; h++) {
-            for (int m = (h == hour) ? roundedMinute : 0; m < 60; m += 30) {
-                timeChoice.getItems().add(String.format("%02d:%02d", h, m));
-            }
-        }
     }
 
     public void initialize() {
