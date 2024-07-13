@@ -9,7 +9,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class TicketsPurchaseSceneController extends AbstractSceneController implements Initializable{
+public class TicketsPurchaseSceneController extends AbstractSceneController{
 
     @FXML
     private CheckBox bikeBox;
@@ -63,32 +63,30 @@ public class TicketsPurchaseSceneController extends AbstractSceneController impl
     private ChoiceBox<String> trainTypeBox;
 
     @FXML
-    void loginClicked() {
-        this.view.switchScene("login.fxml");
-    }
-
-    @FXML
-    void searchClicked(MouseEvent event) {
-        //se nel db trova i treni che combaciano con la partenza, destinazione combaciata, allora setta
-        //l'error label, in messaggio di errore
-        //se trova almeno uno ritorna la lista disponibile, quindi cambia schermata
-        // if (){}
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        trainTypeBox.getItems().addAll("Regionale", "Intercity", "Frecciarossa");
-        trainTypeBox.setValue("Regionale");
-
-        initializeTime(timeBox);
-    }
-
-    public void initialize() {
+    private void initialize() {
         datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 setDisable(date.isBefore(LocalDate.now()));
             }
         });
+
+        trainTypeBox.getItems().addAll("Regionale", "Intercity", "Frecciarossa");
+        trainTypeBox.setValue("Regionale");
+
+        initializeTime(timeBox);
+    }
+
+    @FXML
+    private void loginClicked() {
+        this.view.switchScene("login.fxml");
+    }
+
+    @FXML
+    private void searchClicked() {
+        //se nel db trova i treni che combaciano con la partenza, destinazione combaciata, allora setta
+        //l'error label, in messaggio di errore
+        //se trova almeno uno ritorna la lista disponibile, quindi cambia schermata
+        // if (){}
     }
 }
