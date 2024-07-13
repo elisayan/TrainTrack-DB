@@ -1,15 +1,12 @@
 package view.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.time.LocalTime;
 
-public class TicketsPurchaseSceneController extends AbstractSceneController{
+public class TicketsPurchaseSceneController extends AbstractSceneController {
 
     @FXML
     private CheckBox bikeBox;
@@ -64,17 +61,30 @@ public class TicketsPurchaseSceneController extends AbstractSceneController{
 
     @FXML
     private void initialize() {
-        datePicker.setDayCellFactory(picker -> new DateCell() {
+        this.datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 setDisable(date.isBefore(LocalDate.now()));
             }
         });
 
-        trainTypeBox.getItems().addAll("Regionale", "Intercity", "Frecciarossa");
-        trainTypeBox.setValue("Regionale");
+        this.trainTypeBox.getItems().addAll("Regionale", "Intercity", "Frecciarossa");
+        this.trainTypeBox.setValue("Regionale");
 
-        initializeTime(timeBox);
+        LocalTime now = LocalTime.now();
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        int roundedMinute = (minute < 30) ? 30 : 0;
+        if (roundedMinute == 0) {
+            hour++;
+        }
+
+        this.timeBox.getItems().clear();
+        for (int h = hour; h <= 23; h++) {
+            for (int m = (h == hour) ? roundedMinute : 0; m < 60; m += 30) {
+                this.timeBox.getItems().add(String.format("%02d:%02d", h, m));
+            }
+        }
     }
 
     @FXML
