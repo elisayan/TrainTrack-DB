@@ -3,9 +3,13 @@ package view.controller;
 import controller.PurchaseTicketController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import model.AvailableTicket;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class TicketsPurchaseSceneController extends AbstractSceneController {
 
@@ -76,6 +80,12 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
         this.trainTypeBox.getItems().addAll("Regionale", "Intercity", "Frecciarossa");
         this.trainTypeBox.setValue("Regionale");
 
+        this.datePicker.valueProperty().addListener((observable, oldValue, newValue) -> populateTimeBox(newValue));
+
+        this.datePicker.setValue(LocalDate.now());
+    }
+
+    private void populateTimeBox(LocalDate date) {
         LocalTime now = LocalTime.now();
         int hour = now.getHour();
         int minute = now.getMinute();
@@ -85,10 +95,22 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
         }
 
         this.timeBox.getItems().clear();
-        for (int h = hour; h <= 23; h++) {
-            for (int m = (h == hour) ? roundedMinute : 0; m < 60; m += 30) {
-                this.timeBox.getItems().add(String.format("%02d:%02d", h, m));
-            }
+        if (date.isEqual(LocalDate.now())) {
+            int finalHour = hour;
+            this.timeBox.getItems().addAll(
+                    IntStream.range(hour, 24).boxed()
+                            .flatMap(h -> IntStream.iterate((h == finalHour) ? roundedMinute : 0, m -> m < 60, m -> m + 30)
+                                    .mapToObj(m -> String.format("%02d:%02d", h, m)))
+                            .toList()
+            );
+        } else {
+            this.timeBox.getItems().addAll(
+                    IntStream.range(0, 24)
+                            .boxed()
+                            .flatMap(h -> IntStream.iterate(0, m -> m < 60, m -> m + 30)
+                                    .mapToObj(m -> String.format("%02d:%02d", h, m)))
+                            .toList()
+            );
         }
     }
 
@@ -108,7 +130,9 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
                 datePicker.getValue(), timeBox.getValue(), petBox.isSelected(), bikeBox.isSelected());
     }
 
-    public void showAvailableTickets() {
+    public void showAvailableTickets(List<AvailableTicket> tickets) {
+        SearchSceneController searchSceneController = new SearchSceneController();
+        searchSceneController.fillTicketTable(tickets);
         this.view.switchScene("searchResults.fxml");
     }
 
