@@ -129,7 +129,8 @@ public class ThroughTable {
                 "    sp.Nome AS NomeStazionePartenza, " +
                 "    sa.Nome AS NomeStazioneArrivo, " +
                 "    a1.Data, " +
-                "    a1.OrarioPartenzaPrevisto " +
+                "    a1.OrarioPartenzaPrevisto, " +  // Aggiunta una virgola qui
+                "    t.Tipo " +
                 "FROM " +
                 "    Attraversato a1 " +
                 "    JOIN Attraversato a2 ON a1.CodPercorso = a2.CodPercorso " +
@@ -146,6 +147,7 @@ public class ThroughTable {
                 "    AND a1.Ordine < a2.Ordine " +
                 "ORDER BY " +
                 "    a1.OrarioPartenzaPrevisto";
+
 
 
         List<AvailableTicket> availableTickets = new ArrayList<>();
@@ -165,6 +167,7 @@ public class ThroughTable {
                             rs.getString("CodPercorso"),
                             rs.getString("NomeStazionePartenza"),
                             rs.getString("NomeStazioneArrivo"),
+                            rs.getString("Tipo"),
                             rs.getTime("OrarioPartenzaPrevisto").toLocalTime()
                            // rs.getFloat("Prezzo")
                     );
