@@ -6,14 +6,17 @@ public class AvailableTicket {
     private final String journeyID;
     private final String departureStation;
     private final String destinationStation;
+    private final String typeTrain;
+
     private final LocalTime departureTime;
     //private final float ticketPrice;
 
     public AvailableTicket(String codPercorso, String nomeStazionePartenza,
-                           String destinationStation, LocalTime departureTime){//, float ticketPrice) {
+                           String destinationStation, String typeTrain, LocalTime departureTime){//, float ticketPrice) {
         this.journeyID = codPercorso;
         this.departureStation = nomeStazionePartenza;
         this.destinationStation = destinationStation;
+        this.typeTrain = typeTrain;
         this.departureTime = departureTime;
         //this.ticketPrice = ticketPrice;
     }
@@ -32,6 +35,10 @@ public class AvailableTicket {
 
     public LocalTime getDepartureTime() {
         return departureTime;
+    }
+
+    public String getTypeTrain() {
+        return typeTrain;
     }
 //
 //    public float getTicketPrice() {
