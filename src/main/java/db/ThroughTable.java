@@ -7,7 +7,6 @@ import model.AvailableTicket;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 public class ThroughTable {
