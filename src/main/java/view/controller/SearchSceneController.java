@@ -1,5 +1,6 @@
 package view.controller;
 
+import controller.SearchTicketController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import model.AvailableTicket;
 
 import java.util.List;
@@ -45,6 +45,8 @@ public class SearchSceneController extends AbstractSceneController{
     @FXML
     private TableColumn<AvailableTicket, String> typeColumn;
 
+    private final SearchTicketController controller = new SearchTicketController(this);
+
     @FXML
     void loginClicked() {
         this.view.switchScene("login.fxml");
@@ -56,10 +58,10 @@ public class SearchSceneController extends AbstractSceneController{
         System.out.println(ticketList.stream().iterator().next().getJourneyID());
 
         journeyIDColumn.setCellValueFactory(new PropertyValueFactory<>("journeyID"));
-        departureColumn.setCellValueFactory(new PropertyValueFactory<>("departure"));
-        destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destination"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        departureColumn.setCellValueFactory(new PropertyValueFactory<>("departureStation"));
+        destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destinationStation"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("typeTrain"));
 
         searchTable.setItems(data);
     }
