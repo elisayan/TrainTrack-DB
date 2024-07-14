@@ -40,7 +40,7 @@
             </Label>
             <TableView fx:id="searchTable" prefWidth="200.0">
                <columns>
-                  <TableColumn fx:id="journeyIDColumn" prefWidth="94.40002286434174" text="ID JOURNEY" />
+                  <TableColumn fx:id="journeyIDColumn" prefWidth="94.40002286434174" text="JOURNEY ID" />
                   <TableColumn fx:id="typeColumn" prefWidth="75.0" text="TYPE" />
                   <TableColumn fx:id="departureColumn" prefWidth="145.0" text="DEPARTURE" />
                   <TableColumn fx:id="destinationColumn" prefWidth="145.0" text="DESTINATION" />
