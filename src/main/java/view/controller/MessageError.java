@@ -9,9 +9,11 @@ public enum MessageError {
 
     USER_NOT_EXIST("User doesn't exist"),
 
+    TICKET_NOT_EXIST("Ticket doesn't exist"),
+
     ERROR("Error");
 
-    private String message;
+    private final String message;
 
     MessageError(final String message) {
         this.message = message;
