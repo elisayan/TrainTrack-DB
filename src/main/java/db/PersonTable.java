@@ -18,9 +18,9 @@ public class PersonTable {
     }
 
     public boolean signUpPerson(Person person) {
-        String insert = "INSERT INTO " + tableName +
-                " (Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insert = "INSERT INTO " + tableName
+                + " (Nome, Cognome, CF, Indirizzo, Telefono, Email, Password, SpesaTotale, TipoPersona, TipoCliente) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getMySQLConnection();
                 PreparedStatement statement = connection.prepareStatement(insert)) {
