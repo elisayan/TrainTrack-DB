@@ -38,7 +38,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView fx:id="seachTable" prefWidth="200.0">
+            <TableView fx:id="searchTable" prefWidth="200.0">
                <columns>
                   <TableColumn fx:id="journeyIDColumn" prefWidth="94.40002286434174" text="ID JOURNEY" />
                   <TableColumn fx:id="typeColumn" prefWidth="75.0" text="TYPE" />
