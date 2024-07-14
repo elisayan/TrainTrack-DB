@@ -28,7 +28,7 @@ public class SearchSceneController extends AbstractSceneController{
     private TableColumn<?, ?> priceColumn;
 
     @FXML
-    private TableView<?> seachTable;
+    private TableView<?> searchTable;
 
     @FXML
     private Label searchLabel;
@@ -43,5 +43,6 @@ public class SearchSceneController extends AbstractSceneController{
     void loginClicked() {
         this.view.switchScene("login.fxml");
     }
+
 
 }

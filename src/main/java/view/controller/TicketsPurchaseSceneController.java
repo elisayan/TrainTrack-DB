@@ -1,5 +1,6 @@
 package view.controller;
 
+import controller.PurchaseTicketController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -59,8 +60,12 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
     @FXML
     private ChoiceBox<String> trainTypeBox;
 
+    private PurchaseTicketController controller;
+
     @FXML
     private void initialize() {
+        this.controller = new PurchaseTicketController(this);
+
         this.datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
@@ -98,5 +103,16 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
         //l'error label, in messaggio di errore
         //se trova almeno uno ritorna la lista disponibile, quindi cambia schermata
         // if (){}
+        this.errorLabel.setText("");
+        this.controller.setAvailableTickets(departureField.getText(), destinationField.getText(), trainTypeBox.getValue(),
+                datePicker.getValue(), timeBox.getValue(), petBox.isSelected(), bikeBox.isSelected());
+    }
+
+    public void showAvailableTickets() {
+        this.view.switchScene("searchResults.fxml");
+    }
+
+    public void showMessage() {
+        this.errorLabel.setText(MessageError.TICKET_NOT_EXIST.toString());
     }
 }
