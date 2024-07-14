@@ -8,7 +8,6 @@ import model.AvailableTicket;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TicketsPurchaseSceneController extends AbstractSceneController {
@@ -131,9 +130,9 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
     }
 
     public void showAvailableTickets(List<AvailableTicket> tickets) {
-        SearchSceneController searchSceneController = new SearchSceneController();
+        SearchSceneController searchSceneController = (SearchSceneController) this.view.switchScene("searchResults.fxml").get();
         searchSceneController.fillTicketTable(tickets);
-        this.view.switchScene("searchResults.fxml");
+
     }
 
     public void showMessage() {
