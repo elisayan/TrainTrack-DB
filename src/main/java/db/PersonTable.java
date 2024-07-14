@@ -32,7 +32,7 @@ public class PersonTable {
             statement.setString(5, person.getPhone());
             statement.setString(6, person.getEmail());
             statement.setString(7, person.getPassword());
-            statement.setFloat(8, person.getTotalExspense());
+            statement.setFloat(8, person.getTotalExpense());
             statement.setString(9, person.getPersonType());
             statement.setString(10, person.getClientType());
 
@@ -64,7 +64,7 @@ public class PersonTable {
                 person.setPhone(resultSet.getString("Telefono"));
                 person.setEmail(resultSet.getString("Email"));
                 person.setPassword(resultSet.getString("Password"));
-                person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
+                person.setTotalExpense(resultSet.getFloat("SpesaTotale"));
 
                 return true;
             }
@@ -95,7 +95,7 @@ public class PersonTable {
                 person.setPersonType(resultSet.getString("TipoPersona"));
                 person.setPhone(resultSet.getString("Telefono"));
                 person.setSurname(resultSet.getString("Cognome"));
-                person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
+                person.setTotalExpense(resultSet.getFloat("SpesaTotale"));
                 return Optional.of(person);
             }
 
@@ -118,7 +118,7 @@ public class PersonTable {
                 Person person = new Person();
                 person.setName(resultSet.getString("Nome"));
                 person.setSurname(resultSet.getString("Cognome"));
-                person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
+                person.setTotalExpense(resultSet.getFloat("SpesaTotale"));
                 topSpenders.add(person);
             }
         } catch (SQLException e) {
