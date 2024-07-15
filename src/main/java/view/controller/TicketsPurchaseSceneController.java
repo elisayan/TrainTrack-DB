@@ -55,7 +55,7 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
     private Label supplementsLabel;
 
     @FXML
-    private ChoiceBox<String> timeBox;
+    private ComboBox<String> timeBox;
 
     @FXML
     private TableColumn<?, ?> timeColumn;
@@ -111,28 +111,24 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
                             .toList()
             );
         }
+        this.timeBox.setVisibleRowCount(5);
     }
 
     @FXML
-    private void loginClicked() {
+    private void userClicked() {
         this.view.switchScene("login.fxml");
     }
 
     @FXML
     private void searchClicked() {
-        //se nel db trova i treni che combaciano con la partenza, destinazione combaciata, allora setta
-        //l'error label, in messaggio di errore
-        //se trova almeno uno ritorna la lista disponibile, quindi cambia schermata
-        // if (){}
         this.errorLabel.setText("");
         this.controller.setAvailableTickets(departureField.getText(), destinationField.getText(), trainTypeBox.getValue(),
-                datePicker.getValue(), timeBox.getValue(), petBox.isSelected() && bikeBox.isSelected()?2:petBox.isSelected()||bikeBox.isSelected()? 1: 0);
+                datePicker.getValue(), timeBox.getValue(), petBox.isSelected() && bikeBox.isSelected() ? 2 : petBox.isSelected() || bikeBox.isSelected() ? 1 : 0);
     }
 
     public void showAvailableTickets(List<AvailableTicket> tickets) {
-        SearchSceneController searchSceneController = (SearchSceneController) this.view.switchScene("searchResults.fxml").get();
-        searchSceneController.fillTicketTable(tickets);
-
+        SearchResultSceneController searchResultSceneController = (SearchResultSceneController) this.view.switchScene("searchResults.fxml").get();
+        searchResultSceneController.fillTicketTable(tickets);
     }
 
     public void showMessage() {
