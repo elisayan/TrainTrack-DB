@@ -13,7 +13,7 @@ import model.AvailableTicket;
 
 import java.util.List;
 
-public class SearchSceneController extends AbstractSceneController{
+public class SearchResultSceneController extends AbstractSceneController{
 
     @FXML
     private TableColumn<AvailableTicket, String> departureColumn;
@@ -63,5 +63,14 @@ public class SearchSceneController extends AbstractSceneController{
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("ticketPrice"));
 
         searchTable.setItems(data);
+
+        searchTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                //handleRowSelect(newValue);
+                this.controller.selectedTicket(newValue);
+                this.view.switchScene("passengerDetailTicket.fxml");
+            }
+        });
     }
+
 }

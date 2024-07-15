@@ -31,6 +31,7 @@ public class PassengerDetailSceneController extends AbstractSceneController {
     private ImageView userButton;
 
 
+
     @FXML
     private void confirmClicked() {
         //verifica se le info sono inserite correttamente
