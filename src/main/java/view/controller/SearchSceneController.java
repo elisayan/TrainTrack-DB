@@ -55,8 +55,6 @@ public class SearchSceneController extends AbstractSceneController{
     public void fillTicketTable(List<AvailableTicket> ticketList){
         ObservableList<AvailableTicket> data = FXCollections.observableArrayList(ticketList);
 
-        System.out.println(ticketList.stream().iterator().next().getJourneyID());
-
         journeyIDColumn.setCellValueFactory(new PropertyValueFactory<>("journeyID"));
         departureColumn.setCellValueFactory(new PropertyValueFactory<>("departureStation"));
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destinationStation"));
