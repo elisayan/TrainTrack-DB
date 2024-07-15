@@ -134,8 +134,8 @@ public class ThroughTable {
                 "    sa.Nome AS NomeStazioneArrivo, " +
                 "    a1.Data, " +
                 "    a1.OrarioPartenzaPrevisto, " +
-                "    t.Tipo, "+
-                "    p.Prezzo, "+
+                "    t.Tipo, " +
+                "    p.Prezzo, " +
                 "    (SELECT MAX(a.Ordine) FROM Attraversato a WHERE a.CodPercorso = a1.CodPercorso) AS MaxOrdine, " +
                 "    a2.Ordine - a1.Ordine AS NumeroStazioni " +
                 "FROM " +
@@ -177,7 +177,7 @@ public class ThroughTable {
                     int maxOrdine = rs.getInt("MaxOrdine");
                     int numeroStazioni = rs.getInt("NumeroStazioni");
 
-                    float prezzoFinale = ((supplement + prezzo) / maxOrdine) * numeroStazioni;
+                    float prezzoFinale = ((prezzo / maxOrdine) * numeroStazioni) + supplement;
 
                     AvailableTicket availableTicketRequest = new AvailableTicket(
                             codPercorso,
@@ -187,7 +187,7 @@ public class ThroughTable {
                             orarioPartenzaPrevisto,
                             prezzoFinale
                     );
-                    System.out.println("ticket: "+availableTicketRequest.getJourneyID());
+                    System.out.println("ticket: " + availableTicketRequest.getJourneyID());
                     availableTickets.add(availableTicketRequest);
                 }
             }
