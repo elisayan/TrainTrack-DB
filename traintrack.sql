@@ -105,7 +105,6 @@ create table Servizio (
      CodPercorso varchar(50) not null,
      Email varchar(50) not null,
      Tip_Durata varchar(50),
-     Tip_Durata_1 varchar(50),
      Tip_Chilometraggio int,
      constraint IDServizio primary key (CodServizio));
 
