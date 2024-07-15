@@ -7,6 +7,7 @@ import model.AvailableTicket;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 public class ThroughTable {
@@ -123,14 +124,20 @@ public class ThroughTable {
     }
 
     public List<AvailableTicket> availableTickets(String departure, String arrival, String typeTrain, LocalDate departureDate,
-                                                  String departureTime, boolean bikeSupplement, boolean petSupplement) {
+                                                  String departureTime, int supplement) {
         String query = "SELECT " +
                 "    p.CodPercorso, " +
+                "    p.Email, " +
+                "    p.CodTreno, " +
+                "    p.TempoPercorrenza, " +
                 "    sp.Nome AS NomeStazionePartenza, " +
                 "    sa.Nome AS NomeStazioneArrivo, " +
                 "    a1.Data, " +
-                "    a1.OrarioPartenzaPrevisto, " +  // Aggiunta una virgola qui
-                "    t.Tipo " +
+                "    a1.OrarioPartenzaPrevisto, " +
+                "    t.Tipo, "+
+                "    p.Prezzo, "+
+                "    (SELECT MAX(a.Ordine) FROM Attraversato a WHERE a.CodPercorso = a1.CodPercorso) AS MaxOrdine, " +
+                "    a2.Ordine - a1.Ordine AS NumeroStazioni " +
                 "FROM " +
                 "    Attraversato a1 " +
                 "    JOIN Attraversato a2 ON a1.CodPercorso = a2.CodPercorso " +
@@ -148,8 +155,6 @@ public class ThroughTable {
                 "ORDER BY " +
                 "    a1.OrarioPartenzaPrevisto";
 
-
-
         List<AvailableTicket> availableTickets = new ArrayList<>();
 
         try (Connection connection = dataSource.getMySQLConnection();
@@ -163,14 +168,26 @@ public class ThroughTable {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
+                    String codPercorso = rs.getString("CodPercorso");
+                    String nomeStazionePartenza = rs.getString("NomeStazionePartenza");
+                    String nomeStazioneArrivo = rs.getString("NomeStazioneArrivo");
+                    LocalTime orarioPartenzaPrevisto = rs.getTime("OrarioPartenzaPrevisto").toLocalTime();
+                    String tipo = rs.getString("Tipo");
+                    float prezzo = rs.getFloat("Prezzo");
+                    int maxOrdine = rs.getInt("MaxOrdine");
+                    int numeroStazioni = rs.getInt("NumeroStazioni");
+
+                    float prezzoFinale = ((supplement + prezzo) / maxOrdine) * numeroStazioni;
+
                     AvailableTicket availableTicketRequest = new AvailableTicket(
-                            rs.getString("CodPercorso"),
-                            rs.getString("NomeStazionePartenza"),
-                            rs.getString("NomeStazioneArrivo"),
-                            rs.getString("Tipo"),
-                            rs.getTime("OrarioPartenzaPrevisto").toLocalTime()
-                           // rs.getFloat("Prezzo")
+                            codPercorso,
+                            nomeStazionePartenza,
+                            nomeStazioneArrivo,
+                            tipo,
+                            orarioPartenzaPrevisto,
+                            prezzoFinale
                     );
+                    System.out.println("ticket: "+availableTicketRequest.getJourneyID());
                     availableTickets.add(availableTicketRequest);
                 }
             }
@@ -179,4 +196,5 @@ public class ThroughTable {
         }
         return availableTickets;
     }
+
 }

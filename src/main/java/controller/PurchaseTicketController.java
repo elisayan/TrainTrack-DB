@@ -15,9 +15,9 @@ public class PurchaseTicketController {
     }
 
     public void setAvailableTickets(String departure, String arrival, String typeTrain, LocalDate departureDate,
-                                    String departureTime, boolean bikeSupplement, boolean petSupplement) {
+                                    String departureTime, int supplement) {
         var tickets = this.model.availableTickets(departure, arrival, typeTrain, departureDate,
-                departureTime, bikeSupplement, petSupplement);
+                departureTime, supplement);
         if (!tickets.isEmpty()){
             this.view.showAvailableTickets(tickets);
         } else {

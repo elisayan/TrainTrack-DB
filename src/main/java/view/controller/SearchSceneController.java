@@ -60,6 +60,7 @@ public class SearchSceneController extends AbstractSceneController{
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destinationStation"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("typeTrain"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("ticketPrice"));
 
         searchTable.setItems(data);
     }

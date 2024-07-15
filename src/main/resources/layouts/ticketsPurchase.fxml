@@ -34,12 +34,12 @@
                   </HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="20.0">
                      <children>
-                        <TextField fx:id="departureField" prefWidth="150.0" promptText="DEPARTURE">
+                        <TextField fx:id="departureField" promptText="DEPARTURE">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="destinationField" prefWidth="150.0" promptText="DESTINATION">
+                        <TextField fx:id="destinationField" maxWidth="1.7976931348623157E308" promptText="DESTINATION">
                            <HBox.margin>
                               <Insets top="5.0" />
                            </HBox.margin>
@@ -61,29 +61,29 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="TOP_CENTER" spacing="14.0">
+            <HBox alignment="CENTER_LEFT" spacing="80.0">
                <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0">
+                  <VBox alignment="TOP_CENTER">
                      <children>
                         <DatePicker fx:id="datePicker" promptText="DATE">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
                         </DatePicker>
-                        <Label maxWidth="1.7976931348623157E308" text="Time:">
-                           <VBox.margin>
-                              <Insets left="65.0" />
-                           </VBox.margin>
-                        </Label>
-                        <ChoiceBox fx:id="timeBox" prefWidth="175.0" />
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Time:" />
+                              <ChoiceBox fx:id="timeBox" prefWidth="175.0" />
+                           </children>
+                        </VBox>
                      </children>
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="100.0" prefWidth="326.0">
+                  <VBox>
                      <children>
-                        <Label fx:id="supplementsLabel" maxWidth="1.7976931348623157E308" text="SUPPLEMENTS">
+                        <Label fx:id="supplementsLabel" maxWidth="1.7976931348623157E308" text="SUPPLEMENTS:">
                            <VBox.margin>
                               <Insets top="8.0" />
                            </VBox.margin>
@@ -104,6 +104,9 @@
                      </children>
                   </VBox>
                </children>
+               <VBox.margin>
+                  <Insets left="110.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>

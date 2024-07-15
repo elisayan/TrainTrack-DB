@@ -126,7 +126,7 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
         // if (){}
         this.errorLabel.setText("");
         this.controller.setAvailableTickets(departureField.getText(), destinationField.getText(), trainTypeBox.getValue(),
-                datePicker.getValue(), timeBox.getValue(), petBox.isSelected(), bikeBox.isSelected());
+                datePicker.getValue(), timeBox.getValue(), petBox.isSelected() && bikeBox.isSelected()?2:petBox.isSelected()||bikeBox.isSelected()? 1: 0);
     }
 
     public void showAvailableTickets(List<AvailableTicket> tickets) {
