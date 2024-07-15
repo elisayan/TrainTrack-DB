@@ -99,7 +99,6 @@ create table Servizio (
      DataPartenza date not null,
      OrarioPartenza time,
      TipoPasseggero varchar(50),
-     Supplemento varchar(50),
      Prezzo float(10),
      Durata varchar(50),
      Chilometraggio int,
