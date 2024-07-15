@@ -36,7 +36,7 @@ create table Attraversato (
      StatoPartenza varchar(50) not null,
      CodStazione varchar(50) not null,
      CodPercorso varchar(50) not null,
-     constraint IDAttraversa primary key (Data));
+     constraint IDAttraversa primary key (Data, CodPercorso, CodStazione));
 
 create table BuonoSconto (
      CodBuonoSconto varchar(50) not null,
