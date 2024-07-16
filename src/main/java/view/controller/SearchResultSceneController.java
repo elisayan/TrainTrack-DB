@@ -1,6 +1,5 @@
 package view.controller;
 
-import controller.SearchTicketController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,8 +44,6 @@ public class SearchResultSceneController extends AbstractSceneController{
     @FXML
     private TableColumn<AvailableTicket, String> typeColumn;
 
-    private final SearchTicketController controller = new SearchTicketController(this);
-
     @FXML
     void loginClicked() {
         this.view.switchScene("login.fxml");
@@ -66,9 +63,9 @@ public class SearchResultSceneController extends AbstractSceneController{
 
         searchTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                //handleRowSelect(newValue);
-                this.controller.selectedTicket(newValue);
-                this.view.switchScene("passengerDetailTicket.fxml");
+                //this.controller.selectedTicket(newValue);
+                PassengerDetailSceneController passengerDetailSceneController = (PassengerDetailSceneController) this.view.switchScene("passengerDetailTicket.fxml").get();
+                passengerDetailSceneController.selectedTicket(newValue);
             }
         });
     }

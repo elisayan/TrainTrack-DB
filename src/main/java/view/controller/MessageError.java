@@ -11,6 +11,8 @@ public enum MessageError {
 
     TICKET_NOT_EXIST("Ticket doesn't exist"),
 
+    INSERT_INFO("Insert your personal information"),
+
     ERROR("Error");
 
     private final String message;

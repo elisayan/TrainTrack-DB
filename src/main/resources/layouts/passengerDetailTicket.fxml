@@ -15,12 +15,12 @@
    <top>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="650.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="homeButton" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="homeButton" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/home.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="userButton" fitHeight="35.0" fitWidth="35.0" onMouseClicked="#userClicked" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="userButton" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#userClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/user.png" />
                </image>
@@ -34,7 +34,7 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Messaggio">
+            <Label fx:id="messageLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Messaggio">
                <VBox.margin>
                   <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
@@ -52,9 +52,10 @@
                         <Label layoutX="10.0" layoutY="10.0" text="CF: " />
                         <Label layoutX="10.0" layoutY="10.0" text="Address: " />
                         <Label layoutX="10.0" layoutY="10.0" text="Phone: " />
+                        <Label text="Voucher code:" />
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
+                  <VBox fx:id="vBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
                      <children>
                         <TextField fx:id="firstNameField" promptText="FIRST NAME" />
                         <TextField fx:id="lastNameField" promptText="LAST NAME" />
@@ -62,11 +63,15 @@
                         <TextField fx:id="cfField" promptText="CF" />
                         <TextField fx:id="addressField" promptText="ADDRESS" />
                         <TextField fx:id="phoneField" promptText="PHONE" />
+                        <TextField fx:id="voucherField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="VOUCHER CODE" />
                      </children>
                   </VBox>
                </children>
             </HBox>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="19.0" />
+         </BorderPane.margin>
       </VBox>
    </center>
    <bottom>
@@ -74,7 +79,7 @@
          <children>
             <Button mnemonicParsing="false" onMouseClicked="#confirmClicked" text="CONFIRM">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin></Button>
          </children>
          <padding>
