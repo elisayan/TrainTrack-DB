@@ -2,13 +2,25 @@ package view.controller;
 
 import controller.PassengerDetailController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.AvailableTicket;
 
+import java.io.IOException;
+
 public class PassengerDetailSceneController extends AbstractSceneController {
+
+    @FXML
+    private BorderPane pane;
 
     @FXML
     private TextField addressField;
@@ -45,16 +57,25 @@ public class PassengerDetailSceneController extends AbstractSceneController {
     }
 
     @FXML
-    private void confirmClicked() {
-        //verifica se le info sono inserite correttamente
+    private void confirmClicked() throws IOException {
         this.messageLabel.setText("");
-        boolean isFilled = vBox.getChildren().stream().noneMatch(t -> ((TextField)t).getText().isBlank() && !((TextField)t).equals(voucherField));
-        if (isFilled) {
-            //this.view.switchScene("");
-            System.out.println("switch scene");
+        if (vBox.getChildren().stream().noneMatch(t -> ((TextField)t).getText().isBlank()
+                && !t.equals(voucherField))) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/layouts/confirmDialog.fxml"));
+            Parent root = loader.load();
+
+            ConfirmDialogController controller = loader.getController();
+            controller.initialize(this.view, this.getController());
+            controller.setRoot(root);
+
+            final Stage stage = new Stage();
+            stage.getIcons().add(new Image("/img/tick.png"));
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(this.pane.getScene().getWindow());
+            stage.setScene(new Scene(root));
+            stage.show();
         } else {
             this.messageLabel.setText(MessageError.EMPTY_FIELD.toString());
-            System.out.println("false switch scene");
         }
     }
 
