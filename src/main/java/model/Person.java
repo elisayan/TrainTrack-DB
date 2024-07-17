@@ -105,7 +105,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person [email=" + email + ", password=" + password + ", name=" + name + ", surname=" + surname + ", cf="
-                + cf + ", phone=" + phone + ", address=" + address + ", totalExspense=" + totalExpense
+                + cf + ", phone=" + phone + ", address=" + address + ", totalExpense=" + totalExpense
                 + ", personType=" + personType + ", clientType=" + clientType + "]";
     }
 

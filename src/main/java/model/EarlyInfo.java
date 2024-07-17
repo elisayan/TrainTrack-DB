@@ -1,6 +1,7 @@
 package model;
 
 public class EarlyInfo {
+
     private final String codPercorso;
     private final String stazionePartenzaNome;
     private final String stazioneDestinazioneNome;
@@ -13,6 +14,26 @@ public class EarlyInfo {
         this.stazionePartenzaNome = stazionePartenzaNome;
         this.stazioneDestinazioneNome = stazioneDestinazioneNome;
         this.mediaMinutiAnticipo = mediaMinutiAnticipo;
+    }
+
+    public String getCodPercorso() {
+        return codPercorso;
+    }
+
+    public String getStazionePartenzaNome() {
+        return stazionePartenzaNome;
+    }
+
+    public String getStazioneDestinazioneNome() {
+        return stazioneDestinazioneNome;
+    }
+
+    public float getMediaMinutiAnticipo() {
+        return mediaMinutiAnticipo;
+    }
+
+    public int getRank() {
+        return rank;
     }
 
     public void setRank(int rank) {
