@@ -51,7 +51,7 @@ create table CheckIn (
      Data  date not null,
      Ora time not null,
      Email varchar(50) not null,
-     CodServizio varchar(50) not null,
+     codServizio int not null,
      constraint IDCHECKIN primary key (CodCheckIn));
 
 create table Notifica (
@@ -89,7 +89,7 @@ create table Sequenza (
      constraint IDSequenza primary key (CodStazione, Suc_CodStazione));
 
 create table Servizio (
-     CodServizio char(50) not null,
+     CodServizio int not null auto_increment,
      StazionePartenza varchar(50) not null,
      StazioneArrivo varchar(50) not null,
      NomePasseggero varchar(50) not null,
@@ -123,7 +123,7 @@ create table Treno (
 
 create table Utilizzo (
      CodBuonoSconto varchar(50) not null,
-     CodServizio varchar(50) not null,
+     codServizio int not null,
      Data date not null,
      constraint FKUti_Buo_ID primary key (CodBuonoSconto),
      constraint FKUti_Ser_ID unique (CodServizio));
