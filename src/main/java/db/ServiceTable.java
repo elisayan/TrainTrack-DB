@@ -95,7 +95,7 @@ public class ServiceTable {
         }
     }
 
-    public boolean isGuest(String email) {
+    public boolean existGuest(String email) {
         String sql = "SELECT Email FROM Persona WHERE Email = ? AND (Password IS NULL OR TipoCliente = 'guest')";
 
         try (Connection conn = dataSource.getMySQLConnection();
@@ -129,7 +129,7 @@ public class ServiceTable {
     public void saveOrUpdateGuest(String email, String firstName, String lastName, String address, String cf) {
         String checkSql = "SELECT Email FROM Persona WHERE Email = ?";
         String updateSql = "UPDATE Persona SET Nome = ?, Cognome = ?, Indirizzo = ?, Telefono = ?, CF = ?, Password = ?, SpesaTotale = ?, TipoPersona = 'cliente', TipoCliente = 'guest' WHERE Email = ?";
-        String insertSql = "INSERT INTO Persona (Email, Nome, Cognome, Indirizzo, Telefono, CF, Password, SpesaTotale, TipoPersona, TipoCliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String insertSql = "INSERT INTO Persona (Email, Nome, Cognome, Indirizzo, Telefono, CF, Password, SpesaTotale, TipoPersona, TipoCliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'cliente', 'guest')";
 
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement checkPstmt = conn.prepareStatement(checkSql)) {
@@ -148,6 +148,7 @@ public class ServiceTable {
                     updatePstmt.setNull(7, Types.FLOAT);
                     updatePstmt.setString(8, email);
                     updatePstmt.executeUpdate();
+                    System.out.println("update guest");
                 }
             } else {
                 try (PreparedStatement insertPstmt = conn.prepareStatement(insertSql)) {
@@ -160,6 +161,7 @@ public class ServiceTable {
                     insertPstmt.setNull(7, Types.VARCHAR);
                     insertPstmt.setNull(8, Types.FLOAT);
                     insertPstmt.executeUpdate();
+                    System.out.println("save guest");
                 }
             }
         } catch (SQLException e) {

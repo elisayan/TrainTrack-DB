@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -43,6 +44,9 @@ public class PassengerDetailSceneController extends AbstractSceneController {
     private TextField addressField;
 
     @FXML
+    private Button confirmButton;
+
+    @FXML
     private VBox vBox;
 
     private final PassengerDetailController controller = new PassengerDetailController(this);
@@ -61,13 +65,16 @@ public class PassengerDetailSceneController extends AbstractSceneController {
                 && !t.equals(voucherField))) {
 
             if (!this.voucherField.getText().isBlank()){
-                this.controller.checkVoucher(this.voucherField.getText(), this.emailField.getText());
+                this.controller.checkEmail(ticket.getJourneyID(), ticket.getDepartureStation(), ticket.getDestinationStation(),
+                        ticket.getDepartureDate(), ticket.getDepartureTime(), ticket.getTypeTrain(), ticket.getTicketPrice(),
+                        this.firstNameField.getText(), this.lastNameField.getText(), this.emailField.getText(),
+                        this.addressField.getText(), this.cfField.getText(), this.voucherField.getText());
+            } else {
+                this.controller.successful(ticket.getJourneyID(), ticket.getDepartureStation(), ticket.getDestinationStation(),
+                        ticket.getDepartureDate(), ticket.getDepartureTime(), ticket.getTypeTrain(), ticket.getTicketPrice(),
+                        this.firstNameField.getText(), this.lastNameField.getText(), this.emailField.getText(),
+                        this.addressField.getText(), this.cfField.getText());
             }
-
-            this.controller.checkEmail(ticket.getJourneyID(), ticket.getDepartureStation(), ticket.getDestinationStation(),
-                    ticket.getDepartureDate(), ticket.getDepartureTime(), ticket.getTypeTrain(), ticket.getTicketPrice(),
-                    this.firstNameField.getText(), this.lastNameField.getText(), this.emailField.getText(),
-                    this.addressField.getText(), this.cfField.getText());
         } else {
             this.messageLabel.setText(MessageError.EMPTY_FIELD.toString());
         }
@@ -92,6 +99,8 @@ public class PassengerDetailSceneController extends AbstractSceneController {
         stage.initOwner(this.pane.getScene().getWindow());
         stage.setScene(new Scene(root));
         stage.show();
+
+        this.confirmButton.setDisable(true);
     }
 
     public void selectedTicket(Ticket ticket) {
