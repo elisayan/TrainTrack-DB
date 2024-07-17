@@ -19,46 +19,19 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
     private DatePicker datePicker;
 
     @FXML
-    private TableColumn<?, ?> departureColumn;
-
-    @FXML
     private TextField departureField;
-
-    @FXML
-    private TableColumn<?, ?> destinationColumn;
 
     @FXML
     private TextField destinationField;
 
     @FXML
-    private Button homeButton;
-
-    @FXML
-    private TableColumn<?, ?> journeyIDColumn;
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
     private CheckBox petBox;
-
-    @FXML
-    private Button searchButton;
 
     @FXML
     private Label errorLabel;
 
     @FXML
-    private Label searchesLabel;
-
-    @FXML
-    private Label supplementsLabel;
-
-    @FXML
     private ComboBox<String> timeBox;
-
-    @FXML
-    private TableColumn<?, ?> timeColumn;
 
     @FXML
     private ChoiceBox<String> trainTypeBox;

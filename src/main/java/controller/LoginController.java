@@ -21,9 +21,9 @@ public class LoginController {
             currentPerson.setEmail(email);
             currentPerson.setPassword(password);
             this.controller.setPerson(currentPerson);
-            this.view.goForeward(model.findPerson(email).get());
+            this.view.goForward(model.findPerson(email).get());
         } else if (model.findPerson(email).isEmpty()) {
-            this.view.userNotexist();
+            this.view.userNotExist();
         } else {
             this.view.loginFailed();
         }

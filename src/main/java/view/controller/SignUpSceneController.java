@@ -4,15 +4,9 @@ import controller.SignUpController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import model.Person;
 
 public class SignUpSceneController extends AbstractSceneController {
-    @FXML
-    private Button signButton;
-
-    @FXML
-    private Button loginButton;
 
     @FXML
     private TextField nameField;
@@ -38,18 +32,9 @@ public class SignUpSceneController extends AbstractSceneController {
     @FXML
     private Label errorLabel;
 
-    @FXML
-    private VBox vBox;
-
-    @FXML
-    private HBox hBox;
-
-    @FXML
-    private BorderPane pane;
-
     private String typeClient;
 
-    private SignUpController controller = new SignUpController(this);
+    private final SignUpController controller = new SignUpController(this);
 
     private boolean isFieldsEmpty() {
         if (passwordField.getText().isBlank()) {
@@ -94,7 +79,7 @@ public class SignUpSceneController extends AbstractSceneController {
         }
     }
 
-    public void goForeward(final Person person) {
+    public void goForward(final Person person) {
         this.getController().savePerson(person);
         this.getController().goToTheNextDataScene("login.fxml");
     }

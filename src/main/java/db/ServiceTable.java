@@ -148,7 +148,6 @@ public class ServiceTable {
                     updatePstmt.setNull(7, Types.FLOAT);
                     updatePstmt.setString(8, email);
                     updatePstmt.executeUpdate();
-                    System.out.println("update guest");
                 }
             } else {
                 try (PreparedStatement insertPstmt = conn.prepareStatement(insertSql)) {
@@ -161,7 +160,6 @@ public class ServiceTable {
                     insertPstmt.setNull(7, Types.VARCHAR);
                     insertPstmt.setNull(8, Types.FLOAT);
                     insertPstmt.executeUpdate();
-                    System.out.println("save guest");
                 }
             }
         } catch (SQLException e) {
