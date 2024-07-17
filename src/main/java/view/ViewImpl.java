@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 
 import java.io.*;
+import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,26 +34,30 @@ public class ViewImpl extends Application implements View {
         this.controller.initializeView(this);
     }
 
-    private void loadScene(final String filePath) {
+    private Optional<SceneController> loadScene(final String filePath) {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH + filePath));
+
+        final Parent root;
         try {
-            final Parent root = loader.load(this.getClass().getResourceAsStream(PATH + filePath));
-            final SceneController sceneController = loader.getController();
-            sceneController.setRoot(root);
-            sceneController.initialize(this, this.controller);
-            if (this.stage.getScene() == null) {
-                this.stage.setScene(new Scene(root));
-            } else {
-                this.stage.getScene().setRoot(root);
-            }
+            root = loader.load(this.getClass().getResourceAsStream(PATH + filePath));
+        final SceneController sceneController = loader.getController();
+        sceneController.setRoot(root);
+        sceneController.initialize(this, this.controller);
+        if (this.stage.getScene() == null) {
+            this.stage.setScene(new Scene(root));
+        } else {
+            this.stage.getScene().setRoot(root);
+        }
+        return Optional.of(sceneController);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-    public void switchScene(final String path) {
+    public Optional<SceneController> switchScene(final String path) {
         // this.currentSceneController = this.sceneLoader.loadScene(path).get();
         // this.initializeSceneController(this.currentSceneController);
-        this.loadScene(path);
+        return this.loadScene(path);
     }
+
 }

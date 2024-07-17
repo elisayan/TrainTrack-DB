@@ -9,6 +9,8 @@ public enum MessageError {
 
     USER_NOT_EXIST("User doesn't exist"),
 
+    SUBSCRIPTION_NOT_EXIST("Subscription doesn't exist"),
+
     ERROR("Error");
 
     private String message;

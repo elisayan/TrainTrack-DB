@@ -1,16 +1,21 @@
 package view.controller;
 
+import controller.Controller;
+import controller.SubscriptionPurchaseController;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import model.Subscription;
+import javafx.scene.control.DateCell;
+import view.View;
 
-import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class SubscriptionPurchaseSceneController extends AbstractSceneController implements Initializable {
+public class SubscriptionPurchaseSceneController extends AbstractSceneController {
 
     @FXML
     private DatePicker datePicker;
@@ -28,38 +33,31 @@ public class SubscriptionPurchaseSceneController extends AbstractSceneController
     private ChoiceBox<String> timeChoice;
 
     @FXML
+    private Label errorLabel;
+
+    private SubscriptionPurchaseController controller;
+
+    @FXML
     private void loginClicked() {
         this.view.switchScene("login.fxml");
     }
 
     @FXML
-    private void searchClicked(MouseEvent event) {
-
+    private void searchClicked() {
+        this.controller.setSubscriptions(getDepartureText(), getDestinationText(), getStartDate(), getDurationText());
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initializeTime(timeChoice);
+    public void showSubscriptionSearched(List<Subscription> subscriptions) {
+        SubscriptionSearchSceneController subscriptionSearchSceneController = (SubscriptionSearchSceneController) this.view.switchScene("subscriptionSearchResults.fxml").get();
+        subscriptionSearchSceneController.populateSearchTable(subscriptions);
     }
 
-    static void initializeTime(ChoiceBox<String> timeChoice) {
-        LocalTime now = LocalTime.now();
-        int hour = now.getHour();
-        int minute = now.getMinute();
-        int roundedMinute = (minute < 30) ? 30 : 0;
-        if (roundedMinute == 0) {
-            hour++;
-        }
+    @FXML
+    private void initialize() {
+        this.controller = new SubscriptionPurchaseController(this);
+        timeChoice.getItems().addAll("Weekly", "Monthly", "Yearly");
+        timeChoice.setValue("Weekly");
 
-        timeChoice.getItems().clear();
-        for (int h = hour; h <= 23; h++) {
-            for (int m = (h == hour) ? roundedMinute : 0; m < 60; m += 30) {
-                timeChoice.getItems().add(String.format("%02d:%02d", h, m));
-            }
-        }
-    }
-
-    public void initialize() {
         datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
@@ -68,4 +66,23 @@ public class SubscriptionPurchaseSceneController extends AbstractSceneController
         });
     }
 
+    public String getDepartureText() {
+        return departureField.getText();
+    }
+
+    public String getDestinationText() {
+        return destinationField.getText();
+    }
+
+    public String getDurationText() {
+        return timeChoice.getValue();
+    }
+
+    public LocalDate getStartDate() {
+        return datePicker.getValue();
+    }
+
+    public void showError(String message) {
+        errorLabel.setText(message);
+    }
 }

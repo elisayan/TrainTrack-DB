@@ -80,7 +80,7 @@ public class TicketsPurchaseSceneController extends AbstractSceneController impl
         trainTypeBox.getItems().addAll("Regionale", "Intercity", "Frecciarossa");
         trainTypeBox.setValue("Regionale");
 
-        SubscriptionPurchaseSceneController.initializeTime(timeBox);
+        //SubscriptionPurchaseSceneController.initializeTime(timeBox);
     }
 
     public void initialize() {

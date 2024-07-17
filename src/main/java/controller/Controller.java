@@ -2,12 +2,15 @@ package controller;
 
 import model.Model;
 import model.Person;
+import model.Subscription;
 import view.View;
+import java.util.*;
 
 public class Controller {
     private View view;
     private final Model model;
     private Person person;
+    private List<Subscription> subscriptions;
 
     public Controller() {
         this.model = new Model();
@@ -32,5 +35,13 @@ public class Controller {
 
     public Person getCurrentPerson() {
         return person;
+    }
+
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
     }
 }
