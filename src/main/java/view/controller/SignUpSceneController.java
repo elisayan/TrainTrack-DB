@@ -76,7 +76,7 @@ public class SignUpSceneController extends AbstractSceneController {
     }
 
     public void goForward(final Person person) {
-        this.getController().savePerson(person);
+        this.getController().setPerson(person);
         this.getController().goToTheNextDataScene("login.fxml");
     }
 

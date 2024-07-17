@@ -16,8 +16,15 @@ public class HomeSceneController extends AbstractSceneController {
     }
 
     @FXML
+
     private void rankingClicked(){
         this.view.switchScene("rankingHome.fxml");
+    }
+  
+    @FXML
+    public void timetableClicked() {
+        this.view.switchScene("timetable.fxml");
+
     }
 
     @FXML
