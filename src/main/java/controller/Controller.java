@@ -5,6 +5,8 @@ import model.Person;
 import model.Station;
 import view.View;
 
+import java.util.Optional;
+
 public class Controller {
     private View view;
     private final Model model;
@@ -26,10 +28,11 @@ public class Controller {
 
     public void setPerson(Person person) {
         model.setPerson(person);
+        this.person = person;
     }
 
-    public Person getCurrentPerson() {
-        return person;
+    public Optional<Person> getCurrentPerson() {
+        return Optional.ofNullable(this.person);
     }
 
     public void setStation(Station station) {

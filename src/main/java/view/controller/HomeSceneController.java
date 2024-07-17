@@ -24,17 +24,17 @@ public class HomeSceneController extends AbstractSceneController {
     @FXML
     public void timetableClicked() {
         this.view.switchScene("timetable.fxml");
-
     }
 
     @FXML
     private void purchaseClicked(){this.view.switchScene("purchaseHome.fxml");}
 
-    @FXML
     public void initialize(View view, Controller controller) {
         super.initialize(view, controller);
-        if (controller.getCurrentPerson() != null) {
-            welcomeLabel.setText("Hello " + controller.getCurrentPerson().getName() + "!");
+        //System.out.println("HomeSceneController initialized: "+controller.getCurrentPerson().getEmail());
+        System.out.println("initialized home scene controller " + controller);
+        if (controller.getCurrentPerson().isPresent()) {
+            welcomeLabel.setText("Hello " + controller.getCurrentPerson().get().getName() + "!");
         }
     }
 }

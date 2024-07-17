@@ -47,9 +47,9 @@ public class LoginSceneController extends AbstractSceneController {
         this.view.switchScene("signup.fxml");
     }
 
-    public void goForward(final Person person) {
-        this.getController().setPerson(person);
-        this.getController().goToTheNextDataScene("home.fxml");
+    public void goForward() {
+        //this.getController().goToTheNextDataScene("home.fxml");
+        this.view.switchScene("home.fxml");
     }
 
     public void loginFailed() {

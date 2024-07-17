@@ -16,12 +16,10 @@ public class LoginController {
     }
 
     public void loginPerson(final String email, final String password) {
-        Person currentPerson = new Person();
         if (this.model.loginUser(email, password)) {
-            currentPerson.setEmail(email);
-            currentPerson.setPassword(password);
+            Person currentPerson = this.model.findPerson(email).get();
             this.controller.setPerson(currentPerson);
-            this.view.goForward(model.findPerson(email).get());
+            this.view.goForward();
         } else if (model.findPerson(email).isEmpty()) {
             this.view.userNotExist();
         } else {

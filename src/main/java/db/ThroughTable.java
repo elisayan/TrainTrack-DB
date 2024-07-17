@@ -116,7 +116,7 @@ public class ThroughTable {
                                           Map<String, String> destinationStations) throws SQLException {
         String query = "SELECT CodPercorso, AVG(TIMESTAMPDIFF(MINUTE, OrarioArrivoReale, OrarioArrivoPrevisto)) AS MediaMinutiAnticipo "
                 + "FROM Attraversato "
-                + "WHERE TIMESTAMPDIFF(MINUTE, OrarioArrivoReale, OrarioArrivoPrevisto) > 5 "
+                + "WHERE TIMESTAMPDIFF(MINUTE, OrarioArrivoReale, OrarioArrivoPrevisto) >= 5 "
                 + "GROUP BY CodPercorso "
                 + "ORDER BY MediaMinutiAnticipo DESC "
                 + "LIMIT 5";

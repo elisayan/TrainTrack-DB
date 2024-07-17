@@ -9,15 +9,11 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import model.Journey;
 import model.JourneyInfo;
 import model.Person;
@@ -30,12 +26,6 @@ import java.util.*;
 
 
 public class TimetableSceneController extends AbstractSceneController {
-    
-    @FXML
-    private Label departureLabel;
-
-    @FXML
-    private Label destinationLabel;
 
     @FXML
     private TextField stationField;
@@ -44,43 +34,13 @@ public class TimetableSceneController extends AbstractSceneController {
     private Label errorLabel;
 
     @FXML
-    private Label idjourneyLabel;
-
-    @FXML
-    private Label notificationLabel;
-
-    @FXML
-    private Label platformLabel;
-
-    @FXML
-    private Label statusLabel;
-
-    @FXML
-    private Label timatableLabel;
-
-    @FXML
-    private Label timeLabel;
-
-    @FXML
     private GridPane timetableGridPane;
-
-    @FXML
-    private AnchorPane pane;
-
-    @FXML
-    private VBox vBox;
-
-    @FXML
-    private HBox hBox;
 
     private TimetableController controller;
     private AttivationTable attivationTable;
 
     @FXML
     private final DBConnection dataSource = new DBConnection();
-    
-    final private int rows = 9;
-    final private int columns = 7;
 
     @Override
     public void initialize(View view, Controller controller) {
@@ -105,7 +65,9 @@ public class TimetableSceneController extends AbstractSceneController {
             controller.updateJourneyInfo(station);
             centerAllLabels(timetableGridPane);
 
+            int rows = 9;
             for (int i = 1; i < rows; i++) {
+                int columns = 7;
                 addNotVisibleCheckBoxes(timetableGridPane, columns - 1, i);
                 setCheckBoxVisibleIfLabelHasText(timetableGridPane, 0, i, columns - 1);
                 disableCheckBoxIfUserNotLoggedIn(timetableGridPane, i, columns - 1, getController());
@@ -137,17 +99,13 @@ public class TimetableSceneController extends AbstractSceneController {
         int row = GridPane.getRowIndex(checkBox);
         Label codPercorsoLabel = (Label) getNodeFromGridPane(timetableGridPane, 0, row);
         String codPercorso = codPercorsoLabel.getText();
-        Person person = getController().getCurrentPerson();
+        Person person = getController().getCurrentPerson().orElse(null);
         Journey journey = new Journey();
         journey.setJourneyID(codPercorso);
         if (checkBox.isSelected()) {
-            if (person != null) {
-                attivationTable.subscribeNotification(journey, person);
-            }
+            attivationTable.subscribeNotification(journey, person);
         } else {
-            if (person != null) {
-                attivationTable.unsubscribeNotification(journey, person);
-            }
+            attivationTable.unsubscribeNotification(journey, person);
         }
     }
 
@@ -221,11 +179,9 @@ public class TimetableSceneController extends AbstractSceneController {
     @FXML
     private void disableCheckBoxIfUserNotLoggedIn(GridPane gridPane, int row, int col, Controller controller) {
         CheckBox checkBox = (CheckBox) getNodeFromGridPane(gridPane, col, row);
-        if (checkBox != null) {
-            Person person = controller.getCurrentPerson();
-            if (person == null) {
+        Person person = controller.getCurrentPerson().orElse(null);
+        if (checkBox != null && person == null) {
                 checkBox.setDisable(true);
-            }
         }
     }
 
@@ -236,16 +192,13 @@ public class TimetableSceneController extends AbstractSceneController {
             Label codPercorsoLabel = (Label) getNodeFromGridPane(gridPane, 0, row);
             if (codPercorsoLabel != null) {
                 String codPercorso = codPercorsoLabel.getText();
-                Person person = controller.getCurrentPerson();
+                Person person = controller.getCurrentPerson().get();
                 Journey journey = new Journey();
                 journey.setJourneyID(codPercorso);
-                if (person != null) {
-                    checkBox.setSelected(attivationTable.isSubscribed(journey, person));
-                }
+                checkBox.setSelected(attivationTable.isSubscribed(journey, person));
             }
         }
     }
-
 
     @FXML
     public void loginClicked() {
