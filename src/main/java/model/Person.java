@@ -9,21 +9,21 @@ public class Person {
     private String cf;
     private String phone;
     private String address;
-    private float totalExspense;
+    private float totalExpense;
     private String personType;
     private String clientType;
     private int rank;
-
-    public int getRank() {
-        return rank;
-    }
 
     public void setRank(int rank) {
         this.rank = rank;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
     public Person() {
-        this.totalExspense = 0;
+        this.totalExpense = 0;
     }
 
     public String getEmail() {
@@ -74,12 +74,12 @@ public class Person {
         this.address = address;
     }
 
-    public float getTotalExspense() {
-        return totalExspense;
+    public float getTotalExpense() {
+        return totalExpense;
     }
 
-    public void setTotalExspense(float totalExspense) {
-        this.totalExspense = totalExspense;
+    public void setTotalExpense(float totalExpense) {
+        this.totalExpense = totalExpense;
     }
 
     public String getPersonType() {
@@ -109,8 +109,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person [email=" + email + ", password=" + password + ", name=" + name + ", surname=" + surname + ", cf="
-                + cf + ", phone=" + phone + ", address=" + address + ", totalExspense=" + totalExspense
+                + cf + ", phone=" + phone + ", address=" + address + ", totalExpense=" + totalExpense
                 + ", personType=" + personType + ", clientType=" + clientType + "]";
     }
-
 }

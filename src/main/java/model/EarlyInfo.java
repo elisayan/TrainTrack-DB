@@ -1,10 +1,11 @@
 package model;
 
 public class EarlyInfo {
-    private String codPercorso;
-    private String stazionePartenzaNome;
-    private String stazioneDestinazioneNome;
-    private float mediaMinutiAnticipo;
+
+    private final String codPercorso;
+    private final String stazionePartenzaNome;
+    private final String stazioneDestinazioneNome;
+    private final float mediaMinutiAnticipo;
     private int rank;
 
     public EarlyInfo(String codPercorso, String stazionePartenzaNome, String stazioneDestinazioneNome,
@@ -19,32 +20,16 @@ public class EarlyInfo {
         return codPercorso;
     }
 
-    public void setCodPercorso(String codPercorso) {
-        this.codPercorso = codPercorso;
-    }
-
     public String getStazionePartenzaNome() {
         return stazionePartenzaNome;
-    }
-
-    public void setStazionePartenzaNome(String stazionePartenzaNome) {
-        this.stazionePartenzaNome = stazionePartenzaNome;
     }
 
     public String getStazioneDestinazioneNome() {
         return stazioneDestinazioneNome;
     }
 
-    public void setStazioneDestinazioneNome(String stazioneDestinazioneNome) {
-        this.stazioneDestinazioneNome = stazioneDestinazioneNome;
-    }
-
     public float getMediaMinutiAnticipo() {
         return mediaMinutiAnticipo;
-    }
-
-    public void setMediaMinutiAnticipo(float mediaMinutiAnticipo) {
-        this.mediaMinutiAnticipo = mediaMinutiAnticipo;
     }
 
     public int getRank() {

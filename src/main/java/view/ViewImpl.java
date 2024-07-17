@@ -1,15 +1,15 @@
 package view;
 
-import java.util.*;
-
 import controller.Controller;
 
 import java.io.*;
+import java.util.Optional;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import view.controller.SceneController;
@@ -17,17 +17,17 @@ import view.controller.SceneController;
 public class ViewImpl extends Application implements View {
     // private final SceneLoader sceneLoader;
 
+    private final static String PATH = "/layouts/";
     private Stage stage;
     private Controller controller;
-    private final static String PATH = "/layouts/";
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         this.stage = stage;
         this.stage.setHeight(Screen.getPrimary().getBounds().getHeight() / 2);
         this.stage.setWidth(Screen.getPrimary().getBounds().getWidth() / 2);
         this.stage.setTitle("TrainTrack");
-        // this.stage.getIcons().add(new Image("images/brain_training.png"));
+        this.stage.getIcons().add(new Image("img/trainTrack_icon.png"));
         this.stage.setResizable(true);
         this.stage.show();
         this.controller = new Controller();
@@ -36,9 +36,11 @@ public class ViewImpl extends Application implements View {
 
     private Optional<SceneController> loadScene(final String filePath) {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource(PATH + filePath));
+
+        final Parent root;
         try {
-            final Parent root = loader.load(this.getClass().getResourceAsStream(PATH + filePath));
-            final SceneController sceneController = loader.<SceneController>getController();
+            root = loader.load(this.getClass().getResourceAsStream(PATH + filePath));
+            final SceneController sceneController = loader.getController();
             sceneController.setRoot(root);
             sceneController.initialize(this, this.controller);
             if (this.stage.getScene() == null) {
@@ -48,14 +50,13 @@ public class ViewImpl extends Application implements View {
             }
             return Optional.of(sceneController);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return Optional.empty();
     }
 
-    public void switchScene(final String path) {
+    public Optional<SceneController> switchScene(final String path) {
         // this.currentSceneController = this.sceneLoader.loadScene(path).get();
         // this.initializeSceneController(this.currentSceneController);
-        this.loadScene(path);
+        return this.loadScene(path);
     }
 }

@@ -7,8 +7,6 @@ import java.util.*;
 
 import controller.JourneyRankingController;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,9 +27,6 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     private TableColumn<DelayInfo, String> delayJourneyIDColumn;
 
     @FXML
-    private Label delayLabel;
-
-    @FXML
     private TableColumn<DelayInfo, Integer> delayRankingColumn;
 
     @FXML
@@ -50,36 +45,15 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     private TableColumn<EarlyInfo, String> earlyJourneyIDColumn;
 
     @FXML
-    private Label earlyLabel;
-
-    @FXML
     private TableColumn<EarlyInfo, Integer> earlyRankingColumn;
 
     @FXML
     private TableView<EarlyInfo> earlyTable;
 
-    @FXML
-    private Button homeButton;
-
-    @FXML
-    private Button loginButton;
-
-    private JourneyRankingController controller;
-
-    @FXML
-    private void loginClicked() {
-        this.view.switchScene("login.fxml");
-    }
-
-    @FXML
-    private void journeyClicked() {
-        this.view.switchScene("journeyRanking.fxml");
-    }
+    private final JourneyRankingController controller= new JourneyRankingController(this);
 
     @FXML
     public void initialize() {
-        this.controller = new JourneyRankingController(this, this.getController());
-
         this.delayJourneyIDColumn.setCellValueFactory(new PropertyValueFactory<>("codPercorso"));
         this.delayDepartureColumn.setCellValueFactory(new PropertyValueFactory<>("stazionePartenzaNome"));
         this.delayDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("stazioneDestinazioneNome"));
@@ -108,8 +82,13 @@ public class JourneyRankingSceneController extends AbstractSceneController {
         controller.updateEarlyInfo();
     }
 
+    @FXML
+    private void userClicked(){
+        this.view.switchScene("login.fxml");
+    }
+
     private <S, T> void centerTableColumn(TableColumn<S, T> column) {
-        column.setCellFactory(tc -> new TableCell<S, T>() {
+        column.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(T item, boolean empty) {
                 super.updateItem(item, empty);
@@ -124,7 +103,7 @@ public class JourneyRankingSceneController extends AbstractSceneController {
     }
 
     private <S> void formatAverageColumn(TableColumn<S, Float> column, boolean isDelay) {
-        column.setCellFactory(tc -> new TableCell<S, Float>() {
+        column.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(Float item, boolean empty) {
                 super.updateItem(item, empty);

@@ -1,6 +1,7 @@
 package view.controller;
 
 public enum MessageError {
+
     EMPTY_FIELD("Please fill in the required fields"),
 
     ALREADY_EXIST("User already exist"),
@@ -11,9 +12,15 @@ public enum MessageError {
 
     STATION_NOT_EXIST("Station doesn't exist"),
 
+    TICKET_NOT_EXIST("Ticket doesn't exist"),
+
+    INSERT_INFO("Insert your personal information"),
+
+    VOUCHER_NOT_VALID("Voucher not valid"),
+
     ERROR("Error");
 
-    private String message;
+    private final String message;
 
     MessageError(final String message) {
         this.message = message;

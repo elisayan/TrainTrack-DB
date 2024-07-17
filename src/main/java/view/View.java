@@ -1,5 +1,9 @@
 package view;
 
+import view.controller.SceneController;
+
+import java.util.Optional;
+
 public interface View {
-    void switchScene(final String path);
+    Optional<SceneController> switchScene(final String path);
 }
