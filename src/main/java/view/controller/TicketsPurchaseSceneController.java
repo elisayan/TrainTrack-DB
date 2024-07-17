@@ -3,7 +3,7 @@ package view.controller;
 import controller.PurchaseTicketController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import model.AvailableTicket;
+import model.Ticket;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -126,7 +126,7 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
                 datePicker.getValue(), timeBox.getValue(), petBox.isSelected() && bikeBox.isSelected() ? 2 : petBox.isSelected() || bikeBox.isSelected() ? 1 : 0);
     }
 
-    public void showAvailableTickets(List<AvailableTicket> tickets) {
+    public void showAvailableTickets(List<Ticket> tickets) {
         SearchResultSceneController searchResultSceneController = (SearchResultSceneController) this.view.switchScene("searchResults.fxml").get();
         searchResultSceneController.fillTicketTable(tickets);
     }

@@ -8,49 +8,49 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.AvailableTicket;
+import model.Ticket;
 
 import java.util.List;
 
 public class SearchResultSceneController extends AbstractSceneController{
 
     @FXML
-    private TableColumn<AvailableTicket, String> departureColumn;
+    private TableColumn<Ticket, String> departureColumn;
 
     @FXML
-    private TableColumn<AvailableTicket, String> destinationColumn;
+    private TableColumn<Ticket, String> destinationColumn;
 
     @FXML
     private Button homeButton;
 
     @FXML
-    private TableColumn<AvailableTicket, String> journeyIDColumn;
+    private TableColumn<Ticket, String> journeyIDColumn;
 
     @FXML
     private Button loginButton;
 
     @FXML
-    private TableColumn<AvailableTicket, Float> priceColumn;
+    private TableColumn<Ticket, Float> priceColumn;
 
     @FXML
-    private TableView<AvailableTicket> searchTable;
+    private TableView<Ticket> searchTable;
 
     @FXML
     private Label searchLabel;
 
     @FXML
-    private TableColumn<AvailableTicket, String> timeColumn;
+    private TableColumn<Ticket, String> timeColumn;
 
     @FXML
-    private TableColumn<AvailableTicket, String> typeColumn;
+    private TableColumn<Ticket, String> typeColumn;
 
     @FXML
     void loginClicked() {
         this.view.switchScene("login.fxml");
     }
 
-    public void fillTicketTable(List<AvailableTicket> ticketList){
-        ObservableList<AvailableTicket> data = FXCollections.observableArrayList(ticketList);
+    public void fillTicketTable(List<Ticket> ticketList){
+        ObservableList<Ticket> data = FXCollections.observableArrayList(ticketList);
 
         journeyIDColumn.setCellValueFactory(new PropertyValueFactory<>("journeyID"));
         departureColumn.setCellValueFactory(new PropertyValueFactory<>("departureStation"));

@@ -2,7 +2,7 @@ package db;
 
 import model.DelayInfo;
 import model.EarlyInfo;
-import model.AvailableTicket;
+import model.Ticket;
 
 import java.sql.*;
 import java.sql.Date;
@@ -123,8 +123,8 @@ public class ThroughTable {
         return early;
     }
 
-    public List<AvailableTicket> availableTickets(String departure, String arrival, String typeTrain, LocalDate departureDate,
-                                                  String departureTime, int supplement) {
+    public List<Ticket> availableTickets(String departure, String arrival, String typeTrain, LocalDate departureDate,
+                                         String departureTime, int supplement) {
         String query = "SELECT " +
                 "    p.CodPercorso, " +
                 "    p.Email, " +
@@ -155,7 +155,7 @@ public class ThroughTable {
                 "ORDER BY " +
                 "    a1.OrarioPartenzaPrevisto";
 
-        List<AvailableTicket> availableTickets = new ArrayList<>();
+        List<Ticket> tickets = new ArrayList<>();
 
         try (Connection connection = dataSource.getMySQLConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -171,6 +171,7 @@ public class ThroughTable {
                     String codPercorso = rs.getString("CodPercorso");
                     String nomeStazionePartenza = rs.getString("NomeStazionePartenza");
                     String nomeStazioneArrivo = rs.getString("NomeStazioneArrivo");
+                    LocalDate dataPartenza = rs.getDate("Data").toLocalDate();
                     LocalTime orarioPartenzaPrevisto = rs.getTime("OrarioPartenzaPrevisto").toLocalTime();
                     String tipo = rs.getString("Tipo");
                     float prezzo = rs.getFloat("Prezzo");
@@ -179,22 +180,23 @@ public class ThroughTable {
 
                     float prezzoFinale = ((prezzo / maxOrdine) * numeroStazioni) + supplement;
 
-                    AvailableTicket availableTicketRequest = new AvailableTicket(
+                    Ticket ticketRequest = new Ticket(
                             codPercorso,
                             nomeStazionePartenza,
                             nomeStazioneArrivo,
                             tipo,
                             orarioPartenzaPrevisto,
-                            prezzoFinale
+                            prezzoFinale,
+                            dataPartenza
                     );
-                    System.out.println("ticket: " + availableTicketRequest.getJourneyID());
-                    availableTickets.add(availableTicketRequest);
+                    System.out.println("ticket: " + ticketRequest.getJourneyID());
+                    tickets.add(ticketRequest);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return availableTickets;
+        return tickets;
     }
 
 }
