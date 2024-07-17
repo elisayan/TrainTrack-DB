@@ -9,12 +9,10 @@ import view.controller.ExpenseRankingSceneController;
 public class ExpenseRankingController {
     private final ExpenseRankingSceneController view;
     private final PersonTable model;
-    private final Controller controller;
 
-    public ExpenseRankingController(ExpenseRankingSceneController view, Controller controller) {
+    public ExpenseRankingController(ExpenseRankingSceneController view) {
         this.view = view;
         this.model = new PersonTable();
-        this.controller = controller;
     }
 
     public void updateSpendersInfo(){

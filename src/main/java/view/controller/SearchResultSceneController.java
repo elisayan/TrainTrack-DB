@@ -34,7 +34,7 @@ public class SearchResultSceneController extends AbstractSceneController{
     private TableColumn<Ticket, String> typeColumn;
 
     @FXML
-    void loginClicked() {
+    void userClicked() {
         this.view.switchScene("login.fxml");
     }
 

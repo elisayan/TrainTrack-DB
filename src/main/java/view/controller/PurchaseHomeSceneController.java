@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 public class PurchaseHomeSceneController extends AbstractSceneController{
 
     @FXML
-    private void loginClicked() {
+    private void userClicked() {
         this.view.switchScene("login.fxml");
     }
 

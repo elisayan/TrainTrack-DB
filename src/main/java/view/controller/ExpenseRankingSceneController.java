@@ -1,8 +1,6 @@
 package view.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,9 +12,6 @@ import java.util.List;
 import controller.ExpenseRankingController;
 
 public class ExpenseRankingSceneController extends AbstractSceneController {
-
-    @FXML
-    private Label expenseLabel;
 
     @FXML
     private TableColumn<Person, Integer> expenseRankingColumn;
@@ -31,24 +26,17 @@ public class ExpenseRankingSceneController extends AbstractSceneController {
     private TableColumn<Person, String> firstNameColumn;
 
     @FXML
-    private Button homeButton;
-
-    @FXML
     private TableColumn<Person, String> lastNameColumn;
 
-    @FXML
-    private Button loginButton;
-
-    private ExpenseRankingController controller;
+    private final ExpenseRankingController controller = new ExpenseRankingController(this);
 
     @FXML
-    private void loginClicked() {
+    private void userClicked() {
         this.view.switchScene("login.fxml");
     }
 
     @FXML
     public void initialize() {
-        controller = new ExpenseRankingController(this, this.getController());
         this.firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
         this.expensesColumn.setCellValueFactory(new PropertyValueFactory<>("totalExspense"));
@@ -59,7 +47,7 @@ public class ExpenseRankingSceneController extends AbstractSceneController {
         centerTableColumn(lastNameColumn);
         centerTableColumn(expensesColumn);
 
-        expensesColumn.setCellFactory(column -> new TableCell<Person, Float>() {
+        expensesColumn.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Float item, boolean empty) {
                 super.updateItem(item, empty);
@@ -76,7 +64,7 @@ public class ExpenseRankingSceneController extends AbstractSceneController {
     }
 
     private <T> void centerTableColumn(TableColumn<Person, T> column) {
-        column.setCellFactory(tc -> new TableCell<Person, T>() {
+        column.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(T item, boolean empty) {
                 super.updateItem(item, empty);

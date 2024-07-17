@@ -14,75 +14,67 @@
 <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.PassengerDetailSceneController">
    <top>
       <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="650.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="homeButton" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/home.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="userButton" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#userClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/user.png" />
-               </image>
-            </ImageView>
-         </children>
          <BorderPane.margin>
             <Insets top="5.0" />
          </BorderPane.margin>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true"
+                    preserveRatio="true">
+            <Image url="@../img/home.png"/>
+         </ImageView>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#userClicked" pickOnBounds="true"
+                    preserveRatio="true">
+            <Image url="@../img/user.png"/>
+         </ImageView>
       </HBox>
    </top>
    <center>
       <VBox BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="messageLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Messaggio">
-               <VBox.margin>
-                  <Insets bottom="20.0" top="10.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0">
-               <children>
-                  <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="19.0">
-                     <children>
-                        <Label text="First name: " />
-                        <Label text="Last name: " />
-                        <Label layoutX="10.0" layoutY="10.0" text="Email: " />
-                        <Label layoutX="10.0" layoutY="10.0" text="CF: " />
-                        <Label layoutX="10.0" layoutY="10.0" text="Address: " />
-                        <Label text="Voucher code:" />
-                     </children>
-                  </VBox>
-                  <VBox fx:id="vBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
-                     <children>
-                        <TextField fx:id="firstNameField" promptText="FIRST NAME" />
-                        <TextField fx:id="lastNameField" promptText="LAST NAME" />
-                        <TextField fx:id="emailField" promptText="E-MAIL" />
-                        <TextField fx:id="cfField" promptText="CF" />
-                        <TextField fx:id="addressField" promptText="ADDRESS" />
-                        <TextField fx:id="voucherField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="VOUCHER CODE" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
          <BorderPane.margin>
-            <Insets bottom="19.0" />
+            <Insets bottom="19.0"/>
          </BorderPane.margin>
+         <Label fx:id="messageLabel" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                maxWidth="1.7976931348623157E308" text="Messaggio">
+            <VBox.margin>
+               <Insets bottom="20.0" top="10.0"/>
+            </VBox.margin>
+            <font>
+               <Font size="14.0"/>
+            </font>
+         </Label>
+         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0">
+            <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                  spacing="19.0">
+               <Label text="First name: "/>
+               <Label text="Last name: "/>
+               <Label layoutX="10.0" layoutY="10.0" text="Email: "/>
+               <Label layoutX="10.0" layoutY="10.0" text="CF: "/>
+               <Label layoutX="10.0" layoutY="10.0" text="Address: "/>
+               <Label text="Voucher code:"/>
+            </VBox>
+            <VBox fx:id="vBox" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308"
+                  maxWidth="1.7976931348623157E308" spacing="10.0">
+               <TextField fx:id="firstNameField" promptText="FIRST NAME"/>
+               <TextField fx:id="lastNameField" promptText="LAST NAME"/>
+               <TextField fx:id="emailField" promptText="E-MAIL"/>
+               <TextField fx:id="cfField" promptText="CF"/>
+               <TextField fx:id="addressField" promptText="ADDRESS"/>
+               <TextField fx:id="voucherField" maxHeight="1.7976931348623157E308"
+                          maxWidth="1.7976931348623157E308" promptText="VOUCHER CODE"/>
+            </VBox>
+         </HBox>
       </VBox>
    </center>
    <bottom>
-      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="TOP_CENTER">
-         <children>
-            <Button fx:id="confirmButton" mnemonicParsing="false" onMouseClicked="#confirmClicked" text="CONFIRM">
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin></Button>
-         </children>
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            BorderPane.alignment="TOP_CENTER">
          <padding>
-            <Insets bottom="20.0" top="20.0" />
+            <Insets bottom="20.0" top="20.0"/>
          </padding>
+         <Button fx:id="confirmButton" mnemonicParsing="false" onMouseClicked="#confirmClicked" text="CONFIRM">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+         </Button>
       </VBox>
    </bottom>
 </BorderPane>

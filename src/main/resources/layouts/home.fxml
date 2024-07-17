@@ -10,73 +10,62 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.HomeSceneController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.HomeSceneController">
    <center>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="25.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="purchaseButton" mnemonicParsing="false" onMouseClicked="#purchaseClicked" text="Purchase">
-               <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/purchase.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="Berlin Sans FB" size="18.0" />
-               </font></Button>
-            <Button fx:id="timetableButton" mnemonicParsing="false" text="Timetable">
-               <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/timetable.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="Berlin Sans FB" size="18.0" />
-               </font></Button>
-            <Button fx:id="rankingButton" mnemonicParsing="false" onMouseClicked="#rankingClicked" text="Ranking">
-               <graphic>
-                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/ranking.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-               <font>
-                  <Font name="Berlin Sans FB" size="18.0" />
-               </font></Button>
+         <Label fx:id="welcomeLabel" text="Welcome!">
+            <font>
+               <Font name="System Italic" size="18.0" />
+            </font>
+         </Label>
+         <Button mnemonicParsing="false" onMouseClicked="#purchaseClicked" text="Purchase">
+            <graphic>
+               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../img/purchase.png" />
+               </ImageView>
+            </graphic>
+            <font>
+               <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" text="Timetable">
+            <graphic>
+               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../img/timetable.png" />
+               </ImageView>
+            </graphic>
+            <font>
+               <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" onMouseClicked="#rankingClicked" text="Ranking">
+            <graphic>
+               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../img/ranking.png" />
+               </ImageView>
+            </graphic>
+            <font>
+               <Font name="Berlin Sans FB" size="18.0" />
+            </font>
+         </Button>
 
-         </children>
       </VBox>
    </center>
    <top>
-      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="285.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="homeButton" mnemonicParsing="false" onMouseClicked="#homeClicked" text="Home">
-               <HBox.margin>
-                  <Insets top="7.0" />
-               </HBox.margin></Button>
-            <Label fx:id="welcomeLabel" text="Welcome!">
-               <HBox.margin>
-                  <Insets top="5.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
-            <Button fx:id="login" mnemonicParsing="false" onMouseClicked="#loginClicked" text="Log-in">
-               <HBox.margin>
-                  <Insets top="7.0" />
-               </HBox.margin></Button>
-
-         </children>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="650.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets />
+            <Insets top="5.0" />
          </BorderPane.margin>
          <padding>
             <Insets bottom="10.0" />
          </padding>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/home.png" />
+         </ImageView>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#userClicked" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/user.png" />
+         </ImageView>
+
       </HBox>
    </top>
 </BorderPane>

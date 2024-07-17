@@ -35,16 +35,15 @@ public class LoginSceneController extends AbstractSceneController {
     @FXML
     public void loginClicked() {
         if (!this.isFieldsEmpty()) {
-            Platform.runLater(() -> {
-                this.controller.loginPerson(emailField.getText(), passwordField.getText());
-            });
+            Platform.runLater(() ->
+                this.controller.loginPerson(emailField.getText(), passwordField.getText()));
         } else {
             errorLabel.setText(MessageError.EMPTY_FIELD.toString());
         }
     }
 
     @FXML
-    public void signClicked() {
+    public void userClicked() {
         this.view.switchScene("signup.fxml");
     }
 

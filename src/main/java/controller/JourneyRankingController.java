@@ -10,12 +10,10 @@ import java.util.*;
 public class JourneyRankingController {
     private final JourneyRankingSceneController view;
     private final ThroughTable model;
-    private final Controller controller;
 
-    public JourneyRankingController(JourneyRankingSceneController view, Controller controller) {
+    public JourneyRankingController(JourneyRankingSceneController view) {
         this.view = view;
         this.model = new ThroughTable();
-        this.controller = controller;
     }
 
     public void updateDelayInfo() {

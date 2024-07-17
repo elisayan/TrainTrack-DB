@@ -43,16 +43,12 @@ public class SignUpSceneController extends AbstractSceneController {
             typeClient = "User";
         }
 
-        if (nameField.getText().isBlank() || surnameField.getText().isBlank() || codeField.getText().isBlank()
-                || emailField.getText().isBlank() || addressField.getText().isBlank()) {
-            return true;
-        }
-
-        return false;
+        return nameField.getText().isBlank() || surnameField.getText().isBlank() || codeField.getText().isBlank()
+                || emailField.getText().isBlank() || addressField.getText().isBlank();
     }
 
     @FXML
-    public void loginClicked() {
+    public void userClicked() {
         this.view.switchScene("login.fxml");
     }
 
