@@ -51,7 +51,6 @@
                         <Label layoutX="10.0" layoutY="10.0" text="Email: " />
                         <Label layoutX="10.0" layoutY="10.0" text="CF: " />
                         <Label layoutX="10.0" layoutY="10.0" text="Address: " />
-                        <Label layoutX="10.0" layoutY="10.0" text="Phone: " />
                         <Label text="Voucher code:" />
                      </children>
                   </VBox>
@@ -62,7 +61,6 @@
                         <TextField fx:id="emailField" promptText="E-MAIL" />
                         <TextField fx:id="cfField" promptText="CF" />
                         <TextField fx:id="addressField" promptText="ADDRESS" />
-                        <TextField fx:id="phoneField" promptText="PHONE" />
                         <TextField fx:id="voucherField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="VOUCHER CODE" />
                      </children>
                   </VBox>
