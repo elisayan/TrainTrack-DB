@@ -31,8 +31,6 @@ public class HomeSceneController extends AbstractSceneController {
 
     public void initialize(View view, Controller controller) {
         super.initialize(view, controller);
-        //System.out.println("HomeSceneController initialized: "+controller.getCurrentPerson().getEmail());
-        System.out.println("initialized home scene controller " + controller);
         if (controller.getCurrentPerson().isPresent()) {
             welcomeLabel.setText("Hello " + controller.getCurrentPerson().get().getName() + "!");
         }

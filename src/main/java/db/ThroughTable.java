@@ -203,7 +203,6 @@ public class ThroughTable {
                             prezzoFinale,
                             dataPartenza
                     );
-                    System.out.println("ticket: " + ticketRequest.getJourneyID());
                     tickets.add(ticketRequest);
                 }
             }
