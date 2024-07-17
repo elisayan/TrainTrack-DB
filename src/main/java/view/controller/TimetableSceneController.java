@@ -38,9 +38,6 @@ public class TimetableSceneController extends AbstractSceneController {
     private Label destinationLabel;
 
     @FXML
-    private Button homeButton;
-
-    @FXML
     private TextField stationField;
 
     @FXML
@@ -48,9 +45,6 @@ public class TimetableSceneController extends AbstractSceneController {
 
     @FXML
     private Label idjourneyLabel;
-
-    @FXML
-    private Button loginButton;
 
     @FXML
     private Label notificationLabel;

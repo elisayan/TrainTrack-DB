@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -12,31 +14,31 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.TimetableSceneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.TimetableSceneController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="160.0" layoutY="86.0" maxWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0">
+            <HBox alignment="CENTER" spacing="277.0">
                <children>
-                  <Button fx:id="homeButton" mnemonicParsing="false" onMouseClicked="#homeClicked" text="HOME">
-                     <HBox.margin>
-                        <Insets top="20.0" />
-                     </HBox.margin>
-                  </Button>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/home.png" />
+                     </image>
+                  </ImageView>
                   <Label fx:id="timatableLabel" alignment="CENTER" contentDisplay="CENTER" text="TIMETABLE">
-                     <HBox.margin>
-                        <Insets left="220.0" top="15.0" />
-                     </HBox.margin>
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#loginClicked" text="LOG IN">
-                     <HBox.margin>
-                        <Insets left="220.0" top="20.0" />
-                     </HBox.margin>
-                  </Button>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#loginClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/user.png" />
+                     </image>
+                  </ImageView>
                </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
             </HBox>
             <Label fx:id="errorLabel" />
             <HBox prefWidth="200.0">
