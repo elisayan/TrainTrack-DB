@@ -1,9 +1,6 @@
 package controller;
 
-import java.util.List;
-
 import db.PersonTable;
-import model.Person;
 import view.controller.ExpenseRankingSceneController;
 
 public class ExpenseRankingController {
@@ -16,7 +13,6 @@ public class ExpenseRankingController {
     }
 
     public void updateSpendersInfo(){
-        List<Person> personTable = model.getTopFiveSpenders();
-        view.populateExpensesTable(personTable);
+        view.populateExpensesTable(model.getTopFiveSpenders());
     }
 }

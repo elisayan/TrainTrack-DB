@@ -39,7 +39,7 @@ public class ExpenseRankingSceneController extends AbstractSceneController {
     public void initialize() {
         this.firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         this.lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        this.expensesColumn.setCellValueFactory(new PropertyValueFactory<>("totalExspense"));
+        this.expensesColumn.setCellValueFactory(new PropertyValueFactory<>("totalExpense"));
         this.expenseRankingColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
 
         centerTableColumn(expenseRankingColumn);

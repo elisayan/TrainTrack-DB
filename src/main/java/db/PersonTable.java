@@ -108,11 +108,12 @@ public class PersonTable {
     public List<Person> getTopFiveSpenders() {
         List<Person> topSpenders = new LinkedList<>();
         String query = "SELECT Nome, Cognome, SpesaTotale FROM " + tableName
-                + " WHERE SpesaTotale >= 1000 ORDER BY SpesaTotale DESC LIMIT 5";
+                + " WHERE SpesaTotale >= 1000 AND TipoPersona = 'cliente' AND TipoCliente = 'utente' "
+                + "ORDER BY SpesaTotale DESC LIMIT 5";
 
         try (Connection connection = dataSource.getMySQLConnection();
-                PreparedStatement statement = connection.prepareStatement(query);
-                ResultSet resultSet = statement.executeQuery()) {
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 Person person = new Person();

@@ -18,6 +18,10 @@ public class Person {
         this.rank = rank;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
     public Person() {
         this.totalExpense = 0;
     }
@@ -108,5 +112,4 @@ public class Person {
                 + cf + ", phone=" + phone + ", address=" + address + ", totalExpense=" + totalExpense
                 + ", personType=" + personType + ", clientType=" + clientType + "]";
     }
-
 }
