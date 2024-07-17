@@ -13,6 +13,8 @@ public enum MessageError {
 
     INSERT_INFO("Insert your personal information"),
 
+    VOUCHER_NOT_VALID("Voucher not valid"),
+
     ERROR("Error");
 
     private final String message;
