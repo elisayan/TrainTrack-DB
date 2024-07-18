@@ -13,6 +13,6 @@ public class ExpenseRankingController {
     }
 
     public void updateSpendersInfo(){
-        view.populateExpensesTable(model.getTopFiveSpenders());
+        view.populateExpensesTable(model.getAllSpendersRanking());
     }
 }

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 import model.Person;
@@ -106,11 +108,11 @@ public class PersonTable {
         return Optional.empty();
     }
 
-    public List<Person> getTopFiveSpenders() {
-        List<Person> topSpenders = new LinkedList<>();
-        String query = "SELECT Nome, Cognome, SpesaTotale FROM " + tableName
-                + " WHERE SpesaTotale >= 1000 AND TipoPersona = 'cliente' AND TipoCliente = 'utente' "
-                + "ORDER BY SpesaTotale DESC LIMIT 5";
+    public List<Person> getAllSpendersRanking() {
+        List<Person> spendersRanking = new LinkedList<>();
+        String query = "SELECT Nome, Cognome, SpesaTotale, Email FROM " + tableName
+                + " WHERE TipoPersona = 'cliente' AND TipoCliente = 'utente' "
+                + "ORDER BY SpesaTotale DESC";
 
         try (Connection connection = dataSource.getMySQLConnection();
              PreparedStatement statement = connection.prepareStatement(query);
@@ -121,12 +123,31 @@ public class PersonTable {
                 person.setName(resultSet.getString("Nome"));
                 person.setSurname(resultSet.getString("Cognome"));
                 person.setTotalExpense(resultSet.getFloat("SpesaTotale"));
-                topSpenders.add(person);
+                person.setEmail(resultSet.getString("Email"));
+                spendersRanking.add(person);
+
+                // Calcola i buoni sconto
+                int totalExpense = Math.round(person.getTotalExpense());
+                int voucherCount = totalExpense / 100;
+                if (voucherCount > 0) {
+                    String insertVoucherQuery = "INSERT INTO BuonoSconto (Importo, DataInizioValidita, DataScadenza, Email) VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement voucherStmt = connection.prepareStatement(insertVoucherQuery)) {
+                        for (int i = 0; i < voucherCount; i++) {
+                            voucherStmt.setFloat(1, 10.0f);
+                            voucherStmt.setDate(2, Date.valueOf(LocalDate.now()));
+                            voucherStmt.setDate(3, Date.valueOf(LocalDate.now().plusMonths(1)));
+                            voucherStmt.setString(4, person.getEmail());
+                            voucherStmt.executeUpdate();
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return topSpenders;
+        return spendersRanking;
     }
 }
