@@ -9,6 +9,7 @@ import java.util.*;
 import model.Person;
 
 public class PersonTable {
+
     private final DBConnection dataSource;
     private final String tableName;
 

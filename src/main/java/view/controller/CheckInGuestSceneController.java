@@ -3,6 +3,9 @@ package view.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.Ticket;
+
+import java.util.List;
 
 public class CheckInGuestSceneController extends AbstractSceneController{
 
@@ -11,6 +14,7 @@ public class CheckInGuestSceneController extends AbstractSceneController{
 
     @FXML
     private Label messageLabel;
+
 
     @FXML
     private void confirmClicked() {
@@ -21,5 +25,13 @@ public class CheckInGuestSceneController extends AbstractSceneController{
     @FXML
     private void userClicked() {
         this.view.switchScene("login.fxml");
+    }
+
+    public void showTickets(List<Ticket> tickets) {
+        CheckInSceneController checkInSceneController = (CheckInSceneController) this.view.switchScene("checkin.fxml").get();
+        checkInSceneController.fillTicketTable(tickets);
+    }
+
+    public void showMessage(MessageError messageError) {
     }
 }

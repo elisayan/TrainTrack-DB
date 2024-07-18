@@ -6,6 +6,7 @@ import view.controller.TicketsPurchaseSceneController;
 import java.time.LocalDate;
 
 public class PurchaseTicketController {
+
     private final TicketsPurchaseSceneController view;
     private final ThroughTable model;
 
@@ -18,7 +19,7 @@ public class PurchaseTicketController {
                                     String departureTime, int supplement) {
         var tickets = this.model.availableTickets(departure, arrival, typeTrain, departureDate,
                 departureTime, supplement);
-        if (!tickets.isEmpty()){
+        if (!tickets.isEmpty()) {
             this.view.showAvailableTickets(tickets);
         } else {
             this.view.showMessage();

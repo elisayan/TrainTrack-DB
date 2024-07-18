@@ -18,7 +18,9 @@ public enum MessageError {
 
     VOUCHER_NOT_VALID("Voucher not valid"),
 
-    ERROR("Error");
+    ERROR("Error"),
+
+    PERSON_NOT_EXIST("Person doesn't exist");
 
     private final String message;
 
