@@ -1,8 +1,9 @@
 package db;
 
+import model.Ticket;
+
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,15 +11,18 @@ public class ServiceTable {
 
     private final DBConnection dataSource;
     private int serviceID;
-    private final Map<String, Float> voucherIssuedSpending;
 
     public ServiceTable() {
         this.dataSource = new DBConnection();
-        this.voucherIssuedSpending = new HashMap<>();
     }
 
-    public void addTicket(String journeyID, String departureStation, String destinationStation, LocalDate departureDate,
-                          LocalTime departureTime, String typeTrain, float ticketPrice, String firstName, String lastName, String email) {
+    public float addTicket(Ticket ticket, String firstName, String lastName, String email, float voucherValue) {
+        float ticketPrice = ticket.getTicketPrice();
+        if (voucherValue >= ticketPrice) {
+            ticketPrice = 0;
+        } else {
+            ticketPrice -= voucherValue;
+        }
 
         String sql = "INSERT INTO Servizio (StazionePartenza, StazioneArrivo, NomePasseggero, CognomePasseggero, " +
                 "TipoTreno, DataPartenza, OrarioPartenza, Prezzo, CodPercorso, Email, Durata, Chilometraggio) " +
@@ -27,15 +31,15 @@ public class ServiceTable {
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setString(1, departureStation);
-            pstmt.setString(2, destinationStation);
+            pstmt.setString(1, ticket.getDepartureStation());
+            pstmt.setString(2, ticket.getDestinationStation());
             pstmt.setString(3, firstName);
             pstmt.setString(4, lastName);
-            pstmt.setString(5, typeTrain);
-            pstmt.setDate(6, Date.valueOf(departureDate));
-            pstmt.setTime(7, Time.valueOf(departureTime));
+            pstmt.setString(5, ticket.getTypeTrain());
+            pstmt.setDate(6, Date.valueOf(ticket.getDepartureDate()));
+            pstmt.setTime(7, Time.valueOf(ticket.getDepartureTime()));
             pstmt.setFloat(8, ticketPrice);
-            pstmt.setString(9, journeyID);
+            pstmt.setString(9, ticket.getJourneyID());
             pstmt.setString(10, email);
             pstmt.setNull(11, Types.VARCHAR);
             pstmt.setNull(12, Types.INTEGER);
@@ -52,6 +56,8 @@ public class ServiceTable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return ticketPrice;
     }
 
     public boolean haveVoucher(String voucher, String email) {
@@ -81,61 +87,42 @@ public class ServiceTable {
         }
     }
 
-    public void useVoucher(String voucher) {
-        // Gestione del caso in cui il voucher è una stringa vuota
-        if (voucher == null || voucher.trim().isEmpty()) {
-            System.out.println("Il voucher è vuoto o non valido.");
-            return;
-        }
-
-        String insertSql = "INSERT INTO Utilizzo (CodBuonoSconto, CodServizio, Data) VALUES (?, ?, ?)";
-        String selectVoucherSql = "SELECT Importo, Email FROM BuonoSconto WHERE CodBuonoSconto = ?";
-        String selectPriceSql = "SELECT Prezzo FROM Servizio WHERE CodServizio = ?";
-        String updateSql = "UPDATE Servizio SET Prezzo = ? WHERE CodServizio = ?";
-
+    public float getVoucherValue(String voucher) {
+        String selectVoucherSql = "SELECT Importo FROM BuonoSconto WHERE CodBuonoSconto = ?";
         try (Connection conn = dataSource.getMySQLConnection();
-             PreparedStatement insertPstmt = conn.prepareStatement(insertSql);
-             PreparedStatement selectVoucherPstmt = conn.prepareStatement(selectVoucherSql);
-             PreparedStatement selectPricePstmt = conn.prepareStatement(selectPriceSql);
-             PreparedStatement updatePstmt = conn.prepareStatement(updateSql)) {
-
-            insertPstmt.setInt(1, Integer.parseInt(voucher));
-            insertPstmt.setInt(2, serviceID);
-            insertPstmt.setDate(3, Date.valueOf(LocalDate.now()));
-            insertPstmt.executeUpdate();
+             PreparedStatement selectVoucherPstmt = conn.prepareStatement(selectVoucherSql)) {
 
             selectVoucherPstmt.setString(1, voucher);
             ResultSet voucherRs = selectVoucherPstmt.executeQuery();
             if (voucherRs.next()) {
-                float voucherImporto = voucherRs.getFloat("Importo");
-                String email = voucherRs.getString("Email");
-
-                selectPricePstmt.setInt(1, serviceID);
-                ResultSet priceRs = selectPricePstmt.executeQuery();
-                if (priceRs.next()) {
-                    float servicePrice = priceRs.getFloat("Prezzo");
-
-                    float newPrice = servicePrice - voucherImporto;
-                    if (newPrice < 0) {
-                        newPrice = 0;
-                    }
-
-                    updatePstmt.setFloat(1, newPrice);
-                    updatePstmt.setInt(2, serviceID);
-                    updatePstmt.executeUpdate();
-                }
-
-                issueVouchersIfNecessary(email);
+                return voucherRs.getFloat("Importo");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (NumberFormatException e) {
-            System.out.println("Il voucher deve essere un numero valido.");
+        }
+        return 0;
+    }
+
+    public void useVoucher(String voucher) {
+        if (voucher != null && !voucher.trim().isEmpty()) {
+            String insertSql = "INSERT INTO Utilizzo (CodBuonoSconto, CodServizio, Data) VALUES (?, ?, ?)";
+
+            try (Connection conn = dataSource.getMySQLConnection();
+                 PreparedStatement insertPstmt = conn.prepareStatement(insertSql)) {
+
+                insertPstmt.setInt(1, Integer.parseInt(voucher));
+                insertPstmt.setInt(2, serviceID);
+                insertPstmt.setDate(3, Date.valueOf(LocalDate.now()));
+                insertPstmt.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private void issueVouchersIfNecessary(String email) {
-        String query = "SELECT SpesaTotale FROM Persona WHERE Email = ?";
+        String query = "SELECT SpesaTotale, UltimaSpesaCoupon FROM Persona WHERE Email = ?";
 
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -145,8 +132,8 @@ public class ServiceTable {
 
             if (resultSet.next()) {
                 float totalExpense = resultSet.getFloat("SpesaTotale");
-                float previousSpending = voucherIssuedSpending.getOrDefault(email, 0f);
-                int previousVoucherCount = (int) (previousSpending / 100);
+                float lastCouponExpense = resultSet.getFloat("UltimaSpesaCoupon");
+                int previousVoucherCount = (int) (lastCouponExpense / 100);
                 int currentVoucherCount = (int) (totalExpense / 100);
                 int voucherCount = currentVoucherCount - previousVoucherCount;
 
@@ -163,7 +150,15 @@ public class ServiceTable {
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    voucherIssuedSpending.put(email, totalExpense);
+
+                    String updateCouponExpenseSql = "UPDATE Persona SET UltimaSpesaCoupon = ? WHERE Email = ?";
+                    try (PreparedStatement updateStmt = conn.prepareStatement(updateCouponExpenseSql)) {
+                        updateStmt.setFloat(1, totalExpense);
+                        updateStmt.setString(2, email);
+                        updateStmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -194,7 +189,7 @@ public class ServiceTable {
     }
 
     public void updateTotalPurchase(String email, float price) {
-        String sql = "UPDATE Persona SET SpesaTotale = SpesaTotale + ? WHERE Email = ?";
+        String sql = "UPDATE Persona SET SpesaTotale = SpesaTotale + ? WHERE Email = ? AND TipoCliente = 'utente'";
 
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -203,6 +198,7 @@ public class ServiceTable {
             pstmt.setString(2, email);
 
             pstmt.executeUpdate();
+            this.issueVouchersIfNecessary(email);
         } catch (SQLException e) {
             e.printStackTrace();
         }

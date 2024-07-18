@@ -76,15 +76,11 @@ public class PassengerDetailSceneController extends AbstractSceneController {
         if (vBox.getChildren().stream().noneMatch(t -> ((TextField) t).getText().isBlank() && !t.equals(voucherField))) {
 
             if (!this.voucherField.getText().isBlank()) {
-                this.controller.checkEmail(ticket.getJourneyID(), ticket.getDepartureStation(), ticket.getDestinationStation(),
-                        ticket.getDepartureDate(), ticket.getDepartureTime(), ticket.getTypeTrain(), ticket.getTicketPrice(),
-                        this.firstNameField.getText(), this.lastNameField.getText(), this.emailField.getText(),
-                        this.addressField.getText(), this.cfField.getText(), this.voucherField.getText());
+                this.controller.checkEmail(ticket, this.firstNameField.getText(), this.lastNameField.getText(),
+                        this.emailField.getText(), this.addressField.getText(), this.cfField.getText(), this.voucherField.getText());
             } else {
-                this.controller.successful(ticket.getJourneyID(), ticket.getDepartureStation(), ticket.getDestinationStation(),
-                        ticket.getDepartureDate(), ticket.getDepartureTime(), ticket.getTypeTrain(), ticket.getTicketPrice(),
-                        this.firstNameField.getText(), this.lastNameField.getText(), this.emailField.getText(),
-                        this.addressField.getText(), this.cfField.getText(), null);
+                this.controller.successful(ticket, this.firstNameField.getText(), this.lastNameField.getText(),
+                        this.emailField.getText(), this.addressField.getText(), this.cfField.getText(), null);
             }
         } else {
             this.messageLabel.setText(MessageError.EMPTY_FIELD.toString());

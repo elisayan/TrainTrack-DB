@@ -1,12 +1,11 @@
 package controller;
 
 import db.ServiceTable;
+import model.Ticket;
 import view.controller.MessageError;
 import view.controller.PassengerDetailSceneController;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class PassengerDetailController {
     private final PassengerDetailSceneController view;
@@ -17,42 +16,39 @@ public class PassengerDetailController {
         this.model = new ServiceTable();
     }
 
-    public void checkEmail(String journeyID, String departureStation, String destinationStation, LocalDate departureDate,
-                           LocalTime departureTime, String typeTrain, float ticketPrice, String firstName, String lastName,
+    public void checkEmail(Ticket ticket, String firstName, String lastName,
                            String email, String address, String cf, String voucher) throws IOException {
-        handleGuest(email, firstName, lastName, address, cf, ticketPrice);
+        handleGuest(email, firstName, lastName, address, cf);
 
         if (this.model.haveVoucher(voucher, email)) {
-            addTicketAndNotifyView(journeyID, departureStation, destinationStation, departureDate, departureTime,
-                    typeTrain, ticketPrice, firstName, lastName, email, voucher);
+            addTicketAndNotifyView(ticket, firstName, lastName, email, voucher);
         } else {
             this.view.showMessage(MessageError.VOUCHER_NOT_VALID);
         }
     }
 
-    public void successful(String journeyID, String departureStation, String destinationStation, LocalDate departureDate,
-                           LocalTime departureTime, String typeTrain, float ticketPrice, String firstName, String lastName,
+    public void successful(Ticket ticket, String firstName, String lastName,
                            String email, String address, String cf, String voucher) throws IOException {
-        handleGuest(email, firstName, lastName, address, cf, ticketPrice);
-        addTicketAndNotifyView(journeyID, departureStation, destinationStation, departureDate, departureTime,
-                typeTrain, ticketPrice, firstName, lastName, email, voucher);
+        handleGuest(email, firstName, lastName, address, cf);
+        addTicketAndNotifyView(ticket, firstName, lastName, email, voucher);
     }
 
-    private void handleGuest(String email, String firstName, String lastName, String address, String cf, float ticketPrice) {
+    private void handleGuest(String email, String firstName, String lastName, String address, String cf) {
         if (this.model.isGuest(email)) {
             this.model.saveOrUpdateGuest(email, firstName, lastName, address, cf);
-        } else {
-            this.model.updateTotalPurchase(email, ticketPrice);
         }
     }
 
-    private void addTicketAndNotifyView(String journeyID, String departureStation, String destinationStation, LocalDate departureDate,
-                                        LocalTime departureTime, String typeTrain, float ticketPrice, String firstName, String lastName,
+    private void addTicketAndNotifyView(Ticket ticket, String firstName, String lastName,
                                         String email, String voucher) throws IOException {
-        this.model.addTicket(journeyID, departureStation, destinationStation, departureDate, departureTime,
-                typeTrain, ticketPrice, firstName, lastName, email);
-        this.model.decreaseTotalSeats(journeyID);
-        if (voucher != null && !voucher.trim().isEmpty()) {
+        float voucherValue = 0.0F;
+        if (voucher != null) {
+            voucherValue = this.model.getVoucherValue(voucher);
+        }
+        var updatePrice = this.model.addTicket(ticket, firstName, lastName, email, voucherValue);
+        this.model.decreaseTotalSeats(ticket.getJourneyID());
+        this.model.updateTotalPurchase(email, updatePrice);
+        if (voucher != null) {
             this.model.useVoucher(voucher);
         }
         this.view.bookedSuccessful();
