@@ -1,5 +1,6 @@
 package view.controller;
 
+import controller.Controller;
 import controller.PassengerDetailController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Ticket;
+import view.View;
 
 import java.io.IOException;
 
@@ -53,18 +55,28 @@ public class PassengerDetailSceneController extends AbstractSceneController {
 
     private Ticket ticket;
 
-    @FXML
-    private void initialize() {
+    @Override
+    public void initialize(View view, Controller controller) {
+        super.initialize(view, controller);
         this.messageLabel.setText(MessageError.INSERT_INFO.toString());
+
+        var currentUser = getController().getCurrentPerson().orElse(null);
+        if (currentUser != null) {
+            this.firstNameField.setText(currentUser.getName());
+            this.lastNameField.setText(currentUser.getSurname());
+            this.emailField.setText(currentUser.getEmail());
+            this.addressField.setText(currentUser.getAddress());
+            this.cfField.setText(currentUser.getCf());
+        }
     }
 
     @FXML
     private void confirmClicked() throws IOException {
         this.messageLabel.setText("");
-        if (vBox.getChildren().stream().noneMatch(t -> ((TextField)t).getText().isBlank()
+        if (vBox.getChildren().stream().noneMatch(t -> ((TextField) t).getText().isBlank()
                 && !t.equals(voucherField))) {
 
-            if (!this.voucherField.getText().isBlank()){
+            if (!this.voucherField.getText().isBlank()) {
                 this.controller.checkEmail(ticket.getJourneyID(), ticket.getDepartureStation(), ticket.getDestinationStation(),
                         ticket.getDepartureDate(), ticket.getDepartureTime(), ticket.getTypeTrain(), ticket.getTicketPrice(),
                         this.firstNameField.getText(), this.lastNameField.getText(), this.emailField.getText(),
