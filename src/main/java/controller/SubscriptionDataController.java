@@ -1,26 +1,28 @@
 package controller;
 
+import java.io.IOException;
+
 import db.ServiceTable;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import model.Person;
+import model.Service;
 import model.Subscription;
+import view.controller.MessageError;
 import view.controller.SubscriptionDataSceneController;
 
 public class SubscriptionDataController {
 
     private final SubscriptionDataSceneController view;
     private final ServiceTable model;
-    
-    @FXML
-    private Label subscriptionDetailsLabel;
+    private Service subscription;
+
 
     public SubscriptionDataController(SubscriptionDataSceneController view) {
         this.view = view;
         this.model = new ServiceTable();
     }
 
-    public void setSubscriptionData(Subscription subscription) {
-        // Display the subscription details or process as needed
-        subscriptionDetailsLabel.setText(subscription.toString());
+
+    public void notifyView() throws IOException {
+        this.view.bookedSuccessful();
     }
 }

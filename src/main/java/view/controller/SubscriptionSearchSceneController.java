@@ -1,12 +1,9 @@
 package view.controller;
 
 import controller.Controller;
-import controller.SubscriptionDataController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -15,11 +12,10 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.stage.Stage;
 import model.Subscription;
-import view.View;
+import view.ViewImpl;
+
 import java.util.*;
-import java.io.IOException;
 
 
 public class SubscriptionSearchSceneController extends AbstractSceneController {
@@ -53,6 +49,14 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
 
     @FXML
     private TableColumn<Subscription, String> typeColumn;
+
+    private Controller controller;
+
+    @FXML
+    public void initialize(ViewImpl view, Controller controller) {
+        this.view = view;
+        this.controller = controller;
+    }
 
     @FXML
     private void loginClicked() {
@@ -111,7 +115,12 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
     }
 
     private void handleRowDoubleClick(Subscription subscription) {
-        this.view.switchScene("subscriptionData.fxml");
-    }
+        Optional<SceneController> optionalController = this.view.switchScene("subscriptionData.fxml");
+        if (optionalController.isPresent()) {
+            SubscriptionDataSceneController controller = (SubscriptionDataSceneController) optionalController.get();
+            controller.setSubscription(subscription);
+            System.out.println(controller.getSubscription().toString());
 
+        }
+    }
 }

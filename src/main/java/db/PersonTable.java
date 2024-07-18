@@ -29,7 +29,7 @@ public class PersonTable {
             statement.setString(2, person.getSurname());
             statement.setString(3, person.getCf());
             statement.setString(4, person.getAddress());
-            statement.setString(5, person.getPhone());
+            statement.setInt(5, person.getPhone());
             statement.setString(6, person.getEmail());
             statement.setString(7, person.getPassword());
             statement.setFloat(8, person.getTotalExspense());
@@ -61,7 +61,7 @@ public class PersonTable {
                 person.setName(resultSet.getString("Nome"));
                 person.setSurname(resultSet.getString("Cognome"));
                 person.setAddress(resultSet.getString("Indirizzo"));
-                person.setPhone(resultSet.getString("Telefono"));
+                person.setPhone(resultSet.getInt("Telefono"));
                 person.setEmail(resultSet.getString("Email"));
                 person.setPassword(resultSet.getString("Password"));
                 person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
@@ -93,7 +93,7 @@ public class PersonTable {
                 person.setName(resultSet.getString("Nome"));
                 person.setPassword(resultSet.getString("Password"));
                 person.setPersonType(resultSet.getString("TipoPersona"));
-                person.setPhone(resultSet.getString("Telefono"));
+                person.setPhone(resultSet.getInt("Telefono"));
                 person.setSurname(resultSet.getString("Cognome"));
                 person.setTotalExspense(resultSet.getFloat("SpesaTotale"));
                 return Optional.of(person);

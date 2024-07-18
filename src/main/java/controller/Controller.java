@@ -2,6 +2,7 @@ package controller;
 
 import model.Model;
 import model.Person;
+import model.Service;
 import model.Subscription;
 import view.View;
 import java.util.*;
@@ -11,6 +12,8 @@ public class Controller {
     private final Model model;
     private Person person;
     private List<Subscription> subscriptions;
+    private Subscription subscription;
+    private Service service;
 
     public Controller() {
         this.model = new Model();
@@ -44,4 +47,5 @@ public class Controller {
     public void setSubscriptions(List<Subscription> subscriptions) {
         this.subscriptions = subscriptions;
     }
+
 }
