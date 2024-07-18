@@ -166,6 +166,7 @@ public class ThroughTable {
                 "    AND (a1.OrarioPartenzaPrevisto >= ? OR a1.OrarioPartenzaReale >= ?) " +
                 "    AND t.Tipo = ? " +
                 "    AND a1.Ordine < a2.Ordine " +
+                "    AND t.PostiTotali > 0 " +
                 "ORDER BY " +
                 "    a1.OrarioPartenzaPrevisto";
 
