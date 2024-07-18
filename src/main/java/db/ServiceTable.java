@@ -78,20 +78,34 @@ public class ServiceTable {
     }
 
     public void useVoucher(String voucher) {
-        String sql = "INSERT INTO Utilizzo (CodBuonoSconto, CodServizio, Data) VALUES (?, ?, ?)";
+        String insertSql = "INSERT INTO Utilizzo (CodBuonoSconto, CodServizio, Data) VALUES (?, ?, ?)";
+        String selectSql = "SELECT Importo FROM BuonoSconto WHERE CodBuonoSconto = ?";
+        String updateSql = "UPDATE Servizio SET Prezzo = Prezzo - ? WHERE CodServizio = ?";
 
         try (Connection conn = dataSource.getMySQLConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement insertPstmt = conn.prepareStatement(insertSql);
+             PreparedStatement selectPstmt = conn.prepareStatement(selectSql);
+             PreparedStatement updatePstmt = conn.prepareStatement(updateSql)) {
 
-            pstmt.setString(1, voucher);
-            pstmt.setInt(2, serviceID);
-            pstmt.setDate(3, Date.valueOf(LocalDate.now()));
+            insertPstmt.setString(1, voucher);
+            insertPstmt.setInt(2, serviceID);
+            insertPstmt.setDate(3, Date.valueOf(LocalDate.now()));
+            insertPstmt.executeUpdate();
 
-            pstmt.executeUpdate();
+            selectPstmt.setString(1, voucher);
+            ResultSet rs = selectPstmt.executeQuery();
+            if (rs.next()) {
+                float importo = rs.getFloat("Importo");
+
+                updatePstmt.setFloat(1, importo);
+                updatePstmt.setInt(2, serviceID);
+                updatePstmt.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     public boolean existGuest(String email) {
         String sql = "SELECT Email FROM Persona WHERE Email = ? AND (Password IS NULL OR TipoCliente = 'guest')";
