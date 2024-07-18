@@ -4,10 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.*;
-
 import model.Person;
 
 public class PersonTable {
@@ -26,7 +23,7 @@ public class PersonTable {
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getMySQLConnection();
-                PreparedStatement statement = connection.prepareStatement(insert)) {
+             PreparedStatement statement = connection.prepareStatement(insert)) {
 
             statement.setString(1, person.getName());
             statement.setString(2, person.getSurname());
@@ -52,7 +49,7 @@ public class PersonTable {
         String query = "SELECT * FROM " + tableName + " WHERE Email=? AND Password=?";
 
         try (Connection connection = dataSource.getMySQLConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, email);
             statement.setString(2, password);
@@ -82,7 +79,7 @@ public class PersonTable {
         String query = "SELECT * FROM " + tableName + " WHERE Email=?";
 
         try (Connection connection = dataSource.getMySQLConnection();
-                PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
@@ -125,24 +122,6 @@ public class PersonTable {
                 person.setTotalExpense(resultSet.getFloat("SpesaTotale"));
                 person.setEmail(resultSet.getString("Email"));
                 spendersRanking.add(person);
-
-                // Calcola i buoni sconto
-                int totalExpense = Math.round(person.getTotalExpense());
-                int voucherCount = totalExpense / 100;
-                if (voucherCount > 0) {
-                    String insertVoucherQuery = "INSERT INTO BuonoSconto (Importo, DataInizioValidita, DataScadenza, Email) VALUES (?, ?, ?, ?)";
-                    try (PreparedStatement voucherStmt = connection.prepareStatement(insertVoucherQuery)) {
-                        for (int i = 0; i < voucherCount; i++) {
-                            voucherStmt.setFloat(1, 10.0f);
-                            voucherStmt.setDate(2, Date.valueOf(LocalDate.now()));
-                            voucherStmt.setDate(3, Date.valueOf(LocalDate.now().plusMonths(1)));
-                            voucherStmt.setString(4, person.getEmail());
-                            voucherStmt.executeUpdate();
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

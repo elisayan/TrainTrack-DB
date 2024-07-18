@@ -1,7 +1,10 @@
 package model;
 
-import java.time.LocalTime;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Ticket {
     private final String journeyID;
@@ -11,9 +14,10 @@ public class Ticket {
     private final LocalTime departureTime;
     private final float ticketPrice;
     private final LocalDate departureDate;
+    private final BooleanProperty checkedIn;
 
-    public Ticket(String codPercorso, String nomeStazionePartenza,
-                  String destinationStation, String typeTrain, LocalTime departureTime, float ticketPrice, LocalDate departureDate) {
+    public Ticket(String codPercorso, String nomeStazionePartenza, String destinationStation, String typeTrain,
+                  LocalTime departureTime, float ticketPrice, LocalDate departureDate) {
         this.journeyID = codPercorso;
         this.departureStation = nomeStazionePartenza;
         this.destinationStation = destinationStation;
@@ -21,6 +25,7 @@ public class Ticket {
         this.departureTime = departureTime;
         this.ticketPrice = ticketPrice;
         this.departureDate = departureDate;
+        this.checkedIn = new SimpleBooleanProperty(false);
     }
 
     public String getJourneyID() {
@@ -49,5 +54,17 @@ public class Ticket {
 
     public LocalDate getDepartureDate() {
         return departureDate;
+    }
+
+    public boolean isCheckedIn() {
+        return checkedIn.get();
+    }
+
+    public BooleanProperty checkedInProperty() {
+        return checkedIn;
+    }
+
+    public void setCheckedIn(boolean checkedIn) {
+        this.checkedIn.set(checkedIn);
     }
 }

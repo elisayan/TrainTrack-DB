@@ -73,8 +73,7 @@ public class PassengerDetailSceneController extends AbstractSceneController {
     @FXML
     private void confirmClicked() throws IOException {
         this.messageLabel.setText("");
-        if (vBox.getChildren().stream().noneMatch(t -> ((TextField) t).getText().isBlank()
-                && !t.equals(voucherField))) {
+        if (vBox.getChildren().stream().noneMatch(t -> ((TextField) t).getText().isBlank() && !t.equals(voucherField))) {
 
             if (!this.voucherField.getText().isBlank()) {
                 this.controller.checkEmail(ticket.getJourneyID(), ticket.getDepartureStation(), ticket.getDestinationStation(),
@@ -85,7 +84,7 @@ public class PassengerDetailSceneController extends AbstractSceneController {
                 this.controller.successful(ticket.getJourneyID(), ticket.getDepartureStation(), ticket.getDestinationStation(),
                         ticket.getDepartureDate(), ticket.getDepartureTime(), ticket.getTypeTrain(), ticket.getTicketPrice(),
                         this.firstNameField.getText(), this.lastNameField.getText(), this.emailField.getText(),
-                        this.addressField.getText(), this.cfField.getText());
+                        this.addressField.getText(), this.cfField.getText(), null);
             }
         } else {
             this.messageLabel.setText(MessageError.EMPTY_FIELD.toString());
