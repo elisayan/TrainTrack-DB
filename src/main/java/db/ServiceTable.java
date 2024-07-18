@@ -51,7 +51,7 @@ public class ServiceTable {
     }
 
     public boolean haveVoucher(String voucher, String email) {
-        String checkVoucherSql = "SELECT * FROM BuonoSconto WHERE CodBuonoSconto = ? AND Email = ?";
+        String checkVoucherSql = "SELECT * FROM BuonoSconto WHERE CodBuonoSconto = ? AND Email = ? AND DataScadenza >= ?";
         String checkUsageSql = "SELECT * FROM Utilizzo WHERE CodBuonoSconto = ?";
 
         try (Connection conn = dataSource.getMySQLConnection();
@@ -60,6 +60,7 @@ public class ServiceTable {
 
             checkVoucherStmt.setString(1, voucher);
             checkVoucherStmt.setString(2, email);
+            checkVoucherStmt.setDate(3, Date.valueOf(LocalDate.now()));
             ResultSet voucherResult = checkVoucherStmt.executeQuery();
 
             if (!voucherResult.next()) {
@@ -69,10 +70,7 @@ public class ServiceTable {
             checkUsageStmt.setString(1, voucher);
             ResultSet usageResult = checkUsageStmt.executeQuery();
 
-            if (usageResult.next()) {
-                return false;
-            }
-            return true;
+            return !usageResult.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
