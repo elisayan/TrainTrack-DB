@@ -37,7 +37,7 @@ public class PassengerDetailController {
         addTicketAndNotifyView(journeyID, departureStation, destinationStation, departureDate, departureTime, typeTrain, ticketPrice, firstName, lastName, email);
     }
 
-    private void handleGuest(String email, String firstName, String lastName, String address, String cf, float ticketPrice) throws IOException {
+    private void handleGuest(String email, String firstName, String lastName, String address, String cf, float ticketPrice) {
         if (!this.model.existGuest(email)) {
             this.model.saveOrUpdateGuest(email, firstName, lastName, address, cf);
         } else {
@@ -49,6 +49,7 @@ public class PassengerDetailController {
                                         LocalTime departureTime, String typeTrain, float ticketPrice, String firstName, String lastName,
                                         String email) throws IOException {
         this.model.addTicket(journeyID, departureStation, destinationStation, departureDate, departureTime, typeTrain, ticketPrice, firstName, lastName, email);
+        this.model.decreaseTotalSeats(journeyID);
         this.view.bookedSuccessful();
     }
 }
