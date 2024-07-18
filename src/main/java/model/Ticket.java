@@ -85,4 +85,8 @@ public class Ticket {
     public int getCodServizio() {
         return codServizio;
     }
+
+    public void setDisabled(boolean disabled) {
+        this.checkedIn.set(disabled);
+    }
 }

@@ -3,6 +3,9 @@ package controller;
 import db.CheckInTable;
 import model.Ticket;
 import view.controller.CheckInSceneController;
+import view.controller.MessageError;
+
+import java.util.List;
 
 public class CheckInController {
 
@@ -19,10 +22,23 @@ public class CheckInController {
         this.view.fillTicketTable(this.model.getPersonTicket(email));
     }
 
+    public void initializedCheckIn(List<Ticket> tickets){
+        for(Ticket ticket : tickets) {
+           if (this.model.isCheckInExist(ticket.getCodServizio(), ticket.getEmail())) {
+               this.view.showCheckedTickets(ticket);
+            }
+        }
+    }
+
     public void updateCheckInStatus(Ticket ticket, boolean checkedIn) {
         ticket.setCheckedIn(checkedIn);
-        if (checkedIn) {
+        if (checkedIn && this.model.isCheckInValid(ticket.getCodServizio())) {
             model.insertCheckIn(ticket.getEmail(), ticket.getCodServizio());
+            this.view.showMessage(MessageError.CHECKIN_SUCCESSFUL);
+            //ticket.setCheckedIn(true);
+            //ticket.setDisabled(true);
+        } else {
+            this.view.showMessage(MessageError.CHECKIN_NOT_IN_TIME);
         }
     }
 }

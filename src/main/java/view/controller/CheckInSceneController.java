@@ -76,10 +76,25 @@ public class CheckInSceneController extends AbstractSceneController {
     }
 
     public void fillTicketTable(List<Ticket> tickets) {
+        this.controller.initializedCheckIn(tickets);
         ticketTable.getItems().setAll(tickets);
     }
 
     public void showName(String personName) {
         this.messageLabel.setText(personName + " here are your tickets");
+    }
+
+    public void showMessage(MessageError messageError) {
+        this.messageLabel.setText(messageError.toString());
+    }
+
+    public void showCheckedTickets(Ticket ticket) {
+        for (Ticket t : ticketTable.getItems()) {
+            if (t.equals(ticket)) {
+                t.setCheckedIn(true);
+                t.setDisabled(true);
+            }
+        }
+        ticketTable.refresh();
     }
 }

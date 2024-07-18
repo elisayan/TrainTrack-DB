@@ -24,7 +24,11 @@ public enum MessageError {
 
     INSERT_MAIL("Please enter your email address"),
 
-    SUGGESTION_EMAIL("Enter your email to view and check-in your Tickets");
+    SUGGESTION_EMAIL("Enter your email to view and check in your Tickets"),
+
+    CHECKIN_NOT_IN_TIME("Check in is not valid in time"),
+
+    CHECKIN_SUCCESSFUL("Check in successful");
 
     private final String message;
 
