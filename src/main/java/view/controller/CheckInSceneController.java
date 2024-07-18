@@ -54,6 +54,19 @@ public class CheckInSceneController extends AbstractSceneController {
         checkInColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkInColumn));
         checkInColumn.setCellValueFactory(cellData -> cellData.getValue().checkedInProperty());
 
+        checkInColumn.setCellFactory(tc -> {
+            CheckBoxTableCell<Ticket, Boolean> cell = new CheckBoxTableCell<>();
+            cell.setSelectedStateCallback(index -> ticketTable.getItems().get(index).checkedInProperty());
+
+            cell.setOnMouseClicked(event -> {
+                Ticket ticket = ticketTable.getItems().get(cell.getIndex());
+                boolean newCheckedInStatus = !ticket.isCheckedIn();
+                this.controller.updateCheckInStatus(ticket, newCheckedInStatus);
+            });
+
+            return cell;
+        });
+
         controller.getCurrentPerson().ifPresent(currentPerson -> this.controller.getPersonTickets(currentPerson.getEmail()));
     }
 
@@ -67,6 +80,6 @@ public class CheckInSceneController extends AbstractSceneController {
     }
 
     public void showName(String personName) {
-        this.messageLabel.setText(personName+" here are your tickets");
+        this.messageLabel.setText(personName + " here are your tickets");
     }
 }

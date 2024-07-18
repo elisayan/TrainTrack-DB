@@ -15,6 +15,8 @@ public class Ticket {
     private final float ticketPrice;
     private final LocalDate departureDate;
     private final BooleanProperty checkedIn;
+    private String email;
+    private int codServizio;
 
     public Ticket(String codPercorso, String nomeStazionePartenza, String destinationStation, String typeTrain,
                   LocalTime departureTime, float ticketPrice, LocalDate departureDate) {
@@ -66,5 +68,21 @@ public class Ticket {
 
     public void setCheckedIn(boolean checkedIn) {
         this.checkedIn.set(checkedIn);
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setCodServizio(int codServizio) {
+        this.codServizio = codServizio;
+    }
+
+    public int getCodServizio() {
+        return codServizio;
     }
 }

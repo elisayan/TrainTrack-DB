@@ -2,10 +2,7 @@ package db;
 
 import model.Ticket;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
@@ -39,7 +36,7 @@ public class CheckInTable {
     }
 
     public List<Ticket> getPersonTicket(String email) {
-        String sql = "SELECT CodPercorso, StazionePartenza, StazioneArrivo, TipoTreno, OrarioPartenza, Prezzo, DataPartenza " +
+        String sql = "SELECT CodPercorso, StazionePartenza, StazioneArrivo, TipoTreno, OrarioPartenza, Prezzo, DataPartenza, CodServizio " +
                 "FROM Servizio WHERE Email = ?";
         List<Ticket> tickets = new LinkedList<>();
 
@@ -57,8 +54,11 @@ public class CheckInTable {
                 LocalTime orarioPartenza = rs.getTime("OrarioPartenza").toLocalTime();
                 float prezzo = rs.getFloat("Prezzo");
                 LocalDate dataPartenza = rs.getDate("DataPartenza").toLocalDate();
+                int codServizio = rs.getInt("CodServizio");
 
                 Ticket ticket = new Ticket(codPercorso, stazionePartenza, stazioneArrivo, tipoTreno, orarioPartenza, prezzo, dataPartenza);
+                ticket.setEmail(email);
+                ticket.setCodServizio(codServizio);
                 tickets.add(ticket);
             }
         } catch (SQLException e) {
@@ -66,5 +66,22 @@ public class CheckInTable {
         }
 
         return tickets;
+    }
+
+    public void insertCheckIn(String email, int codServizio) {
+        String sql = "INSERT INTO CheckIn (Data, Ora, Email, codServizio) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = dataSource.getMySQLConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setDate(1, Date.valueOf(LocalDate.now()));
+            pstmt.setTime(2, Time.valueOf(java.time.LocalTime.now()));
+            pstmt.setString(3, email);
+            pstmt.setInt(4, codServizio);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

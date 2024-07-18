@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-
 public class ThroughTable {
     private final DBConnection dataSource;
 
@@ -24,11 +23,8 @@ public class ThroughTable {
         List<DelayInfo> delays = new ArrayList<>();
         try (Connection connection = dataSource.getMySQLConnection()) {
             Map<String, String> departureStations = getDepartureStations(connection);
-
             Map<String, String> destinationStations = getDestinationStations(connection);
-
             delays = getDelayInfos(connection, departureStations, destinationStations);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -141,9 +137,6 @@ public class ThroughTable {
                                          String departureTime, int supplement) {
         String query = "SELECT " +
                 "    p.CodPercorso, " +
-                "    p.Email, " +
-                "    p.CodTreno, " +
-                "    p.TempoPercorrenza, " +
                 "    sp.Nome AS NomeStazionePartenza, " +
                 "    sa.Nome AS NomeStazioneArrivo, " +
                 "    a1.Data, " +
@@ -231,7 +224,6 @@ public class ThroughTable {
                 "AND TIMESTAMP(a.Data, a.OrarioPartenzaReale) > NOW() " +
                 "ORDER BY TIMESTAMP(a.Data, a.OrarioPartenzaReale) " +
                 "LIMIT 8";
-
 
         List<JourneyInfo> journeyInfos = new ArrayList<>();
 

@@ -1,6 +1,7 @@
 package controller;
 
 import db.CheckInTable;
+import model.Ticket;
 import view.controller.CheckInSceneController;
 
 public class CheckInController {
@@ -16,5 +17,12 @@ public class CheckInController {
     public void getPersonTickets(String email){
         this.view.showName(this.model.getPersonName(email));
         this.view.fillTicketTable(this.model.getPersonTicket(email));
+    }
+
+    public void updateCheckInStatus(Ticket ticket, boolean checkedIn) {
+        ticket.setCheckedIn(checkedIn);
+        if (checkedIn) {
+            model.insertCheckIn(ticket.getEmail(), ticket.getCodServizio());
+        }
     }
 }
