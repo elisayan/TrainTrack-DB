@@ -4,9 +4,6 @@ import model.Ticket;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-
 public class ServiceTable {
 
     private final DBConnection dataSource;

@@ -11,7 +11,6 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import model.Ticket;
 import view.View;
 
-import java.net.URL;
 import java.util.List;
 
 public class CheckInSceneController extends AbstractSceneController {

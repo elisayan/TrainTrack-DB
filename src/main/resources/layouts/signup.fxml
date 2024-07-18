@@ -26,10 +26,10 @@
       </HBox>
    </top>
    <center>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="13.0" BorderPane.alignment="CENTER">
-         <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="227.0" textAlignment="CENTER">
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" BorderPane.alignment="CENTER">
+         <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="227.0" text="Sign up now to get started!" textAlignment="CENTER">
             <font>
-               <Font size="13.0" />
+               <Font size="18.0" />
             </font>
          </Label>
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -55,8 +55,11 @@
       </VBox>
    </center>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <Button maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#signUpClicked" text="Sign up" />
+         <BorderPane.margin>
+            <Insets bottom="25.0" />
+         </BorderPane.margin>
       </HBox>
    </bottom>
 </BorderPane>
