@@ -1,6 +1,5 @@
 package controller;
 
-import com.google.protobuf.Message;
 import db.CheckInTable;
 import view.controller.CheckInGuestSceneController;
 import view.controller.MessageError;

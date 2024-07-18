@@ -20,7 +20,11 @@ public enum MessageError {
 
     ERROR("Error"),
 
-    PERSON_NOT_EXIST("Person doesn't exist");
+    PERSON_NOT_EXIST("Person doesn't exist"),
+
+    INSERT_MAIL("Please enter your email address"),
+
+    SUGGESTION_EMAIL("Enter your email to view and check-in your Tickets");
 
     private final String message;
 
