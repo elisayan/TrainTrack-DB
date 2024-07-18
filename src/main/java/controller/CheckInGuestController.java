@@ -15,8 +15,9 @@ public class CheckInGuestController {
     }
 
     public void checkPerson(String email){
-        if (this.model.isPersonPresent(email)){
-            this.view.showTickets(this.model.getPersonTicket(email));
+        var name = this.model.getPersonName(email);
+        if (name != null){
+            this.view.showTickets(this.model.getPersonTicket(email), name);
         } else {
             this.view.showMessage(MessageError.PERSON_NOT_EXIST);
         }

@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.CheckInSceneController">
    <top>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -54,12 +53,12 @@
             </Label>
             <TableView fx:id="ticketTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                <columns>
-                  <TableColumn prefWidth="91.99998700618744" text="Journey ID" />
-                  <TableColumn prefWidth="124.80001068115234" text="Destination" />
-                  <TableColumn prefWidth="113.60003662109375" text="Time" />
-                  <TableColumn minWidth="9.60003662109375" prefWidth="120.79998779296875" text="Date" />
-                  <TableColumn prefWidth="87.99996948242188" text="Price" />
-                  <TableColumn prefWidth="112.0" text="Check-in" />
+                  <TableColumn fx:id="journeyIDColumn" prefWidth="91.99998700618744" text="Journey ID" />
+                  <TableColumn fx:id="destinationColumn" prefWidth="124.80001068115234" text="Destination" />
+                  <TableColumn fx:id="timeColumn" prefWidth="113.60003662109375" text="Time" />
+                  <TableColumn fx:id="dateColumn" minWidth="9.60003662109375" prefWidth="120.79998779296875" text="Date" />
+                  <TableColumn fx:id="priceColumn" prefWidth="87.99996948242188" text="Price" />
+                  <TableColumn fx:id="checkInColumn" prefWidth="112.0" text="Check-in" />
                </columns>
                <VBox.margin>
                   <Insets bottom="50.0" left="50.0" right="50.0" />

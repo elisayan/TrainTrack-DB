@@ -1,13 +1,20 @@
 package view.controller;
 
+import controller.CheckInController;
+import controller.Controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import model.Ticket;
+import view.View;
 
+import java.net.URL;
 import java.util.List;
 
-public class CheckInSceneController extends AbstractSceneController{
+public class CheckInSceneController extends AbstractSceneController {
 
     @FXML
     private Label messageLabel;
@@ -16,11 +23,51 @@ public class CheckInSceneController extends AbstractSceneController{
     private TableView<Ticket> ticketTable;
 
     @FXML
-    void userClicked() {
+    private TableColumn<Ticket, String> journeyIDColumn;
+
+    @FXML
+    private TableColumn<Ticket, String> destinationColumn;
+
+    @FXML
+    private TableColumn<Ticket, String> timeColumn;
+
+    @FXML
+    private TableColumn<Ticket, String> dateColumn;
+
+    @FXML
+    private TableColumn<Ticket, Float> priceColumn;
+
+    @FXML
+    private TableColumn<Ticket, Boolean> checkInColumn;
+
+    private final CheckInController controller = new CheckInController(this);
+
+    @Override
+    public void initialize(View view, Controller controller) {
+        super.initialize(view, controller);
+
+        journeyIDColumn.setCellValueFactory(new PropertyValueFactory<>("journeyID"));
+        destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destinationStation"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("departureDate"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("ticketPrice"));
+
+        checkInColumn.setCellFactory(CheckBoxTableCell.forTableColumn(checkInColumn));
+        checkInColumn.setCellValueFactory(cellData -> cellData.getValue().checkedInProperty());
+
+        controller.getCurrentPerson().ifPresent(currentPerson -> this.controller.getPersonTickets(currentPerson.getEmail()));
+    }
+
+    @FXML
+    private void userClicked() {
         this.view.switchScene("login.fxml");
     }
 
     public void fillTicketTable(List<Ticket> tickets) {
-        //riempe la tabella
+        ticketTable.getItems().setAll(tickets);
+    }
+
+    public void showName(String personName) {
+        this.messageLabel.setText(personName+" here are your tickets");
     }
 }

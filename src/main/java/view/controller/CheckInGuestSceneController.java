@@ -38,9 +38,10 @@ public class CheckInGuestSceneController extends AbstractSceneController{
         this.view.switchScene("login.fxml");
     }
 
-    public void showTickets(List<Ticket> tickets) {
+    public void showTickets(List<Ticket> tickets, String name) {
         CheckInSceneController checkInSceneController = (CheckInSceneController) this.view.switchScene("checkin.fxml").get();
         checkInSceneController.fillTicketTable(tickets);
+        checkInSceneController.showName(name);
     }
 
     public void showMessage(MessageError messageError) {
