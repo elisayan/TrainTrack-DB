@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.Person;
 import view.View;
 
 public class LoginSceneController extends AbstractSceneController {
