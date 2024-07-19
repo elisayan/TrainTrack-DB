@@ -3,7 +3,7 @@ package controller;
 import db.ThroughTable;
 import model.JourneyInfo;
 import model.Station;
-import view.controller.MessageError;
+import view.controller.Message;
 import view.controller.TimetableSceneController;
 
 import java.sql.SQLException;
@@ -23,7 +23,7 @@ public class TimetableController {
 
     public void searchStation(final String station) {
         if (station == null || station.trim().isEmpty()) {
-            this.view.showError(MessageError.EMPTY_FIELD.toString());
+            this.view.showError(Message.EMPTY_FIELD.toString());
             return;
         }
 
@@ -34,7 +34,7 @@ public class TimetableController {
             this.controller.setStation(currentStation);
             this.view.updateTimetableView(currentStation);
         } else {
-            this.view.showError(MessageError.STATION_NOT_EXIST.toString());
+            this.view.showError(Message.STATION_NOT_EXIST.toString());
         }
     }
 
@@ -43,7 +43,7 @@ public class TimetableController {
             return this.model.isStationExist(station);
         } catch (SQLException e) {
             e.printStackTrace();
-            this.view.showError(MessageError.ERROR.toString());
+            this.view.showError(Message.ERROR.toString());
             return false;
         }
     }

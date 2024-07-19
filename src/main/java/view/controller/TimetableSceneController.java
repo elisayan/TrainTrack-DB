@@ -74,7 +74,7 @@ public class TimetableSceneController extends AbstractSceneController {
                 setCheckBoxSelected(timetableGridPane, i, columns - 1, getController());
             }
         } catch (SQLException e) {
-            showError(MessageError.ERROR.toString());
+            showError(Message.ERROR.toString());
         }
     }
 

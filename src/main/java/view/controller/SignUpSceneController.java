@@ -71,7 +71,7 @@ public class SignUpSceneController extends AbstractSceneController {
                 this.controller.signUpPerson(person);
             });
         } else {
-            errorLabel.setText(MessageError.EMPTY_FIELD.toString());
+            errorLabel.setText(Message.EMPTY_FIELD.toString());
         }
     }
 
@@ -81,7 +81,7 @@ public class SignUpSceneController extends AbstractSceneController {
     }
 
     public void singUpFailed() {
-        errorLabel.setText(MessageError.ALREADY_EXIST.toString());
+        errorLabel.setText(Message.ALREADY_EXIST.toString());
     }
 
 }

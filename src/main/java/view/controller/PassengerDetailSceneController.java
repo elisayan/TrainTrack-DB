@@ -58,7 +58,7 @@ public class PassengerDetailSceneController extends AbstractSceneController {
     @Override
     public void initialize(View view, Controller controller) {
         super.initialize(view, controller);
-        this.messageLabel.setText(MessageError.INSERT_INFO.toString());
+        this.messageLabel.setText(Message.INSERT_INFO.toString());
 
         var currentUser = getController().getCurrentPerson().orElse(null);
         if (currentUser != null) {
@@ -83,7 +83,7 @@ public class PassengerDetailSceneController extends AbstractSceneController {
                         this.emailField.getText(), this.addressField.getText(), this.cfField.getText(), null);
             }
         } else {
-            this.messageLabel.setText(MessageError.EMPTY_FIELD.toString());
+            this.messageLabel.setText(Message.EMPTY_FIELD.toString());
         }
     }
 
@@ -114,7 +114,7 @@ public class PassengerDetailSceneController extends AbstractSceneController {
         this.ticket = ticket;
     }
 
-    public void showMessage(MessageError messageError) {
-        this.messageLabel.setText(messageError.toString());
+    public void showMessage(Message message) {
+        this.messageLabel.setText(message.toString());
     }
 }

@@ -2,7 +2,7 @@ package controller;
 
 import db.ServiceTable;
 import model.Ticket;
-import view.controller.MessageError;
+import view.controller.Message;
 import view.controller.PassengerDetailSceneController;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class PassengerDetailController {
         if (this.model.haveVoucher(voucher, email)) {
             addTicketAndNotifyView(ticket, firstName, lastName, email, voucher);
         } else {
-            this.view.showMessage(MessageError.VOUCHER_NOT_VALID);
+            this.view.showMessage(Message.VOUCHER_NOT_VALID);
         }
     }
 

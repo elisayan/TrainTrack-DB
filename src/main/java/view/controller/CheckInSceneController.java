@@ -86,8 +86,8 @@ public class CheckInSceneController extends AbstractSceneController {
         this.messageLabel.setText(personName + " here are your tickets");
     }
 
-    public void showMessage(MessageError messageError) {
-        this.messageLabel.setText(messageError.toString());
+    public void showMessage(Message message) {
+        this.messageLabel.setText(message.toString());
     }
 
     public void showCheckedTickets(Ticket ticket) {

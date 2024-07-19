@@ -83,14 +83,14 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
 
         if (name.isEmpty() || lastName.isEmpty() || email.isEmpty()
             || cf.isEmpty() || address.isEmpty()) {
-            showError(MessageError.EMPTY_FIELD.toString());
+            showError(Message.EMPTY_FIELD.toString());
             return;
         }
 
         try {
             phone = Integer.parseInt(phoneTextField.getText());
         } catch (NumberFormatException e) {
-            showError(MessageError.PHONE_NOT_EXIST.toString());
+            showError(Message.PHONE_NOT_EXIST.toString());
             return;
         }
 
@@ -111,7 +111,7 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
                 if (serviceTable.haveVoucher(voucher, email)) {
                   serviceTable.useVoucher(voucher, service.getServiceID());
                 } else {
-                    showError(MessageError.VOUCHER_NOT_EXIST.toString());
+                    showError(Message.VOUCHER_NOT_EXIST.toString());
                     return;
                 }
             }
@@ -119,7 +119,7 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
             subscriptionDataController.notifyView();
             bookedSuccessful();
         } else {
-            showError(MessageError.ERROR.toString());
+            showError(Message.ERROR.toString());
         }
     }
 

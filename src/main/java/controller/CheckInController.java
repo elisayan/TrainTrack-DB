@@ -3,7 +3,7 @@ package controller;
 import db.CheckInTable;
 import model.Ticket;
 import view.controller.CheckInSceneController;
-import view.controller.MessageError;
+import view.controller.Message;
 
 import java.util.List;
 
@@ -38,17 +38,17 @@ public class CheckInController {
             if (checkedIn) {
                 if (this.model.isCheckInValid(ticket.getCodServizio())) {
                     model.insertCheckIn(ticket.getEmail(), ticket.getCodServizio());
-                    this.view.showMessage(MessageError.CHECKIN_SUCCESSFUL);
+                    this.view.showMessage(Message.CHECKIN_SUCCESSFUL);
                     ticket.setCheckedIn(true);
                 } else {
                     ticket.setCheckedIn(false);
-                    this.view.showMessage(MessageError.CHECKIN_NOT_IN_TIME);
+                    this.view.showMessage(Message.CHECKIN_NOT_IN_TIME);
                 }
             }
         }else {
             ticket.setCheckedIn(true);
             ticket.setDisabled(true);
-            this.view.showMessage(MessageError.CHECKIN_ALREADY_DONE);
+            this.view.showMessage(Message.CHECKIN_ALREADY_DONE);
         }
     }
 }

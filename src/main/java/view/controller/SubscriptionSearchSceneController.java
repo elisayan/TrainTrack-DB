@@ -78,7 +78,7 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
                 }
             }
         } else {
-            showError(MessageError.SUBSCRIPTION_NOT_EXIST.toString());
+            showError(Message.SUBSCRIPTION_NOT_EXIST.toString());
         }
 
         departureColumn.setCellValueFactory(new PropertyValueFactory<>("departureStation"));
@@ -134,7 +134,7 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
                 controller.setSubscriptionGroup(selectedGroup);
             }
         } else {
-            showError(MessageError.SUBSCRIPTION_NOT_EXIST.toString());
+            showError(Message.SUBSCRIPTION_NOT_EXIST.toString());
         }
     }
     

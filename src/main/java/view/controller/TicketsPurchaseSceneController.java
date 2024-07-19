@@ -105,6 +105,6 @@ public class TicketsPurchaseSceneController extends AbstractSceneController {
     }
 
     public void showMessage() {
-        this.errorLabel.setText(MessageError.TICKET_NOT_EXIST.toString());
+        this.errorLabel.setText(Message.TICKET_NOT_EXIST.toString());
     }
 }

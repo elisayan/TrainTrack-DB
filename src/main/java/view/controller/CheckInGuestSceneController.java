@@ -20,14 +20,14 @@ public class CheckInGuestSceneController extends AbstractSceneController{
 
     @FXML
     private void initialize() {
-        this.showMessage(MessageError.SUGGESTION_EMAIL);
+        this.showMessage(Message.SUGGESTION_EMAIL);
     }
 
     @FXML
     private void confirmClicked() {
         this.messageLabel.setText("");
         if (this.emailField.getText().isEmpty()) {
-            this.showMessage(MessageError.INSERT_MAIL);
+            this.showMessage(Message.INSERT_MAIL);
         } else {
             this.controller.checkPerson(this.emailField.getText());
         }
@@ -44,7 +44,7 @@ public class CheckInGuestSceneController extends AbstractSceneController{
         checkInSceneController.showName(name);
     }
 
-    public void showMessage(MessageError messageError) {
-        this.messageLabel.setText(messageError.toString());
+    public void showMessage(Message message) {
+        this.messageLabel.setText(message.toString());
     }
 }

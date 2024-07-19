@@ -1,6 +1,6 @@
 package view.controller;
 
-public enum MessageError {
+public enum Message {
 
     EMPTY_FIELD("Please fill in the required fields"),
 
@@ -30,17 +30,17 @@ public enum MessageError {
 
     INSERT_MAIL("Please enter your email address"),
 
-    SUGGESTION_EMAIL("Enter your email to view and check in your Tickets"),
+    SUGGESTION_EMAIL("Enter your email to view and check in your tickets"),
 
-    CHECKIN_NOT_IN_TIME("Check in is not valid in time"),
+    CHECKIN_NOT_IN_TIME("Check-in is not valid in time"),
 
-    CHECKIN_SUCCESSFUL("Check in successful"),
+    CHECKIN_SUCCESSFUL("Check-in successful"),
 
     CHECKIN_ALREADY_DONE("Check-in has already been completed for this service");
 
     private final String message;
 
-    MessageError(final String message) {
+    Message(final String message) {
         this.message = message;
     }
 

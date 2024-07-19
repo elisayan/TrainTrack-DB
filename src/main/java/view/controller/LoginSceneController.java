@@ -37,7 +37,7 @@ public class LoginSceneController extends AbstractSceneController {
             Platform.runLater(() ->
                 this.controller.loginPerson(emailField.getText(), passwordField.getText()));
         } else {
-            errorLabel.setText(MessageError.EMPTY_FIELD.toString());
+            errorLabel.setText(Message.EMPTY_FIELD.toString());
         }
     }
 
@@ -51,10 +51,10 @@ public class LoginSceneController extends AbstractSceneController {
     }
 
     public void loginFailed() {
-        errorLabel.setText(MessageError.INCORRECT_INPUT.toString());
+        errorLabel.setText(Message.INCORRECT_INPUT.toString());
     }
 
     public void userNotExist() {
-        errorLabel.setText(MessageError.USER_NOT_EXIST.toString());
+        errorLabel.setText(Message.USER_NOT_EXIST.toString());
     }
 }

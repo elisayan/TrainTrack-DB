@@ -5,7 +5,7 @@ import java.util.List;
 
 import db.ServiceTable;
 import model.Subscription;
-import view.controller.MessageError;
+import view.controller.Message;
 import view.controller.SubscriptionPurchaseSceneController;
 
 public class SubscriptionPurchaseController {
@@ -22,7 +22,7 @@ public class SubscriptionPurchaseController {
         if (departure == null || departure.trim().isEmpty() ||
             destination == null || destination.trim().isEmpty() ||
             beginningDate == null || duration == null || duration.trim().isEmpty()) {
-            this.view.showError(MessageError.EMPTY_FIELD.toString());
+            this.view.showError(Message.EMPTY_FIELD.toString());
             return;
         }
 
@@ -30,7 +30,7 @@ public class SubscriptionPurchaseController {
         if (!subscriptionGroups.isEmpty()) {
             this.view.showSubscriptionsSearched(subscriptionGroups);
         } else {
-            this.view.showError(MessageError.SUBSCRIPTION_NOT_EXIST.toString());
+            this.view.showError(Message.SUBSCRIPTION_NOT_EXIST.toString());
         }
     }
 }

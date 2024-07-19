@@ -2,7 +2,7 @@ package controller;
 
 import db.CheckInTable;
 import view.controller.CheckInGuestSceneController;
-import view.controller.MessageError;
+import view.controller.Message;
 
 public class CheckInGuestController {
 
@@ -19,7 +19,7 @@ public class CheckInGuestController {
         if (name != null){
             this.view.showTickets(this.model.getPersonTicket(email), name);
         } else {
-            this.view.showMessage(MessageError.PERSON_NOT_EXIST);
+            this.view.showMessage(Message.PERSON_NOT_EXIST);
         }
     }
 }
