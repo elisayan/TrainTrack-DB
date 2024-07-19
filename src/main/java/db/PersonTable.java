@@ -39,8 +39,7 @@ public class PersonTable {
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
         return false;
     }
