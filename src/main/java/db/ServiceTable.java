@@ -17,30 +17,30 @@ public class ServiceTable {
         this.tableName = "servizio";
     }
 
-    public List<Subscription> subscriptionSearched(String departure, String destination, LocalDate beginningDate, String duration) {
-       
-        String query = "SELECT DISTINCT s.StazionePartenza, s.StazioneArrivo, s.TipoTreno, s.DataPartenza, s.Durata, t.Prezzo, s.Chilometraggio, s.CodPercorso " + 
-                       "FROM " + tableName + " s, tipoabbonamento t " +  
-                       "WHERE s.Durata = t.Durata " +
-                       "AND s.Chilometraggio = t.Chilometraggio " +
-                       "AND s.StazionePartenza = ? " +
-                       "AND s.StazioneArrivo = ? " +
-                       "AND s.DataPartenza = ? " +
-                       "AND s.Durata = ? " + 
-                       "ORDER BY t.prezzo"; 
+    public List<List<Subscription>> subscriptionsSearched(String departure, String destination, LocalDate beginningDate, String duration) {
+        String query = "SELECT s.StazionePartenza, s.StazioneArrivo, s.TipoTreno, s.DataPartenza, s.Durata, t.Prezzo, s.Chilometraggio, s.CodPercorso " +
+                       "FROM " + tableName + " s " +
+                       "JOIN tipoabbonamento t ON s.Durata = t.Durata AND s.Chilometraggio = t.Chilometraggio " +
+                       "WHERE (s.StazionePartenza = ? AND s.StazioneArrivo = ? OR s.StazionePartenza = ? AND s.StazioneArrivo = ?) " +
+                       "AND s.DataPartenza = ? AND s.Durata = ? " +
+                       "ORDER BY t.prezzo";
     
-        List<Subscription> subscriptions = new ArrayList<>();
-
+        List<List<Subscription>> allSubscriptions = new ArrayList<>();
+    
         try (Connection connection = dataSource.getMySQLConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
-            
+    
             stmt.setString(1, departure);
             stmt.setString(2, destination);
-            stmt.setString(4, duration);
-            stmt.setDate(3, java.sql.Date.valueOf(beginningDate));
-            
+            stmt.setString(3, destination);  // for the reverse direction
+            stmt.setString(4, departure);    // for the reverse direction
+            stmt.setDate(5, java.sql.Date.valueOf(beginningDate));
+            stmt.setString(6, duration);
+    
             ResultSet rs = stmt.executeQuery();
-            
+    
+            Map<String, List<Subscription>> subscriptionMap = new HashMap<>();
+    
             while (rs.next()) {
                 Subscription subscription = new Subscription(
                     rs.getString("StazionePartenza"),
@@ -50,15 +50,28 @@ public class ServiceTable {
                     rs.getString("TipoTreno"),
                     rs.getFloat("Prezzo"),
                     rs.getFloat("Chilometraggio"),
-                    rs.getInt("CodPercorso"));
-                subscriptions.add(subscription);
+                    rs.getInt("CodPercorso")
+                );
+    
+                String trainType = subscription.getType();
+    
+                if (!subscriptionMap.containsKey(trainType)) {
+                    subscriptionMap.put(trainType, new ArrayList<>());
+                }
+    
+                subscriptionMap.get(trainType).add(subscription);
             }
+    
+            allSubscriptions.addAll(subscriptionMap.values());
+    
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        return subscriptions;
+    
+        return allSubscriptions;
     }
+    
+    
 
     public Service insertSubscriptionUser(Subscription subscriptionInfo, String name, String lastName, String email) {
         Service service = null;
@@ -115,8 +128,8 @@ public class ServiceTable {
     public Service insertSubscriptionGuest(Subscription subscriptionInfo, String name, String lastName, String email, String cf, String address, int phone) {
         Service service = null;
         String checkSql = "SELECT Email FROM Persona WHERE Email = ?";
-        String sqlInsertGuest = "INSERT INTO Persona (Nome, Cognome, Email, CF, Indirizzo, Telefono, TipoPersona, TipoCliente) VALUES (?, ?, ?, ?, ?, ?, 'client', 'guest')";
-        String sqlUpdateGuest = "UPDATE Persona SET Nome = ?, Cognome = ?, Indirizzo = ?, Telefono = ?, CF = ?, Password = ?, SpesaTotale = ?, TipoPersona = 'client', TipoCliente = 'guest' WHERE Email = ?";
+        String sqlInsertGuest = "INSERT INTO Persona (Nome, Cognome, Email, CF, Indirizzo, Telefono, TipoPersona, TipoCliente) VALUES (?, ?, ?, ?, ?, ?, 'cliente', 'ospite')";
+        String sqlUpdateGuest = "UPDATE Persona SET Nome = ?, Cognome = ?, Indirizzo = ?, Telefono = ?, CF = ?, Password = ?, SpesaTotale = ?, TipoPersona = 'cliente', TipoCliente = 'ospite' WHERE Email = ?";
         String sqlInsertSubscription = "INSERT INTO " + tableName +
                 "(StazionePartenza, StazioneArrivo, Durata, DataPartenza, TipoTreno, " +
                 "NomePasseggero, CognomePasseggero, Email, CodPercorso, Chilometraggio) " +
@@ -260,7 +273,7 @@ public class ServiceTable {
     }
     
     public boolean existGuest(String email) {
-        String sql = "SELECT Email FROM Persona WHERE Email = ? AND (Password IS NULL OR TipoCliente = 'guest')";
+        String sql = "SELECT Email FROM Persona WHERE Email = ? AND (Password IS NULL OR TipoCliente = 'ospite')";
 
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {

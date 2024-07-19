@@ -11,6 +11,10 @@ public enum MessageError {
 
     SUBSCRIPTION_NOT_EXIST("Subscription doesn't exist"),
 
+    VOUCHER_NOT_EXIST("Invalid or used voucher"),
+
+    PHONE_NOT_EXIST("Invalid phone number format"),
+
     ERROR("Error");
 
     private String message;

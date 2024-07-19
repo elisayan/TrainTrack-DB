@@ -17,7 +17,6 @@ import view.ViewImpl;
 
 import java.util.*;
 
-
 public class SubscriptionSearchSceneController extends AbstractSceneController {
 
     @FXML
@@ -51,6 +50,7 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
     private TableColumn<Subscription, String> typeColumn;
 
     private Controller controller;
+    private List<List<Subscription>> subscriptionGroups;
 
     @FXML
     public void initialize(ViewImpl view, Controller controller) {
@@ -67,9 +67,19 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
         searchLabel.setText(message);
     }
 
-
-    public void populateSearchTable(List<Subscription> subscriptions) {
-        ObservableList<Subscription> data = FXCollections.observableArrayList(subscriptions);
+    public void populateSearchTableSubs(List<List<Subscription>> subscriptionGroups) {
+        this.subscriptionGroups = subscriptionGroups;
+        ObservableList<Subscription> data = FXCollections.observableArrayList();
+        
+        if (subscriptionGroups != null) {
+            for (List<Subscription> group : subscriptionGroups) {
+                if (!group.isEmpty()) {
+                    data.add(group.get(0)); // Aggiungi solo il primo elemento del gruppo
+                }
+            }
+        } else {
+            showError(MessageError.SUBSCRIPTION_NOT_EXIST.toString());
+        }
 
         departureColumn.setCellValueFactory(new PropertyValueFactory<>("departureStation"));
         destinationColumn.setCellValueFactory(new PropertyValueFactory<>("destinationStation"));
@@ -79,6 +89,7 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         searchTable.setItems(data);
+        System.out.println("Data added to table: " + data);
 
         centerTableColumn(departureColumn);
         centerTableColumn(destinationColumn);
@@ -114,13 +125,27 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
         });
     }
 
-    private void handleRowDoubleClick(Subscription subscription) {
-        Optional<SceneController> optionalController = this.view.switchScene("subscriptionData.fxml");
-        if (optionalController.isPresent()) {
-            SubscriptionDataSceneController controller = (SubscriptionDataSceneController) optionalController.get();
-            controller.setSubscription(subscription);
-            System.out.println(controller.getSubscription().toString());
-
+    private void handleRowDoubleClick(Subscription selectedSubscription) {
+        if (subscriptionGroups != null) {
+            List<Subscription> selectedGroup = findGroupContainingSubscription(selectedSubscription);
+            Optional<SceneController> optionalController = this.view.switchScene("subscriptionData.fxml");
+            if (optionalController.isPresent()) {
+                SubscriptionDataSceneController controller = (SubscriptionDataSceneController) optionalController.get();
+                controller.setSubscriptionGroup(selectedGroup);
+            }
+        } else {
+            showError(MessageError.SUBSCRIPTION_NOT_EXIST.toString());
         }
+    }
+    
+    private List<Subscription> findGroupContainingSubscription(Subscription subscription) {
+        if (subscriptionGroups != null) {
+            for (List<Subscription> group : subscriptionGroups) {
+                if (group.contains(subscription)) {
+                    return group;
+                }
+            }
+        }
+        return Collections.emptyList();
     }
 }

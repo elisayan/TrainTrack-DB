@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import model.Person;
 import model.Service;
 import model.Subscription;
-
+import java.util.*;
 import java.io.IOException;
 
 
@@ -59,7 +59,8 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
     private TextField voucherField;
 
     private SubscriptionDataController subscriptionDataController;
-    private Subscription subscription;
+
+    private List<Subscription> subscriptionGroup;
 
 
     @FXML
@@ -70,6 +71,14 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
     @FXML
     private void loginClicked() {
         this.view.switchScene("login.fxml");
+    }
+
+    public void setSubscriptionGroup(List<Subscription> subscriptionGroup) {
+        this.subscriptionGroup = subscriptionGroup;
+    }
+
+    public List<Subscription> subscriptionGroup() {
+        return subscriptionGroup;
     }
 
     @FXML
@@ -92,7 +101,7 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
         try {
             phone = Integer.parseInt(phoneTextField.getText());
         } catch (NumberFormatException e) {
-            showError("Invalid phone number format");
+            showError(MessageError.PHONE_NOT_EXIST.toString());
             return;
         }
 
@@ -100,19 +109,20 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
         Person person = controller.getCurrentPerson();
         Service service = null;
         
+        for (Subscription subscription : subscriptionGroup) {
         if (person != null) {
             service = serviceTable.insertSubscriptionUser(subscription, name, lastName, email);
             serviceTable.updateTotalPurchase(person.getEmail(), service.getPrice());
         } else {
             service = serviceTable.insertSubscriptionGuest(subscription, name, lastName, email, cf, address, phone);
+            }
         }
-
         if (service != null) {
             if (!voucher.isEmpty()) {
                 if (serviceTable.haveVoucher(voucher, email)) {
-                    serviceTable.useVoucher(voucher, service.getServiceID());
+                  serviceTable.useVoucher(voucher, service.getServiceID());
                 } else {
-                    showError("Invalid or used voucher");
+                    showError(MessageError.VOUCHER_NOT_EXIST.toString());
                     return;
                 }
             }
@@ -120,11 +130,10 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
             subscriptionDataController.notifyView();
             bookedSuccessful();
         } else {
-            showError("Failed to insert subscription");
+            showError(MessageError.ERROR.toString());
         }
     }
 
-    
     @FXML
     public void showError(String message) {
         errorLabel.setText(message);
@@ -146,14 +155,6 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
         stage.show();
 
         this.confirmButton.setDisable(true);
-    }
-
-    public void setSubscription(Subscription subscription) {
-        this.subscription = subscription;
-    }
-
-    public Subscription getSubscription() {
-        return subscription;
     }
 
 }

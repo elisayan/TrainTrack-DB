@@ -18,20 +18,20 @@ public class SubscriptionPurchaseController {
         this.model = new ServiceTable();
     }
 
-    public void setSubscriptions(String departure, String destination, LocalDate beginningDate, String duration) {
+    public void setListOfSubscriptions(String departure, String destination, LocalDate beginningDate, String duration) {
         if (departure == null || departure.trim().isEmpty() ||
             destination == null || destination.trim().isEmpty() ||
             beginningDate == null || duration == null || duration.trim().isEmpty()) {
             this.view.showError(MessageError.EMPTY_FIELD.toString());
             return;
         }
-    
-        List<Subscription> subscriptionSearched = this.model.subscriptionSearched(departure, destination, beginningDate, duration);
-        if (!subscriptionSearched.isEmpty()) {
-            this.view.showSubscriptionSearched(subscriptionSearched);
+
+        List<List<Subscription>> subscriptionGroups = this.model.subscriptionsSearched(departure, destination, beginningDate, duration);
+        System.out.println("subscriptionGroups: " + subscriptionGroups);
+        if (!subscriptionGroups.isEmpty()) {
+            this.view.showSubscriptionsSearched(subscriptionGroups);
         } else {
             this.view.showError(MessageError.ERROR.toString());
         }
     }
-    
 }

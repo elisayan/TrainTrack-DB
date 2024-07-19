@@ -44,12 +44,14 @@ public class SubscriptionPurchaseSceneController extends AbstractSceneController
 
     @FXML
     private void searchClicked() {
-        this.controller.setSubscriptions(getDepartureText(), getDestinationText(), getStartDate(), getDurationText());
+        System.out.println("Search clicked"); 
+        this.controller.setListOfSubscriptions(getDepartureText(), getDestinationText(), getStartDate(), getDurationText());
     }
 
-    public void showSubscriptionSearched(List<Subscription> subscriptions) {
-        SubscriptionSearchSceneController subscriptionSearchSceneController = (SubscriptionSearchSceneController) this.view.switchScene("subscriptionSearchResults.fxml").get();
-        subscriptionSearchSceneController.populateSearchTable(subscriptions);
+    public void showSubscriptionsSearched(List<List<Subscription>> subscriptionGroups) {
+        SubscriptionSearchSceneController subscriptionSearchSceneController = 
+            (SubscriptionSearchSceneController) this.view.switchScene("subscriptionSearchResults.fxml").get();
+        subscriptionSearchSceneController.populateSearchTableSubs(subscriptionGroups);
     }
 
     @FXML
