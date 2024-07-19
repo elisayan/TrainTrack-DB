@@ -27,7 +27,7 @@
                   </ImageView>
                   <Label fx:id="timatableLabel" alignment="CENTER" contentDisplay="CENTER" text="TIMETABLE">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="Bell MT Bold" size="18.0" />
                      </font>
                   </Label>
                   <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#loginClicked" pickOnBounds="true" preserveRatio="true">
