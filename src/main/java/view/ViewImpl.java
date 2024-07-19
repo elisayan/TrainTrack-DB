@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import view.controller.SceneController;
 
 public class ViewImpl extends Application implements View {
-    // private final SceneLoader sceneLoader;
 
     private final static String PATH = "/layouts/";
     private Stage stage;
@@ -55,8 +54,6 @@ public class ViewImpl extends Application implements View {
     }
 
     public Optional<SceneController> switchScene(final String path) {
-        // this.currentSceneController = this.sceneLoader.loadScene(path).get();
-        // this.initializeSceneController(this.currentSceneController);
         return this.loadScene(path);
     }
 

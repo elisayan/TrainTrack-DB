@@ -48,7 +48,6 @@ public class LoginSceneController extends AbstractSceneController {
     }
 
     public void goForward() {
-        //this.getController().goToTheNextDataScene("home.fxml");
         this.view.switchScene("home.fxml");
     }
 

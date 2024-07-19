@@ -3,7 +3,6 @@ package db;
 import java.util.*;
 import java.sql.*;
 import java.time.LocalDate;
-
 import model.Service;
 import model.Subscription;
 
@@ -27,8 +26,7 @@ public class ServiceTable {
                        "WHERE (s.StazionePartenza = ? AND s.StazioneArrivo = ? OR s.StazionePartenza = ? AND s.StazioneArrivo = ?) " +
                        "AND s.DataPartenza = ? AND s.Durata = ? " +
                        "ORDER BY t.prezzo";
-        
-        // Map to group subscriptions by train type
+
         Map<String, List<Subscription>> groupedByTrainType = new HashMap<>();
         
         try (Connection connection = dataSource.getMySQLConnection();
@@ -56,14 +54,12 @@ public class ServiceTable {
                     rs.getFloat("Chilometraggio"),
                     rs.getInt("CodPercorso")
                 );
-    
-                // Create a unique key based on CodServizio, StazionePartenza, and StazioneArrivo
+
                 String uniqueKey = subscription.getJourneyID() + "_" + subscription.getDepartureStation() + "_" + subscription.getDestinationStation();
     
                 if (!uniqueSubscriptionsMap.containsKey(uniqueKey)) {
                     uniqueSubscriptionsMap.put(uniqueKey, subscription);
-    
-                    // Add subscription to the appropriate train type group
+
                     String trainType = subscription.getType();
                     groupedByTrainType
                         .computeIfAbsent(trainType, k -> new ArrayList<>())
@@ -102,14 +98,12 @@ public class ServiceTable {
                 int rowsInsertedSubscription = stmtInsertSubscription.executeUpdate();
     
                 if (rowsInsertedSubscription > 0) {
-                    // Retrieve the generated keys for servizio insertion
                     ResultSet generatedKeysSub = stmtInsertSubscription.getGeneratedKeys();
                     int serviceID = -1;
                     if (generatedKeysSub.next()) {
                         serviceID = generatedKeysSub.getInt(1);
                     }   
-    
-                    // Construct the Service object
+
                     service = new Service(serviceID,
                             subscriptionInfo.getDepartureStation(),
                             subscriptionInfo.getDestinationStation(),
@@ -151,18 +145,16 @@ public class ServiceTable {
             ResultSet rs = stmtCheckGuest.executeQuery();
 
             if (rs.next()) {
-                // Guest exists, update the guest
                 stmtUpdateGuest.setString(1, name);
                 stmtUpdateGuest.setString(2, lastName);
                 stmtUpdateGuest.setString(3, address);
                 stmtUpdateGuest.setInt(4, phone);
                 stmtUpdateGuest.setString(5, cf);
-                stmtUpdateGuest.setNull(6, Types.VARCHAR); // Password is null
-                stmtUpdateGuest.setNull(7, Types.FLOAT); // SpesaTotale is null
+                stmtUpdateGuest.setNull(6, Types.VARCHAR);
+                stmtUpdateGuest.setNull(7, Types.FLOAT);
                 stmtUpdateGuest.setString(8, email);
                 stmtUpdateGuest.executeUpdate();
             } else {
-                // Guest does not exist, insert new guest
                 stmtInsertGuest.setString(1, name);
                 stmtInsertGuest.setString(2, lastName);
                 stmtInsertGuest.setString(3, email);
@@ -172,7 +164,6 @@ public class ServiceTable {
                 stmtInsertGuest.executeUpdate();
             }
 
-            // Insert into servizio table
             stmtInsertSubscription.setString(1, subscriptionInfo.getDepartureStation());
             stmtInsertSubscription.setString(2, subscriptionInfo.getDestinationStation());
             stmtInsertSubscription.setString(3, subscriptionInfo.getDuration());
@@ -187,14 +178,12 @@ public class ServiceTable {
             int rowsInsertedSubscription = stmtInsertSubscription.executeUpdate();
 
             if (rowsInsertedSubscription > 0) {
-                // Retrieve the generated keys for servizio insertion
                 ResultSet generatedKeysSub = stmtInsertSubscription.getGeneratedKeys();
                 int serviceID = -1;
                 if (generatedKeysSub.next()) {
                     serviceID = generatedKeysSub.getInt(1);
                 }   
 
-                // Construct the Service object
                 service = new Service(serviceID,
                         subscriptionInfo.getDepartureStation(),
                         subscriptionInfo.getDestinationStation(),
@@ -211,7 +200,6 @@ public class ServiceTable {
 
         } catch (SQLException e) { 
             e.printStackTrace();
-            // Handle your exception appropriately
         }
 
         return service;
@@ -230,22 +218,6 @@ public class ServiceTable {
             int affectedRows = pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-    
-    public boolean existGuest(String email) {
-        String sql = "SELECT Email FROM Persona WHERE Email = ? AND (Password IS NULL OR TipoCliente = 'ospite')";
-
-        try (Connection conn = dataSource.getMySQLConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, email);
-            ResultSet rs = pstmt.executeQuery();
-
-            return rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 

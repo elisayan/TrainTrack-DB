@@ -40,7 +40,6 @@ public class CheckInController {
                     model.insertCheckIn(ticket.getEmail(), ticket.getCodServizio());
                     this.view.showMessage(MessageError.CHECKIN_SUCCESSFUL);
                     ticket.setCheckedIn(true);
-                    //ticket.setDisabled(true);
                 } else {
                     ticket.setCheckedIn(false);
                     this.view.showMessage(MessageError.CHECKIN_NOT_IN_TIME);
