@@ -4,25 +4,12 @@ import controller.Controller;
 import controller.LoginController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import model.Person;
 import view.View;
 
 public class LoginSceneController extends AbstractSceneController {
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
-    private Button homeButton;
-
-    @FXML
-    private Button signButton;
 
     @FXML
     private TextField emailField;
@@ -32,15 +19,6 @@ public class LoginSceneController extends AbstractSceneController {
 
     @FXML
     private Label errorLabel;
-
-    @FXML
-    private BorderPane pane;
-
-    @FXML
-    private VBox vBox;
-
-    @FXML
-    private HBox hBox;
 
     private LoginController controller;
 
@@ -57,29 +35,28 @@ public class LoginSceneController extends AbstractSceneController {
     @FXML
     public void loginClicked() {
         if (!this.isFieldsEmpty()) {
-            Platform.runLater(() -> {
-                this.controller.loginPerson(emailField.getText(), passwordField.getText());
-            });
+            Platform.runLater(() ->
+                this.controller.loginPerson(emailField.getText(), passwordField.getText()));
         } else {
             errorLabel.setText(MessageError.EMPTY_FIELD.toString());
         }
     }
 
     @FXML
-    public void signClicked() {
+    public void userClicked() {
         this.view.switchScene("signup.fxml");
     }
 
-    public void goForeward(final Person person) {
-        this.getController().savePerson(person);
-        this.getController().goToTheNextDataScene("home.fxml");
+    public void goForward() {
+        //this.getController().goToTheNextDataScene("home.fxml");
+        this.view.switchScene("home.fxml");
     }
 
     public void loginFailed() {
         errorLabel.setText(MessageError.INCORRECT_INPUT.toString());
     }
 
-    public void userNotexist() {
+    public void userNotExist() {
         errorLabel.setText(MessageError.USER_NOT_EXIST.toString());
     }
 }

@@ -1,15 +1,15 @@
 package model;
 
 public class Notification {
-    private int notificationID;
+    private String notificationID;
     private String description;
-    private int journeyID;
+    private String journeyID;
 
-    public int getNotificationID() {
+    public String getNotificationID() {
         return notificationID;
     }
 
-    public void setNotificationID(int notificationID) {
+    public void setNotificationID(String notificationID) {
         this.notificationID = notificationID;
     }
 
@@ -21,11 +21,11 @@ public class Notification {
         this.description = description;
     }
 
-    public int getJourneyID() {
+    public String getJourneyID() {
         return journeyID;
     }
 
-    public void setJourneyID(int journeyID) {
+    public void setJourneyID(String journeyID) {
         this.journeyID = journeyID;
     }
 

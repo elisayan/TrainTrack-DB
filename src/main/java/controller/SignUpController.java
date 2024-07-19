@@ -15,7 +15,7 @@ public class SignUpController {
 
     public void signUpPerson(final Person person) {
         if (this.model.signUpPerson(person)) {
-            this.view.goForeward(person);
+            this.view.goForward(person);
         } else {
             this.view.singUpFailed();
         }

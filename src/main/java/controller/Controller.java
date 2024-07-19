@@ -4,8 +4,11 @@ import model.Model;
 import model.Person;
 import model.Service;
 import model.Subscription;
+import model.Station;
 import view.View;
 import java.util.*;
+
+import java.util.Optional;
 
 public class Controller {
     private View view;
@@ -14,6 +17,7 @@ public class Controller {
     private List<Subscription> subscriptions;
     private Subscription subscription;
     private Service service;
+    private Station station;
 
     public Controller() {
         this.model = new Model();
@@ -24,20 +28,25 @@ public class Controller {
         this.view.switchScene("home.fxml");
     }
 
-    public void savePerson(Person person) {
-        this.person = person;
-    }
-
     public void goToTheNextDataScene(String path) {
         this.view.switchScene(path);
     }
 
     public void setPerson(Person person) {
+        model.setPerson(person);
         this.person = person;
     }
 
-    public Person getCurrentPerson() {
-        return person;
+    public Optional<Person> getCurrentPerson() {
+        return Optional.ofNullable(this.person);
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
+    }
+
+    public Station getCurrentStation() {
+        return station;
     }
 
     public List<Subscription> getSubscriptions() {

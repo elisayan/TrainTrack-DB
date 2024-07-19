@@ -12,19 +12,18 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.SubscriptionPurchaseSceneController">
    <top>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="615.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" onAction="#homeClicked" text="Home">
-               <HBox.margin>
-                  <Insets left="15.0" top="7.0" />
-               </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#loginClicked" text="Log-in">
-               <HBox.margin>
-                  <Insets top="7.0" />
-               </HBox.margin>
-            </Button>
-         </children>
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="615.0"
+            BorderPane.alignment="CENTER">
+         <Button mnemonicParsing="false" onMouseClicked="#homeClicked" text="Home">
+            <HBox.margin>
+               <Insets left="15.0" top="7.0"/>
+            </HBox.margin>
+         </Button>
+         <Button mnemonicParsing="false" onMouseClicked="#loginClicked" text="Log-in">
+            <HBox.margin>
+               <Insets top="7.0"/>
+            </HBox.margin>
+         </Button>
       </HBox>
    </top>
    <center>
@@ -57,17 +56,17 @@
       </VBox>
    </center>
    <bottom>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="120.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#searchClicked" text="Search">
-               <VBox.margin>
-                  <Insets left="350.0" />
-               </VBox.margin>
-            </Button>
-         </children>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="120.0"
+            BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets />
+            <Insets/>
          </BorderPane.margin>
+         <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#searchClicked"
+                 text="Search">
+            <VBox.margin>
+               <Insets left="350.0"/>
+            </VBox.margin>
+         </Button>
       </VBox>
    </bottom>
 </BorderPane>

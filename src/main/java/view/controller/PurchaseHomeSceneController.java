@@ -1,41 +1,38 @@
 package view.controller;
 
+import controller.Controller;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import view.View;
 
-public class PurchaseHomeSceneController extends AbstractSceneController{
+public class PurchaseHomeSceneController extends AbstractSceneController {
 
-    @FXML
-    private Label buyLabel;
-
-    @FXML
-    private Button homeButton;
+    @Override
+    public void initialize(View view, Controller controller) {
+        super.initialize(view, controller);
+    }
 
     @FXML
-    private Button loginButton;
-
-    @FXML
-    private Button subscriptionButton;
-
-    @FXML
-    private Button ticketsButton;
-
-    @FXML
-    private void loginClicked() {
+    private void userClicked() {
         this.view.switchScene("login.fxml");
     }
 
     @FXML
     private void subscriptionClicked() {
         this.view.switchScene("subscriptionPurchase.fxml");
-
     }
 
     @FXML
     private void ticketsClicked() {
         this.view.switchScene("ticketsPurchase.fxml");
+    }
+
+    @FXML
+    private void checkInClicked() {
+        if (getController().getCurrentPerson().isPresent()) {
+            this.view.switchScene("checkIn.fxml");
+        } else {
+            this.view.switchScene("checkInGuest.fxml");
+        }
     }
 
 }

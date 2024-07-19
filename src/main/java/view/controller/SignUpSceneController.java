@@ -4,15 +4,9 @@ import controller.SignUpController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import model.Person;
 
 public class SignUpSceneController extends AbstractSceneController {
-    @FXML
-    private Button signButton;
-
-    @FXML
-    private Button loginButton;
 
     @FXML
     private TextField nameField;
@@ -38,36 +32,23 @@ public class SignUpSceneController extends AbstractSceneController {
     @FXML
     private Label errorLabel;
 
-    @FXML
-    private VBox vBox;
-
-    @FXML
-    private HBox hBox;
-
-    @FXML
-    private BorderPane pane;
-
     private String typeClient;
 
-    private SignUpController controller = new SignUpController(this);
+    private final SignUpController controller = new SignUpController(this);
 
     private boolean isFieldsEmpty() {
         if (passwordField.getText().isBlank()) {
-            typeClient = "Guest";
+            typeClient = "ospite";
         } else {
-            typeClient = "User";
+            typeClient = "utente";
         }
 
-        if (nameField.getText().isBlank() || surnameField.getText().isBlank() || codeField.getText().isBlank()
-                || emailField.getText().isBlank() || addressField.getText().isBlank()) {
-            return true;
-        }
-
-        return false;
+        return nameField.getText().isBlank() || surnameField.getText().isBlank() || codeField.getText().isBlank()
+                || emailField.getText().isBlank() || addressField.getText().isBlank();
     }
 
     @FXML
-    public void loginClicked() {
+    public void userClicked() {
         this.view.switchScene("login.fxml");
     }
 
@@ -83,7 +64,7 @@ public class SignUpSceneController extends AbstractSceneController {
                 person.setPassword(passwordField.getText());
                 person.setAddress(addressField.getText());
                 person.setClientType(typeClient);
-                person.setPersonType("Client");
+                person.setPersonType("cliente");
                 if (!phoneField.getText().isBlank()) {
                     person.setPhone(Integer.parseInt(phoneField.getText()));
                 }
@@ -94,8 +75,8 @@ public class SignUpSceneController extends AbstractSceneController {
         }
     }
 
-    public void goForeward(final Person person) {
-        this.getController().savePerson(person);
+    public void goForward(final Person person) {
+        this.getController().setPerson(person);
         this.getController().goToTheNextDataScene("login.fxml");
     }
 

@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -11,70 +13,53 @@
 
 <BorderPane prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.SignUpSceneController">
    <top>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="615.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#homeClicked" text="Home">
-               <HBox.margin>
-                  <Insets left="15.0" top="7.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="loginButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#loginClicked" text="Log-in">
-               <HBox.margin>
-                  <Insets top="7.0" />
-               </HBox.margin>
-            </Button>
-         </children>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="650.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/home.png" />
+         </ImageView>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#userClicked" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/user.png" />
+         </ImageView>
       </HBox>
    </top>
    <center>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="13.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="227.0" textAlignment="CENTER">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="NAME*">
-               <VBox.margin>
-                  <Insets left="226.0" />
-               </VBox.margin>
-            </TextField>
-            <TextField fx:id="surnameField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="SURNAME*">
-               <VBox.margin>
-                  <Insets left="226.0" />
-               </VBox.margin>
-            </TextField>
-            <TextField fx:id="codeField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="TAX CODE*">
-               <VBox.margin>
-                  <Insets left="226.0" />
-               </VBox.margin>
-            </TextField>
-            <TextField fx:id="emailField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="E-MAIL*">
-               <VBox.margin>
-                  <Insets left="226.0" />
-               </VBox.margin>
-            </TextField>
-            <TextField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="PASSWORD">
-               <VBox.margin>
-                  <Insets left="226.0" />
-               </VBox.margin>
-            </TextField>
-            <TextField fx:id="phoneField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="PHONE">
-               <VBox.margin>
-                  <Insets left="226.0" />
-               </VBox.margin>
-            </TextField>
-            <TextField fx:id="addressField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="ADDRESS*">
-               <VBox.margin>
-                  <Insets left="226.0" />
-               </VBox.margin>
-            </TextField>
-            <Button fx:id="signButton" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#signUpClicked" text="Sign up">
-               <VBox.margin>
-                  <Insets left="346.0" />
-               </VBox.margin>
-            </Button>
-         </children>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" BorderPane.alignment="CENTER">
+         <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="227.0" text="Sign up now to get started!" textAlignment="CENTER">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="19.0">
+               <Label text="Name: " />
+               <Label text="Surname: " />
+               <Label text="CF: " />
+               <Label text="Email: " />
+               <Label text="Password: " />
+               <Label text="Phone: " />
+               <Label text="Address: " />
+            </VBox>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0">
+               <TextField fx:id="nameField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="NAME*" />
+               <TextField fx:id="surnameField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="SURNAME*" />
+               <TextField fx:id="codeField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="TAX CODE*" />
+               <TextField fx:id="emailField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="E-MAIL*" />
+               <TextField fx:id="passwordField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="PASSWORD" />
+               <TextField fx:id="phoneField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="PHONE" />
+               <TextField fx:id="addressField" maxHeight="1.7976931348623157E308" maxWidth="300.0" promptText="ADDRESS*" />
+            </VBox>
+         </HBox>
       </VBox>
    </center>
+   <bottom>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <Button maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#signUpClicked" text="Sign up" />
+         <BorderPane.margin>
+            <Insets bottom="25.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
 </BorderPane>

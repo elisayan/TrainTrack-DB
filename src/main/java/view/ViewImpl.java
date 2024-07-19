@@ -40,15 +40,15 @@ public class ViewImpl extends Application implements View {
         final Parent root;
         try {
             root = loader.load(this.getClass().getResourceAsStream(PATH + filePath));
-        final SceneController sceneController = loader.getController();
-        sceneController.setRoot(root);
-        sceneController.initialize(this, this.controller);
-        if (this.stage.getScene() == null) {
-            this.stage.setScene(new Scene(root));
-        } else {
-            this.stage.getScene().setRoot(root);
-        }
-        return Optional.of(sceneController);
+            final SceneController sceneController = loader.getController();
+            sceneController.setRoot(root);
+            sceneController.initialize(this, this.controller);
+            if (this.stage.getScene() == null) {
+                this.stage.setScene(new Scene(root));
+            } else {
+                this.stage.getScene().setRoot(root);
+            }
+            return Optional.of(sceneController);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

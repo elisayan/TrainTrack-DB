@@ -106,13 +106,13 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
         }
 
         ServiceTable serviceTable = new ServiceTable();
-        Person person = controller.getCurrentPerson();
+        Optional<Person> person = controller.getCurrentPerson();
         Service service = null;
         
         for (Subscription subscription : subscriptionGroup) {
         if (person != null) {
             service = serviceTable.insertSubscriptionUser(subscription, name, lastName, email);
-            serviceTable.updateTotalPurchase(person.getEmail(), service.getPrice());
+            serviceTable.updateTotalPurchase(person.get().getEmail(), service.getPrice());
         } else {
             service = serviceTable.insertSubscriptionGuest(subscription, name, lastName, email, cf, address, phone);
             }

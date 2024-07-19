@@ -42,6 +42,10 @@ create table BuonoSconto (
      CodBuonoSconto varchar(50) not null,
      Importo float(10) not null,
      DataInizioValidita date not null,
+create table BuonoSconto (
+     CodBuonoSconto varchar(50) not null,
+     Importo float(10) not null,
+     DataInizioValidita date not null,
      DataScadenza date not null,
      Email varchar(50) not null,
      constraint IDBUONOSCONTO primary key (CodBuonoSconto));
@@ -68,6 +72,7 @@ create table Percorso (
      Prezzo float(1) not null,
      constraint IDPERCORSO_ID primary key (CodPercorso),
      constraint IDPERCORSO_1 unique (CodTreno, CodPercorso),
+     constraint IDPercorso_2 unique (Email, CodPercorso));
      constraint IDPercorso_2 unique (Email, CodPercorso));
 
 create table Persona (
@@ -107,6 +112,9 @@ create table Servizio (
 create table Stazione (
      CodStazione varchar(50) not null,
      Nome varchar(50) not null,
+create table Stazione (
+     CodStazione varchar(50) not null,
+     Nome varchar(50) not null,
      constraint IDSTAZIONE_ID primary key (CodStazione));
 
 create table TipoAbbonamento (
@@ -134,6 +142,7 @@ create table Utilizzo (
 
 alter table Attivazione add constraint FKAtt_Not
      foreign key (CodNotifica)
+     references Notifica (CodNotifica);
      references Notifica (CodNotifica);
 
 alter table Attivazione add constraint FKAtt_Per
@@ -177,6 +186,7 @@ alter table Notifica add constraint FKRiferimento
 alter table Percorso add constraint FKSegue
      foreign key (CodTreno)
      references Treno (CodTreno);
+     references Treno (CodTreno);
 
 alter table Percorso add constraint FKCondotto
      foreign key (Email)
@@ -184,6 +194,7 @@ alter table Percorso add constraint FKCondotto
 
 alter table Sequenza add constraint FKPrecedente
      foreign key (CodStazione)
+     references Stazione (CodStazione);
      references Stazione (CodStazione);
 
 alter table Sequenza add constraint FKSuccessivo
@@ -201,7 +212,9 @@ alter table Servizio add constraint FKAcquisto
 alter table Servizio add constraint FKTipologia_FK
      foreign key (Durata, Chilometraggio)
      references TipoAbbonamento (Durata, Chilometraggio);
+     references TipoAbbonamento (Durata, Chilometraggio);
 
+alter table Servizio add constraint FKTipologia_CHK
 alter table Servizio add constraint FKTipologia_CHK
      check((Durata is not null and Chilometraggio is not null)
            or (Durata is null and Chilometraggio is null)); 
