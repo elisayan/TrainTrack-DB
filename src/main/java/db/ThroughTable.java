@@ -46,8 +46,7 @@ public class ThroughTable {
     public List<JourneyInfo> journeyInfo(Station station) {
         List<JourneyInfo> info = new ArrayList<>();
         try (Connection connection = dataSource.getMySQLConnection()) {
-            List<JourneyInfo> journeyInfos = getJourneyInfos(connection, station);
-            info = journeyInfos;
+            info = getJourneyInfos(connection, station);
         } catch (SQLException e) {
             e.printStackTrace();
         }

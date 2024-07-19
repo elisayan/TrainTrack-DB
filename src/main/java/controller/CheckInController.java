@@ -24,7 +24,7 @@ public class CheckInController {
 
     public void initializedCheckIn(List<Ticket> tickets) {
         for (Ticket ticket : tickets) {
-            if (!this.model.isCheckInExist(ticket.getCodServizio(), ticket.getEmail())) {
+            if (this.model.isNotCheckInExist(ticket.getCodServizio(), ticket.getEmail())) {
                 this.view.showCheckedTickets(ticket);
             } else {
                 ticket.setCheckedIn(true);
@@ -34,7 +34,7 @@ public class CheckInController {
     }
 
     public void updateCheckInStatus(Ticket ticket, boolean checkedIn) {
-        if (!this.model.isCheckInExist(ticket.getCodServizio(), ticket.getEmail())) {
+        if (this.model.isNotCheckInExist(ticket.getCodServizio(), ticket.getEmail())) {
             if (checkedIn) {
                 if (this.model.isCheckInValid(ticket.getCodServizio())) {
                     model.insertCheckIn(ticket.getEmail(), ticket.getCodServizio());

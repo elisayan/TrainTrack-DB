@@ -44,7 +44,6 @@ public class SubscriptionPurchaseSceneController extends AbstractSceneController
 
     @FXML
     private void searchClicked() {
-        System.out.println("Search clicked"); 
         this.controller.setListOfSubscriptions(getDepartureText(), getDestinationText(), getStartDate(), getDurationText());
     }
 

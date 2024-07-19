@@ -27,7 +27,6 @@ public class SubscriptionPurchaseController {
         }
 
         List<List<Subscription>> subscriptionGroups = this.model.subscriptionsSearched(departure, destination, beginningDate, duration);
-        System.out.println("subscriptionGroups: " + subscriptionGroups);
         if (!subscriptionGroups.isEmpty()) {
             this.view.showSubscriptionsSearched(subscriptionGroups);
         } else {

@@ -107,8 +107,8 @@ public class CheckInTable {
     }
 
 
-    public boolean isCheckInExist(int codServizio, String email) {
-        String sqlCheckInExists = "SELECT 1 FROM CheckIn WHERE CodServizio = ? AND Email = ?";
+    public boolean isNotCheckInExist(int codServizio, String email) {
+        String sqlCheckInExists = "SELECT CodCheckIn FROM CheckIn WHERE CodServizio = ? AND Email = ?";
 
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement pstmtCheckInExists = conn.prepareStatement(sqlCheckInExists)) {
@@ -118,11 +118,11 @@ public class CheckInTable {
 
             ResultSet rsCheckInExists = pstmtCheckInExists.executeQuery();
             if (rsCheckInExists.next()) {
-                return true;
+                return false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return true;
     }
 }

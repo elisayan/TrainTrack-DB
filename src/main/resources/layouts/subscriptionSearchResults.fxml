@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -12,30 +13,33 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.SubscriptionSearchSceneController">
    <top>
-      <HBox spacing="615.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="650.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="homeButton" mnemonicParsing="false" onMouseClicked="#homeClicked" text="Home">
-               <HBox.margin>
-                  <Insets left="15.0" top="7.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="loginButton" mnemonicParsing="false" onMouseClicked="#loginClicked" text="Log-in">
-               <HBox.margin>
-                  <Insets top="7.0" />
-               </HBox.margin>
-            </Button>
+            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/home.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#loginClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/user.png" />
+               </image>
+            </ImageView>
          </children>
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
       </HBox>
    </top>
    <center>
       <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="searchLabel" text="SEARCH RESULTS">
+            <Label fx:id="searchLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="SUBSCRITIONS" textAlignment="CENTER">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets bottom="10.0" top="20.0" />
                </VBox.margin>
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="Bell MT" size="24.0" />
                </font>
             </Label>
             <TableView fx:id="searchTable" prefWidth="200.0">

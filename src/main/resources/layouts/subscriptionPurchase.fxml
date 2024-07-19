@@ -6,36 +6,59 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.SubscriptionPurchaseSceneController">
    <top>
-      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="615.0"
-            BorderPane.alignment="CENTER">
-         <Button mnemonicParsing="false" onMouseClicked="#homeClicked" text="Home">
-            <HBox.margin>
-               <Insets left="15.0" top="7.0"/>
-            </HBox.margin>
-         </Button>
-         <Button mnemonicParsing="false" onMouseClicked="#loginClicked" text="Log-in">
-            <HBox.margin>
-               <Insets top="7.0"/>
-            </HBox.margin>
-         </Button>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="650.0" BorderPane.alignment="CENTER">
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../img/home.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#loginClicked" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../img/user.png" />
+            </image>
+         </ImageView>
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
       </HBox>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="40.0" BorderPane.alignment="CENTER">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="BOTTOM_CENTER">
-               <children>
-                  <Label fx:id="errorLabel" alignment="CENTER" />
-               </children>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Insert information about your subscription" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
+            </Label>
+            <Label fx:id="errorLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox alignment="BASELINE_LEFT" spacing="210.0">
+               <children>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Departure:">
+                     <padding>
+                        <Insets left="120.0" />
+                     </padding>
+                  </Label>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Destination:" />
+               </children>
             </HBox>
             <HBox alignment="TOP_CENTER" spacing="20.0">
                <children>
@@ -45,6 +68,16 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+            </HBox>
+            <HBox alignment="BASELINE_LEFT" spacing="238.0">
+               <children>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Date:">
+                     <padding>
+                        <Insets left="120.0" />
+                     </padding>
+                  </Label>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Type:" />
+               </children>
             </HBox>
             <HBox alignment="TOP_CENTER" spacing="20.0">
                <children>
@@ -56,16 +89,14 @@
       </VBox>
    </center>
    <bottom>
-      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="120.0"
-            BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets/>
+            <Insets bottom="50.0" />
          </BorderPane.margin>
-         <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#searchClicked"
-                 text="Search">
-            <VBox.margin>
-               <Insets left="350.0"/>
-            </VBox.margin>
+         <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#searchClicked" text="Search">
+            <font>
+               <Font size="14.0" />
+            </font>
          </Button>
       </VBox>
    </bottom>

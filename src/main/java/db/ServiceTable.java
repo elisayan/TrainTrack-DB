@@ -228,7 +228,6 @@ public class ServiceTable {
             pstmt.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
 
             int affectedRows = pstmt.executeUpdate();
-            System.out.println("Inserted into Utilizzo: " + affectedRows + " rows, serviceID: " + serviceID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
