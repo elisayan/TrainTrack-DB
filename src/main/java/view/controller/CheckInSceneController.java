@@ -59,9 +59,11 @@ public class CheckInSceneController extends AbstractSceneController {
             cell.setSelectedStateCallback(index -> ticketTable.getItems().get(index).checkedInProperty());
 
             cell.setOnMouseClicked(event -> {
-                Ticket ticket = ticketTable.getItems().get(cell.getIndex());
-                boolean newCheckedInStatus = !ticket.isCheckedIn();
-                this.controller.updateCheckInStatus(ticket, newCheckedInStatus);
+                if (cell.getTableRow() != null && !cell.getTableRow().isEmpty()) {
+                    Ticket ticket = cell.getTableRow().getItem();
+                    boolean newCheckedInStatus = !ticket.isCheckedIn();
+                    this.controller.updateCheckInStatus(ticket, newCheckedInStatus);
+                }
             });
 
             return cell;

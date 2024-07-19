@@ -164,7 +164,7 @@ public class ServiceTable {
     }
 
     public boolean isGuest(String email) {
-        String sql = "SELECT Email, TipoCliente, Password FROM Persona WHERE Email = ?";
+        String sql = "SELECT Email, TipoCliente, Password FROM Persona WHERE Email = ? AND TipoPersona = 'cliente', TipoCliente = 'ospite'";
 
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -202,8 +202,8 @@ public class ServiceTable {
     }
 
     public void saveOrUpdateGuest(String email, String firstName, String lastName, String address, String cf) {
-        String checkSql = "SELECT Email FROM Persona WHERE Email = ?";
-        String updateSql = "UPDATE Persona SET Nome = ?, Cognome = ?, Indirizzo = ?, Telefono = ?, CF = ?, Password = ?, SpesaTotale = ?, TipoPersona = 'cliente', TipoCliente = 'ospite' WHERE Email = ?";
+        String checkSql = "SELECT Email, TipoCliente FROM Persona WHERE Email = ? AND TipoPersona = 'cliente'";
+        String updateSql = "UPDATE Persona SET Nome = ?, Cognome = ?, Indirizzo = ?, Telefono = ?, CF = ?, Password = ?, SpesaTotale = ? WHERE Email = ?";
         String insertSql = "INSERT INTO Persona (Email, Nome, Cognome, Indirizzo, Telefono, CF, Password, SpesaTotale, TipoPersona, TipoCliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'cliente', 'ospite')";
 
         try (Connection conn = dataSource.getMySQLConnection();
@@ -213,19 +213,21 @@ public class ServiceTable {
             ResultSet rs = checkPstmt.executeQuery();
 
             if (rs.next()) {
-                try (PreparedStatement updatePstmt = conn.prepareStatement(updateSql)) {
-                    updatePstmt.setString(1, firstName);
-                    updatePstmt.setString(2, lastName);
-                    updatePstmt.setString(3, address);
-                    updatePstmt.setNull(4, Types.VARCHAR);
-                    updatePstmt.setString(5, cf);
-                    updatePstmt.setNull(6, Types.VARCHAR);
-                    updatePstmt.setNull(7, Types.FLOAT);
-                    updatePstmt.setString(8, email);
-                    updatePstmt.executeUpdate();
+                String tipoCliente = rs.getString("TipoCliente");
+                if ("ospite".equals(tipoCliente)) {
+                    try (PreparedStatement updatePstmt = conn.prepareStatement(updateSql)) {
+                        updatePstmt.setString(1, firstName);
+                        updatePstmt.setString(2, lastName);
+                        updatePstmt.setString(3, address);
+                        updatePstmt.setNull(4, Types.VARCHAR);
+                        updatePstmt.setString(5, cf);
+                        updatePstmt.setNull(6, Types.VARCHAR);
+                        updatePstmt.setNull(7, Types.FLOAT);
+                        updatePstmt.setString(8, email);
+                        updatePstmt.executeUpdate();
+                    }
                 }
             } else {
-                System.out.println("register guest");
                 try (PreparedStatement insertPstmt = conn.prepareStatement(insertSql)) {
                     insertPstmt.setString(1, email);
                     insertPstmt.setString(2, firstName);
@@ -242,6 +244,7 @@ public class ServiceTable {
             e.printStackTrace();
         }
     }
+
 
     public void decreaseTotalSeats(String journeyID) {
         String getTrainCodeSql = "SELECT CodTreno FROM Percorso WHERE CodPercorso = ?";

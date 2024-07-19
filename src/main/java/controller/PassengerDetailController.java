@@ -18,7 +18,7 @@ public class PassengerDetailController {
 
     public void checkEmail(Ticket ticket, String firstName, String lastName,
                            String email, String address, String cf, String voucher) throws IOException {
-        handleGuest(email, firstName, lastName, address, cf);
+        this.model.saveOrUpdateGuest(email, firstName, lastName, address, cf);
 
         if (this.model.haveVoucher(voucher, email)) {
             addTicketAndNotifyView(ticket, firstName, lastName, email, voucher);
@@ -29,14 +29,8 @@ public class PassengerDetailController {
 
     public void successful(Ticket ticket, String firstName, String lastName,
                            String email, String address, String cf, String voucher) throws IOException {
-        handleGuest(email, firstName, lastName, address, cf);
+        this.model.saveOrUpdateGuest(email, firstName, lastName, address, cf);
         addTicketAndNotifyView(ticket, firstName, lastName, email, voucher);
-    }
-
-    private void handleGuest(String email, String firstName, String lastName, String address, String cf) {
-        if (!this.model.isGuest(email)) {
-            this.model.saveOrUpdateGuest(email, firstName, lastName, address, cf);
-        }
     }
 
     private void addTicketAndNotifyView(Ticket ticket, String firstName, String lastName,
