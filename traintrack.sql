@@ -3,7 +3,7 @@
 -- *--------------------------------------------
 -- * DB-MAIN version: 11.0.2              
 -- * Generator date: Sep 14 2021              
--- * Generation date: Tue Jul 16 12:43:12 2024 
+-- * Generation date: Fri Jul 19 11:30:04 2024 
 -- * LUN file: C:\Users\jiaax\Downloads\traintrackFinale.lun 
 -- * Schema: relazionale-finale/1-1-1-1 
 -- ********************************************* 
@@ -39,7 +39,7 @@ create table Attraversato (
      constraint IDAttraversato primary key (CodStazione, CodPercorso, Data));
 
 create table BuonoSconto (
-     CodBuonoSconto varchar(50) not null,
+     CodBuonoSconto int not null auto_increment,
      Importo float(10) not null,
      DataInizioValidita date not null,
      DataScadenza date not null,
@@ -47,12 +47,13 @@ create table BuonoSconto (
      constraint IDBUONOSCONTO primary key (CodBuonoSconto));
 
 create table CheckIn (
-     CodCheckIn varchar(50) not null,
+     CodCheckIn int not null auto_increment,
+     CodServizio int not null,
      Data  date not null,
      Ora time not null,
      Email varchar(50) not null,
-     codServizio int not null,
-     constraint IDCHECKIN primary key (CodCheckIn));
+     constraint IDCHECKIN primary key (CodCheckIn),
+     constraint FKValidazione_ID unique (CodServizio));
 
 create table Notifica (
      CodNotifica varchar(50) not null,
@@ -65,7 +66,7 @@ create table Percorso (
      CodTreno varchar(50) not null,
      Email varchar(50) not null,
      TempoPercorrenza varchar(50) not null,
-     Prezzo float(1) not null,
+     Prezzo float(10) not null,
      constraint IDPERCORSO_ID primary key (CodPercorso),
      constraint IDPERCORSO_1 unique (CodTreno, CodPercorso),
      constraint IDPercorso_2 unique (Email, CodPercorso));
@@ -81,6 +82,7 @@ create table Persona (
      SpesaTotale float(50),
      TipoPersona varchar(50) not null,
      TipoCliente varchar(50),
+     UltimaSpesaCoupon int,
      constraint IDPersona primary key (Email));
 
 create table Sequenza (
@@ -122,8 +124,8 @@ create table Treno (
      constraint IDTRENO primary key (CodTreno));
 
 create table Utilizzo (
-     CodBuonoSconto varchar(50) not null,
-     codServizio int not null,
+     CodBuonoSconto int not null auto_increment,
+     CodServizio int not null,
      Data date not null,
      constraint FKUti_Buo_ID primary key (CodBuonoSconto),
      constraint FKUti_Ser_ID unique (CodServizio));
@@ -156,7 +158,7 @@ alter table CheckIn add constraint FKFatto
      foreign key (Email)
      references Persona (Email);
 
-alter table CheckIn add constraint FKValidizione
+alter table CheckIn add constraint FKValidazione_FK
      foreign key (CodServizio)
      references Servizio (CodServizio);
 
