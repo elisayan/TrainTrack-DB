@@ -1,15 +1,15 @@
 -- Inserimento Macchinisti
 INSERT INTO Persona (Email, Nome, Cognome, Indirizzo, Telefono, CF, Password, SpesaTotale, TipoPersona, TipoCliente, UltimaSpesaCoupon) VALUES
-('macchinista1@example.com', 'Giovanni', 'Ferrari', 'Via Roma 1, Roma', '1234567890', 'GFRGVN80A01H501U', 'password123', NULL, 'macchinista', NULL, NULL),
-('macchinista2@example.com', 'Luca', 'Bianchi', 'Via Milano 2, Milano', '0987654321', 'BNCLCU85M01H501V', 'password456', NULL, 'macchinista', NULL, NULL);
+('macchinista1@example.com', 'Giovanni', 'Ferrari', 'Via Roma 1, Roma', '1111', 'CFMACCHINISTA1', 'macchinista1', NULL, 'macchinista', NULL, NULL),
+('macchinista2@example.com', 'Luca', 'Bianchi', 'Via Milano 2, Milano', '2222', 'CFMACCHINISTA2', 'macchinista2', NULL, 'macchinista', NULL, NULL);
 
 -- Inserimento Clienti
 INSERT INTO Persona (Email, Nome, Cognome, Indirizzo, Telefono, CF, Password, SpesaTotale, TipoPersona, TipoCliente, UltimaSpesaCoupon) VALUES
-('ospite1@example.com', 'Anna', 'Rossi', 'Via Napoli 3, Napoli', '1122334455', 'RSSNNA90L01H501W', NULL, NULL, 'cliente', 'ospite', NULL),
-('utente1@example.com', 'Mario', 'Verdi', 'Via Firenze 4, Firenze', '2233445566', 'VRDLMR80A01H501X', 'password101', 0.0, 'cliente', 'utente', NULL),
-('utente2@example.com', 'Sara', 'Neri', 'Via Torino 5, Torino', '3344556677', 'NRASRA85M01H501Y', 'password202', 200.0, 'cliente', 'utente', NULL),
-('utente3@example.com', 'Paolo', 'Blu', 'Via Genova 6, Genova', '4455667788', 'BLUPLO90L01H501Z', 'password303', 150.0, 'cliente', 'utente', NULL),
-('utente4@example.com', 'Elena', 'Gialli', 'Via Bologna 7, Bologna', '5566778899', 'GLNLNA95M01H501A', 'password404', 300.0, 'cliente', 'utente', NULL);
+('ospite1@example.com', 'Anna', 'Rossi', 'Via Napoli 3, Napoli', NULL, 'CFOSPITE1', NULL, NULL, 'cliente', 'ospite', NULL),
+('utente1@example.com', 'Mario', 'Verdi', 'Via Firenze 4, Firenze', '1111', 'CFUTENTE1', 'utente1', 0.0, 'cliente', 'utente', NULL),
+('utente2@example.com', 'Sara', 'Neri', 'Via Torino 5, Torino', '2222', 'CFUTENTE2', 'utente2', 90.0, 'cliente', 'utente', NULL),
+('utente3@example.com', 'Paolo', 'Blu', 'Via Genova 6, Genova', '3333', 'CFUTENTE3', 'utente3', 95.0, 'cliente', 'utente', NULL),
+('utente4@example.com', 'Elena', 'Gialli', 'Via Bologna 7, Bologna', '4444', 'CFUTENTE4', 'utente4', 80.0, 'cliente', 'utente', NULL);
 
 
 INSERT INTO Treno (CodTreno, PostiTotali, Tipo) VALUES
@@ -100,3 +100,15 @@ INSERT INTO TipoAbbonamento (Durata, Chilometraggio, Prezzo) VALUES
 ('Mensile', 500, 80.0),
 ('Annuale', 6000, 800.0);
 
+#INSERT INTO Servizio (StazionePartenza, StazioneArrivo, NomePasseggero, CognomePasseggero, TipoTreno, DataPartenza, OrarioPartenza, Prezzo, CodPercorso, Email, Durata, Chilometraggio) VALUES
+#-- Abbonamento Settimanale
+#('Roma Termini', 'Milano Centrale', 'Mario', 'Verdi', 'Frecciarossa', '2024-07-23', NULL, 80.0, 'P001', 'utente1@example.com', 'Settimanale', 500),
+#('Napoli Centrale', 'Firenze Santa Maria Novella', 'Sara', 'Neri', 'Intercity', '2024-07-24', NULL, 70.0, 'P002', 'utente2@example.com', 'Settimanale', 500),
+
+#-- Abbonamento Mensile
+#('Roma Termini', 'Napoli Centrale', 'Paolo', 'Blu', 'Regionale', '2024-07-25', NULL, 150.0, 'P003', 'utente3@example.com', 'Mensile', 500),
+#('Firenze Santa Maria Novella', 'Torino Porta Nuova', 'Elena', 'Gialli', 'Frecciarossa', '2024-07-26', NULL, 140.0, 'P004', 'utente4@example.com', 'Mensile', 500),
+
+#-- Abbonamento Annuale
+#('Roma Termini', 'Venezia Santa Lucia', 'Anna', 'Rossi', 'Frecciarossa', '2024-07-27', NULL, 800.0, 'P001', 'ospite1@example.com', 'Annuale', 6000),
+#('Napoli Centrale', 'Milano Centrale', 'Luca', 'Bianchi', 'Intercity', '2024-07-28', NULL, 750.0, 'P002', 'utente1@example.com', 'Annuale', 6000);

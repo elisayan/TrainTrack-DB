@@ -85,11 +85,6 @@ create table Persona (
      UltimaSpesaCoupon int,
      constraint IDPersona primary key (Email));
 
-create table Sequenza (
-     Suc_CodStazione varchar(50) not null,
-     CodStazione varchar(50) not null,
-     constraint IDSequenza primary key (CodStazione, Suc_CodStazione));
-
 create table Servizio (
      CodServizio int not null auto_increment,
      StazionePartenza varchar(50) not null,
@@ -183,14 +178,6 @@ alter table Percorso add constraint FKSegue
 alter table Percorso add constraint FKCondotto
      foreign key (Email)
      references Persona (Email);
-
-alter table Sequenza add constraint FKPrecedente
-     foreign key (CodStazione)
-     references Stazione (CodStazione);
-
-alter table Sequenza add constraint FKSuccessivo
-     foreign key (Suc_CodStazione)
-     references Stazione (CodStazione);
 
 alter table Servizio add constraint FKRiguarda
      foreign key (CodPercorso)
