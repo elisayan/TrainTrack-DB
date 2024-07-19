@@ -175,7 +175,7 @@ public class ServiceTable {
             if (rs.next()) {
                 String tipoCliente = rs.getString("TipoCliente");
                 String password = rs.getString("Password");
-                return "guest".equals(tipoCliente) && password == null;
+                return "ospite".equals(tipoCliente) && password == null;
             } else {
                 return false;
             }
@@ -203,8 +203,8 @@ public class ServiceTable {
 
     public void saveOrUpdateGuest(String email, String firstName, String lastName, String address, String cf) {
         String checkSql = "SELECT Email FROM Persona WHERE Email = ?";
-        String updateSql = "UPDATE Persona SET Nome = ?, Cognome = ?, Indirizzo = ?, Telefono = ?, CF = ?, Password = ?, SpesaTotale = ?, TipoPersona = 'cliente', TipoCliente = 'guest' WHERE Email = ?";
-        String insertSql = "INSERT INTO Persona (Email, Nome, Cognome, Indirizzo, Telefono, CF, Password, SpesaTotale, TipoPersona, TipoCliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'cliente', 'guest')";
+        String updateSql = "UPDATE Persona SET Nome = ?, Cognome = ?, Indirizzo = ?, Telefono = ?, CF = ?, Password = ?, SpesaTotale = ?, TipoPersona = 'cliente', TipoCliente = 'ospite' WHERE Email = ?";
+        String insertSql = "INSERT INTO Persona (Email, Nome, Cognome, Indirizzo, Telefono, CF, Password, SpesaTotale, TipoPersona, TipoCliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'cliente', 'ospite')";
 
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement checkPstmt = conn.prepareStatement(checkSql)) {
@@ -225,6 +225,7 @@ public class ServiceTable {
                     updatePstmt.executeUpdate();
                 }
             } else {
+                System.out.println("register guest");
                 try (PreparedStatement insertPstmt = conn.prepareStatement(insertSql)) {
                     insertPstmt.setString(1, email);
                     insertPstmt.setString(2, firstName);

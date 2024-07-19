@@ -34,7 +34,7 @@ public class PassengerDetailController {
     }
 
     private void handleGuest(String email, String firstName, String lastName, String address, String cf) {
-        if (this.model.isGuest(email)) {
+        if (!this.model.isGuest(email)) {
             this.model.saveOrUpdateGuest(email, firstName, lastName, address, cf);
         }
     }

@@ -186,7 +186,7 @@ public class ThroughTable {
                     int maxOrdine = rs.getInt("MaxOrdine");
                     int numeroStazioni = rs.getInt("NumeroStazioni");
 
-                    float prezzoFinale = ((prezzo / maxOrdine) * numeroStazioni) + supplement;
+                    float prezzoFinale = Math.round((((prezzo / maxOrdine) * numeroStazioni) + supplement) * 100) / 100f;
 
                     Ticket ticketRequest = new Ticket(
                             codPercorso,
@@ -205,7 +205,6 @@ public class ThroughTable {
         }
         return tickets;
     }
-
 
     public static List<JourneyInfo> getJourneyInfos(Connection connection, Station station) throws SQLException {
         String selectPercorsoQuery = "SELECT a.CodPercorso, a.Binario, a.OrarioPartenzaPrevisto, " +

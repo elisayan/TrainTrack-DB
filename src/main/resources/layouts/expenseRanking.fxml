@@ -27,9 +27,9 @@
    </top>
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
-         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Top 5 Spenders">
+         <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="SPENDERS">
             <font>
-               <Font name="System Bold" size="15.0" />
+               <Font name="Bell MT Bold" size="18.0" />
             </font>
          </Label>
          <TableView fx:id="expensesTable" prefHeight="274.0" prefWidth="670.0">
