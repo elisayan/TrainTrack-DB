@@ -24,22 +24,23 @@ public class ServiceTable {
                        "WHERE (s.StazionePartenza = ? AND s.StazioneArrivo = ? OR s.StazionePartenza = ? AND s.StazioneArrivo = ?) " +
                        "AND s.DataPartenza = ? AND s.Durata = ? " +
                        "ORDER BY t.prezzo";
-    
-        List<List<Subscription>> allSubscriptions = new ArrayList<>();
-    
+        
+        // Map to group subscriptions by train type
+        Map<String, List<Subscription>> groupedByTrainType = new HashMap<>();
+        
         try (Connection connection = dataSource.getMySQLConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
     
             stmt.setString(1, departure);
             stmt.setString(2, destination);
-            stmt.setString(3, destination);  // for the reverse direction
-            stmt.setString(4, departure);    // for the reverse direction
+            stmt.setString(3, destination);  
+            stmt.setString(4, departure);    
             stmt.setDate(5, java.sql.Date.valueOf(beginningDate));
             stmt.setString(6, duration);
     
             ResultSet rs = stmt.executeQuery();
     
-            Map<String, List<Subscription>> subscriptionMap = new HashMap<>();
+            Map<String, Subscription> uniqueSubscriptionsMap = new HashMap<>();
     
             while (rs.next()) {
                 Subscription subscription = new Subscription(
@@ -53,25 +54,27 @@ public class ServiceTable {
                     rs.getInt("CodPercorso")
                 );
     
-                String trainType = subscription.getType();
+                // Create a unique key based on CodServizio, StazionePartenza, and StazioneArrivo
+                String uniqueKey = subscription.getJourneyID() + "_" + subscription.getDepartureStation() + "_" + subscription.getDestinationStation();
     
-                if (!subscriptionMap.containsKey(trainType)) {
-                    subscriptionMap.put(trainType, new ArrayList<>());
+                if (!uniqueSubscriptionsMap.containsKey(uniqueKey)) {
+                    uniqueSubscriptionsMap.put(uniqueKey, subscription);
+    
+                    // Add subscription to the appropriate train type group
+                    String trainType = subscription.getType();
+                    groupedByTrainType
+                        .computeIfAbsent(trainType, k -> new ArrayList<>())
+                        .add(subscription);
                 }
-    
-                subscriptionMap.get(trainType).add(subscription);
             }
-    
-            allSubscriptions.addAll(subscriptionMap.values());
     
         } catch (SQLException e) {
             e.printStackTrace();
         }
     
-        return allSubscriptions;
+        List<List<Subscription>> allGroupedSubscriptions = new ArrayList<>(groupedByTrainType.values());
+        return allGroupedSubscriptions;
     }
-    
-    
 
     public Service insertSubscriptionUser(Subscription subscriptionInfo, String name, String lastName, String email) {
         Service service = null;
