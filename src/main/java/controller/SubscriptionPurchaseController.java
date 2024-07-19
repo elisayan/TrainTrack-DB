@@ -30,7 +30,7 @@ public class SubscriptionPurchaseController {
         if (!subscriptionGroups.isEmpty()) {
             this.view.showSubscriptionsSearched(subscriptionGroups);
         } else {
-            this.view.showError(MessageError.ERROR.toString());
+            this.view.showError(MessageError.SUBSCRIPTION_NOT_EXIST.toString());
         }
     }
 }

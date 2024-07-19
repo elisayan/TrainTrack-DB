@@ -44,13 +44,7 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
     private TextField firstNameTextField;
 
     @FXML
-    private Button homeButton;
-
-    @FXML
     private TextField lastNameTextField;
-
-    @FXML
-    private Button loginButton;
 
     @FXML
     private TextField phoneTextField;
@@ -77,10 +71,6 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
         this.subscriptionGroup = subscriptionGroup;
     }
 
-    public List<Subscription> subscriptionGroup() {
-        return subscriptionGroup;
-    }
-
     @FXML
     private void confirmClicked() throws IOException {
         String name = firstNameTextField.getText();
@@ -91,7 +81,6 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
         String voucher = voucherField.getText();
         int phone;
 
-        // Validate fields
         if (name.isEmpty() || lastName.isEmpty() || email.isEmpty()
             || cf.isEmpty() || address.isEmpty()) {
             showError(MessageError.EMPTY_FIELD.toString());
@@ -110,7 +99,7 @@ public class SubscriptionDataSceneController extends AbstractSceneController {
         Service service = null;
         
         for (Subscription subscription : subscriptionGroup) {
-        if (person != null) {
+        if (person.isPresent()) {
             service = serviceTable.insertSubscriptionUser(subscription, name, lastName, email);
             serviceTable.updateTotalPurchase(person.get().getEmail(), service.getPrice());
         } else {
