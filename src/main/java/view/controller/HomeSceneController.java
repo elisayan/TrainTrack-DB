@@ -1,14 +1,38 @@
 package view.controller;
 
+import controller.Controller;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import view.View;
 
-public class HomeSceneController extends AbstractSceneController{
-    @FXML
-    private Button login;
+public class HomeSceneController extends AbstractSceneController {
 
     @FXML
-    public void loginClicked(){
+    private Label welcomeLabel;
+
+    @FXML
+    private void userClicked() {
         this.view.switchScene("login.fxml");
+    }
+
+    @FXML
+
+    private void rankingClicked(){
+        this.view.switchScene("rankingHome.fxml");
+    }
+  
+    @FXML
+    public void timetableClicked() {
+        this.view.switchScene("timetable.fxml");
+    }
+
+    @FXML
+    private void purchaseClicked(){this.view.switchScene("purchaseHome.fxml");}
+
+    public void initialize(View view, Controller controller) {
+        super.initialize(view, controller);
+        if (controller.getCurrentPerson().isPresent()) {
+            welcomeLabel.setText("Hello " + controller.getCurrentPerson().get().getName() + "!");
+        }
     }
 }

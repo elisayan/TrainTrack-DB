@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.RankingHomeSceneController">
+   <top>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="650.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/home.png" />
+         </ImageView>
+         <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#userClicked" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../img/user.png" />
+         </ImageView>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="25.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <Label text="Which ranking are you interested in?">
+            <font>
+               <Font size="20.0" />
+            </font>
+         </Label>
+         <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#journeyClicked" text="Journey">
+            <graphic>
+               <ImageView fitHeight="150.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../img/journey_ranking.png" />
+               </ImageView>
+            </graphic>
+            <font>
+               <Font name="Berlin Sans FB" size="24.0" />
+            </font>
+         </Button>
+         <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#expensesClicked" text="Expenses">
+            <graphic>
+               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <Image url="@../img/expense_ranking.png" />
+               </ImageView>
+            </graphic>
+            <font>
+               <Font name="Berlin Sans FB" size="24.0" />
+            </font>
+         </Button>
+      </VBox>
+   </center>
+</BorderPane>
