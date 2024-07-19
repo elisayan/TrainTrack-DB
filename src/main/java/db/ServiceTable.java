@@ -163,28 +163,6 @@ public class ServiceTable {
         }
     }
 
-    public boolean isGuest(String email) {
-        String sql = "SELECT Email, TipoCliente, Password FROM Persona WHERE Email = ? AND TipoPersona = 'cliente', TipoCliente = 'ospite'";
-
-        try (Connection conn = dataSource.getMySQLConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, email);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                String tipoCliente = rs.getString("TipoCliente");
-                String password = rs.getString("Password");
-                return "ospite".equals(tipoCliente) && password == null;
-            } else {
-                return false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public void updateTotalPurchase(String email, float price) {
         String sql = "UPDATE Persona SET SpesaTotale = SpesaTotale + ? WHERE Email = ? AND TipoCliente = 'utente'";
 
