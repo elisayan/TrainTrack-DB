@@ -38,9 +38,9 @@ public class SignUpSceneController extends AbstractSceneController {
 
     private boolean isFieldsEmpty() {
         if (passwordField.getText().isBlank()) {
-            typeClient = "Guest";
+            typeClient = "ospite";
         } else {
-            typeClient = "User";
+            typeClient = "utente";
         }
 
         return nameField.getText().isBlank() || surnameField.getText().isBlank() || codeField.getText().isBlank()
@@ -64,7 +64,7 @@ public class SignUpSceneController extends AbstractSceneController {
                 person.setPassword(passwordField.getText());
                 person.setAddress(addressField.getText());
                 person.setClientType(typeClient);
-                person.setPersonType("Client");
+                person.setPersonType("cliente");
                 if (!phoneField.getText().isBlank()) {
                     person.setPhone(phoneField.getText());
                 }

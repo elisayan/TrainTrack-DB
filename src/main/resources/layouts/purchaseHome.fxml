@@ -39,9 +39,7 @@
             </font>
             <graphic>
                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
                      <Image url="@../img/checkin.png" />
-                  </image>
                </ImageView>
             </graphic>
          </Button>
@@ -49,7 +47,6 @@
    </center>
    <top>
       <VBox BorderPane.alignment="CENTER">
-         <children>
             <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="650.0">
                <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#homeClicked" pickOnBounds="true" preserveRatio="true">
                   <Image url="@../img/home.png" />
@@ -61,12 +58,11 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </HBox>
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="What Would You Like to Do?">
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="What would you like to do?">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-         </children>
       </VBox>
    </top>
 </BorderPane>

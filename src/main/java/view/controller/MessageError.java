@@ -12,7 +12,7 @@ public enum MessageError {
 
     STATION_NOT_EXIST("Station doesn't exist"),
 
-    TICKET_NOT_EXIST("Ticket doesn't exist"),
+    TICKET_NOT_EXIST("There aren't tickets available for this journey"),
 
     INSERT_INFO("Insert your personal information"),
 
@@ -28,7 +28,9 @@ public enum MessageError {
 
     CHECKIN_NOT_IN_TIME("Check in is not valid in time"),
 
-    CHECKIN_SUCCESSFUL("Check in successful");
+    CHECKIN_SUCCESSFUL("Check in successful"),
+
+    CHECKIN_ALREADY_DONE("Check-in has already been completed for this service");
 
     private final String message;
 
