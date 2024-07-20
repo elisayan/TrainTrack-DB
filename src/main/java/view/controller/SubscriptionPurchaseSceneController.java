@@ -56,8 +56,8 @@ public class SubscriptionPurchaseSceneController extends AbstractSceneController
     @FXML
     private void initialize() {
         this.controller = new SubscriptionPurchaseController(this);
-        timeChoice.getItems().addAll("Weekly", "Monthly", "Yearly");
-        timeChoice.setValue("Weekly");
+        timeChoice.getItems().addAll("Settimanale", "Mensile", "Annuale");
+        timeChoice.setValue("Settimanale");
 
         datePicker.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
