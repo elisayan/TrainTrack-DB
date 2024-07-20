@@ -1,7 +1,6 @@
 package view.controller;
 
 import javafx.stage.Stage;
-import model.Service;
 
 public class ConfirmationWindowSceneController extends AbstractSceneController{
     

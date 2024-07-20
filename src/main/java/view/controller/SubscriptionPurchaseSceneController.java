@@ -1,6 +1,5 @@
 package view.controller;
 
-import controller.Controller;
 import controller.SubscriptionPurchaseController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.Subscription;
 import javafx.scene.control.DateCell;
-import view.View;
 
 import java.time.LocalDate;
 import java.util.*;

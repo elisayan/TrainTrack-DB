@@ -49,7 +49,6 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
     @FXML
     private TableColumn<Subscription, String> typeColumn;
 
-    private Controller controller;
     private List<List<Subscription>> subscriptionGroups;
 
     @FXML

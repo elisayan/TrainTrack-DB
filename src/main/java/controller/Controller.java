@@ -2,7 +2,6 @@ package controller;
 
 import model.Model;
 import model.Person;
-import model.Service;
 import model.Subscription;
 import model.Station;
 import view.View;
@@ -15,8 +14,6 @@ public class Controller {
     private final Model model;
     private Person person;
     private List<Subscription> subscriptions;
-    private Subscription subscription;
-    private Service service;
     private Station station;
 
     public Controller() {

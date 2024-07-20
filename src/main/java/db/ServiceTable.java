@@ -215,7 +215,7 @@ public class ServiceTable {
             pstmt.setInt(2, serviceID);
             pstmt.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
 
-            int affectedRows = pstmt.executeUpdate();
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
