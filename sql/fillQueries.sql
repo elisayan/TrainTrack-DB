@@ -100,15 +100,15 @@ INSERT INTO TipoAbbonamento (Durata, Chilometraggio, Prezzo) VALUES
 ('Mensile', 500, 80.0),
 ('Annuale', 6000, 800.0);
 
-#INSERT INTO Servizio (StazionePartenza, StazioneArrivo, NomePasseggero, CognomePasseggero, TipoTreno, DataPartenza, OrarioPartenza, Prezzo, CodPercorso, Email, Durata, Chilometraggio) VALUES
-#-- Abbonamento Settimanale
-#('Roma Termini', 'Milano Centrale', 'Mario', 'Verdi', 'Frecciarossa', '2024-07-23', NULL, 80.0, 'P001', 'utente1@example.com', 'Settimanale', 500),
-#('Napoli Centrale', 'Firenze Santa Maria Novella', 'Sara', 'Neri', 'Intercity', '2024-07-24', NULL, 70.0, 'P002', 'utente2@example.com', 'Settimanale', 500),
+INSERT INTO Servizio (StazionePartenza, StazioneArrivo, NomePasseggero, CognomePasseggero, TipoTreno, DataPartenza, OrarioPartenza, Prezzo, CodPercorso, Email, Durata, Chilometraggio, CodServizio) VALUES
+-- Abbonamento Settimanale
+('Roma Termini', 'Milano Centrale', 'Mario', 'Verdi', 'Frecciarossa', '2024-07-23', NULL, NULL, 'P001', 'utente1@example.com', 'Settimanale', 100, 1),
+('Napoli Centrale', 'Firenze Santa Maria Novella', 'Sara', 'Neri', 'Intercity', '2024-07-24', NULL, NULL, 'P002', 'utente2@example.com', 'Settimanale', 100, 2),
 
-#-- Abbonamento Mensile
-#('Roma Termini', 'Napoli Centrale', 'Paolo', 'Blu', 'Regionale', '2024-07-25', NULL, 150.0, 'P003', 'utente3@example.com', 'Mensile', 500),
-#('Firenze Santa Maria Novella', 'Torino Porta Nuova', 'Elena', 'Gialli', 'Frecciarossa', '2024-07-26', NULL, 140.0, 'P004', 'utente4@example.com', 'Mensile', 500),
+-- Abbonamento Mensile
+('Roma Termini', 'Napoli Centrale', 'Paolo', 'Blu', 'Regionale', '2024-07-25', NULL, NULL, 'P003', 'utente3@example.com', 'Mensile', 500, 3),
+('Firenze Santa Maria Novella', 'Torino Porta Nuova', 'Elena', 'Gialli', 'Frecciarossa', '2024-07-26', NULL, NULL, 'P004', 'utente4@example.com', 'Mensile', 500, 4),
 
-#-- Abbonamento Annuale
-#('Roma Termini', 'Venezia Santa Lucia', 'Anna', 'Rossi', 'Frecciarossa', '2024-07-27', NULL, 800.0, 'P001', 'ospite1@example.com', 'Annuale', 6000),
-#('Napoli Centrale', 'Milano Centrale', 'Luca', 'Bianchi', 'Intercity', '2024-07-28', NULL, 750.0, 'P002', 'utente1@example.com', 'Annuale', 6000);
+-- Abbonamento Annuale
+('Roma Termini', 'Venezia Santa Lucia', 'Anna', 'Rossi', 'Frecciarossa', '2024-07-27', NULL, NULL, 'P001', 'ospite1@example.com', 'Annuale', 6000, 5),
+('Napoli Centrale', 'Milano Centrale', 'Luca', 'Bianchi', 'Intercity', '2024-07-28', NULL, NULL, 'P002', 'utente1@example.com', 'Annuale', 6000, 6);
