@@ -14,10 +14,10 @@ public class Service {
     private String type;
     private float price;
     private float km;
-    private int journeyIDs;
+    private String journeyIDs;
 
     public Service (int serviceID, String departure, String destination, String name, String lastName, String email, 
-                    LocalDate beginningDate, String duration, String type, float price, float km, int journeyIDs) {
+                    LocalDate beginningDate, String duration, String type, float price, float km, String journeyIDs) {
         this.serviceID = serviceID;
         this.departureStation = departure;
         this.destinationStation = destination;
@@ -40,11 +40,11 @@ public class Service {
         this.email = email;
     }
 
-    public int getJourneyIDs() {
+    public String getJourneyIDs() {
         return journeyIDs;
     }
 
-    public void setJourneyIDs(int journeyIDs) {
+    public void setJourneyIDs(String journeyIDs) {
         this.journeyIDs = journeyIDs;
     }
 

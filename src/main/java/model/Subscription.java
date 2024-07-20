@@ -10,9 +10,9 @@ public class Subscription {
     private String type;
     private float price;
     private float km;
-    private int journeyID;
+    private String journeyID;
 
-    public Subscription(String departure, String destination, LocalDate beginningDate, String duration, String type, float price, float km, int journeyID) {
+    public Subscription(String departure, String destination, LocalDate beginningDate, String duration, String type, float price, float km, String journeyID) {
         this.departureStation = departure;
         this.destinationStation = destination;
         this.beginningDate = beginningDate;
@@ -24,11 +24,11 @@ public class Subscription {
     }
 
     
-    public int getJourneyID() {
+    public String getJourneyID() {
         return journeyID;
     }
 
-    public void setJourneyID(int journeyID) {
+    public void setJourneyID(String journeyID) {
         this.journeyID = journeyID;
     }
 

@@ -52,9 +52,9 @@ public class ServiceTable {
                     rs.getString("TipoTreno"),
                     rs.getFloat("Prezzo"),
                     rs.getFloat("Chilometraggio"),
-                    rs.getInt("CodPercorso")
+                    rs.getString("CodPercorso")
                 );
-
+                System.out.println(subscription.getJourneyID());
                 String uniqueKey = subscription.getJourneyID() + "_" + subscription.getDepartureStation() + "_" + subscription.getDestinationStation();
     
                 if (!uniqueSubscriptionsMap.containsKey(uniqueKey)) {
@@ -92,7 +92,7 @@ public class ServiceTable {
                 stmtInsertSubscription.setString(6, name);
                 stmtInsertSubscription.setString(7, lastName);
                 stmtInsertSubscription.setString(8, email);
-                stmtInsertSubscription.setInt(9, subscriptionInfo.getJourneyID());
+                stmtInsertSubscription.setString(9, subscriptionInfo.getJourneyID());
                 stmtInsertSubscription.setFloat(10, subscriptionInfo.getKm());
     
                 int rowsInsertedSubscription = stmtInsertSubscription.executeUpdate();
@@ -172,7 +172,7 @@ public class ServiceTable {
             stmtInsertSubscription.setString(6, name);
             stmtInsertSubscription.setString(7, lastName);
             stmtInsertSubscription.setString(8, email);
-            stmtInsertSubscription.setInt(9, subscriptionInfo.getJourneyID());
+            stmtInsertSubscription.setString(9, subscriptionInfo.getJourneyID());
             stmtInsertSubscription.setFloat(10, subscriptionInfo.getKm());
 
             int rowsInsertedSubscription = stmtInsertSubscription.executeUpdate();
