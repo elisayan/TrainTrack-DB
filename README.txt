@@ -1,7 +1,7 @@
 # TrainTrack
 
 ##Introduzione
-Questo progetto è un sistema di gestione dei treni chiamato "TrainTrack". L'applicazione permette di tenere traccia dei treni, percorsi, stazioni, macchinisti e prenotazioni dei biglietti.
+Questo progetto è un sistema di gestione dei treni chiamato "TrainTrack". L'applicazione permette di tenere traccia dei treni, percorsi, stazioni, macchinisti, prenotazioni dei biglietti e abbonamenti.
 
 ## Configurazione del Progetto
 1. Importa il progetto come "gradle project" nel tuo IDE.
