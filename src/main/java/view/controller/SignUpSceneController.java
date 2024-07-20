@@ -37,14 +37,10 @@ public class SignUpSceneController extends AbstractSceneController {
     private final SignUpController controller = new SignUpController(this);
 
     private boolean isFieldsEmpty() {
-        if (passwordField.getText().isBlank()) {
-            typeClient = "ospite";
-        } else {
-            typeClient = "utente";
-        }
+        typeClient = "utente";
 
         return nameField.getText().isBlank() || surnameField.getText().isBlank() || codeField.getText().isBlank()
-                || emailField.getText().isBlank() || addressField.getText().isBlank();
+                || emailField.getText().isBlank() || addressField.getText().isBlank() || passwordField.getText().isBlank();
     }
 
     @FXML

@@ -45,7 +45,7 @@ public class PersonTable {
     }
 
     public boolean loginUser(String email, String password) {
-        String query = "SELECT * FROM " + tableName + " WHERE Email=? AND Password=?";
+        String query = "SELECT * FROM " + tableName + " WHERE Email=? AND Password=? AND TipoCliente = 'utente'";
 
         try (Connection connection = dataSource.getMySQLConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -127,5 +127,42 @@ public class PersonTable {
         }
 
         return spendersRanking;
+    }
+
+    public boolean isGuest(Person person) {
+        String query = "SELECT Email FROM " + tableName + " WHERE Email = ? AND TipoCliente = 'ospite'";
+
+        try (Connection connection = dataSource.getMySQLConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, person.getEmail());
+            ResultSet resultSet = statement.executeQuery();
+
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void updateToUser(Person person) {
+        String update = "UPDATE " + tableName + " SET Nome = ?, Cognome = ?, CF = ?, Indirizzo = ?, Telefono = ?, Password = ?, SpesaTotale = ?, TipoPersona = 'cliente', TipoCliente = 'utente' WHERE Email = ?";
+
+        try (Connection connection = dataSource.getMySQLConnection();
+             PreparedStatement statement = connection.prepareStatement(update)) {
+
+            statement.setString(1, person.getName());
+            statement.setString(2, person.getSurname());
+            statement.setString(3, person.getCf());
+            statement.setString(4, person.getAddress());
+            statement.setInt(5, person.getPhone());
+            statement.setString(6, person.getPassword());
+            statement.setFloat(7, person.getTotalExpense());
+            statement.setString(8, person.getEmail());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

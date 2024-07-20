@@ -14,7 +14,10 @@ public class SignUpController {
     }
 
     public void signUpPerson(final Person person) {
-        if (this.model.signUpPerson(person)) {
+        if (this.model.isGuest(person)){
+            this.model.updateToUser(person);
+            this.view.goForward(person);
+        } else if (this.model.signUpPerson(person)) {
             this.view.goForward(person);
         } else {
             this.view.singUpFailed();
