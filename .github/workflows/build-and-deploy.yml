@@ -9,7 +9,7 @@ on:
     paths-ignore:
       - 'CHANGELOG.md'
       - 'LICENSE'
-      - 'README.md'
+      - 'README.txt'
       - 'renovate.json'
   pull_request:
   workflow_dispatch:
