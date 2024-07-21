@@ -35,4 +35,4 @@ Questa schermata fornisce una panoramica dei vari servizi disponibili, come la v
 
 #### Schermata dei Biglietti
 ![Schermata Ticket](src/main/resources/img/app-ticket.png)
-Questa schermata consente agli utenti di visualizzare e gestire i propri biglietti, compresa la prenotazione e l'annullamento dei biglietti.
+Questa schermata consente agli utenti di visualizzare e prenotare i propri biglietti.
