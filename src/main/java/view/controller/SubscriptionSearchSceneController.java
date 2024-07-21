@@ -88,7 +88,6 @@ public class SubscriptionSearchSceneController extends AbstractSceneController {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         searchTable.setItems(data);
-        System.out.println("Data added to table: " + data);
 
         centerTableColumn(departureColumn);
         centerTableColumn(destinationColumn);

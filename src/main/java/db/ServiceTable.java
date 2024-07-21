@@ -54,7 +54,6 @@ public class ServiceTable {
                     rs.getFloat("Chilometraggio"),
                     rs.getString("CodPercorso")
                 );
-                System.out.println(subscription.getJourneyID());
                 String uniqueKey = subscription.getJourneyID() + "_" + subscription.getDepartureStation() + "_" + subscription.getDestinationStation();
     
                 if (!uniqueSubscriptionsMap.containsKey(uniqueKey)) {
