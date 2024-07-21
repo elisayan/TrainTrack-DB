@@ -86,18 +86,24 @@ public class CheckInTable {
     }
 
     public boolean isCheckInValid(int codServizio) {
-        String sqlCheckInTime = "SELECT CodServizio FROM Servizio WHERE CodServizio = ? AND OrarioPartenza > ?";
+        String sqlCheckInTime = "SELECT OrarioPartenza FROM Servizio WHERE CodServizio = ? AND DataPartenza = ?";
 
         try (Connection conn = dataSource.getMySQLConnection();
              PreparedStatement pstmtCheckInTime = conn.prepareStatement(sqlCheckInTime)) {
 
-            LocalTime checkInTimeLimit = LocalTime.now().plusMinutes(5);
             pstmtCheckInTime.setInt(1, codServizio);
-            pstmtCheckInTime.setTime(2, Time.valueOf(checkInTimeLimit));
+            pstmtCheckInTime.setDate(2, Date.valueOf(LocalDate.now()));
 
             ResultSet rsCheckInTime = pstmtCheckInTime.executeQuery();
+
             if (rsCheckInTime.next()) {
-                return true;
+                Time orarioPartenza = rsCheckInTime.getTime("OrarioPartenza");
+                LocalTime orarioPartenzaLocal = orarioPartenza.toLocalTime();
+                LocalTime checkInTimeLimit = LocalTime.now().plusMinutes(5);
+
+                if (checkInTimeLimit.isBefore(orarioPartenzaLocal)) {
+                    return true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,6 +111,7 @@ public class CheckInTable {
 
         return false;
     }
+
 
 
     public boolean isNotCheckInExist(int codServizio, String email) {
