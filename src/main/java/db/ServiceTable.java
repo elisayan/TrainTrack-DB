@@ -432,21 +432,13 @@ public class ServiceTable {
 
 
     public void decreaseTotalSeats(String journeyID) {
-        String getTrainCodeSql = "SELECT CodTreno FROM Percorso WHERE CodPercorso = ?";
-        String decreaseSeatsSql = "UPDATE Treno SET PostiTotali = PostiTotali - 1 WHERE CodTreno = ?";
+        String decreaseSeatsSql = "UPDATE Percorso SET PostiDisponibili = PostiDisponibili - 1 WHERE CodPercorso = ?";
 
         try (Connection conn = dataSource.getMySQLConnection();
-             PreparedStatement getTrainCodeStmt = conn.prepareStatement(getTrainCodeSql);
              PreparedStatement decreaseSeatsStmt = conn.prepareStatement(decreaseSeatsSql)) {
 
-            getTrainCodeStmt.setString(1, journeyID);
-            ResultSet rs = getTrainCodeStmt.executeQuery();
-            if (rs.next()) {
-                String codTreno = rs.getString("CodTreno");
-
-                decreaseSeatsStmt.setString(1, codTreno);
-                decreaseSeatsStmt.executeUpdate();
-            }
+            decreaseSeatsStmt.setString(1, journeyID);
+            decreaseSeatsStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
