@@ -34,9 +34,9 @@
    <center>
       <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Insert information about your subscription" textAlignment="CENTER">
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Book your subscrition" textAlignment="CENTER">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Bell MT" size="24.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />

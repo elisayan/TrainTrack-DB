@@ -9,10 +9,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.SubscriptionDataSceneController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="167.0" layoutY="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_CENTER" layoutX="167.0" layoutY="40.0" spacing="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="40.0" prefWidth="200.0" spacing="650.0">
                <children>
@@ -35,103 +36,79 @@
                </children>
             </HBox>
             <Label fx:id="errorLabel" alignment="CENTER" />
-            <HBox alignment="TOP_CENTER" spacing="65.0">
+            <HBox alignment="CENTER_LEFT">
                <children>
-                  <Label text="First Name Passenger:" />
-                  <Label text="Last Name Passenger:" />
+                  <Label text="First name:">
+                     <HBox.margin>
+                        <Insets left="215.0" />
+                     </HBox.margin></Label>
+                  <Label text="Last name:">
+                     <HBox.margin>
+                        <Insets left="120.0" />
+                     </HBox.margin></Label>
                </children>
             </HBox>
-            <HBox alignment="TOP_CENTER">
+            <HBox alignment="CENTER" spacing="30.0">
                <children>
-                  <TextField fx:id="firstNameTextField" promptText="FIRST NAME PASSENGER">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <TextField fx:id="lastNameTextField" promptText="LAST NAME PASSENGER">
-                     <HBox.margin>
-                        <Insets left="30.0" top="10.0" />
-                     </HBox.margin>
-                  </TextField>
+                  <TextField fx:id="firstNameTextField" promptText="FIRST NAME PASSENGER" />
+                  <TextField fx:id="lastNameTextField" promptText="LAST NAME PASSENGER" />
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </HBox>
-            <HBox alignment="TOP_CENTER" spacing="150.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="150.0">
                <children>
-                  <Label text="E-mail:">
+                  <Label text="Email:">
                      <HBox.margin>
-                        <Insets top="15.0" />
+                        <Insets left="215.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="CF:">
+                  <Label text="CF:" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" spacing="30.0">
+               <children>
+                  <TextField fx:id="emailTextField" promptText="E-MAIL" />
+                  <TextField fx:id="cfTextField" promptText="CF" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="130.0">
+               <children>
+                  <Label text="Address:">
                      <HBox.margin>
-                        <Insets top="15.0" />
+                        <Insets left="215.0" />
                      </HBox.margin>
                   </Label>
+                  <Label text="Phone:" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="30.0">
+               <children>
+                  <TextField fx:id="addressTextField" promptText="ADDRESS" />
+                  <TextField fx:id="phoneTextField" promptText="PHONE" />
                </children>
             </HBox>
             <HBox alignment="TOP_CENTER">
                <children>
-                  <TextField fx:id="emailTextField" promptText="E-MAIL">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <TextField fx:id="cfTextField" promptText="CF">
-                     <HBox.margin>
-                        <Insets left="30.0" top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox alignment="TOP_CENTER" spacing="130.0">
-               <children>
-                  <Label text="Address:">
-                     <HBox.margin>
-                        <Insets top="15.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label text="Phone:">
-                     <HBox.margin>
-                        <Insets top="15.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="200.0">
-               <children>
-                  <TextField fx:id="addressTextField" promptText="ADDRESS">
-                     <HBox.margin>
-                        <Insets top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <TextField fx:id="phoneTextField" promptText="PHONE">
-                     <HBox.margin>
-                        <Insets left="30.0" top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-            <HBox alignment="TOP_CENTER" spacing="65.0">
-               <children>
                   <Label text="Voucher:" />
                </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <TextField fx:id="voucherField" alignment="CENTER" promptText="VOUCHER CODE">
-                     <HBox.margin>
-                        <Insets bottom="15.0" top="10.0" />
-                     </HBox.margin>
-                  </TextField>
+                  <TextField fx:id="voucherField" alignment="CENTER" promptText="VOUCHER CODE" />
                </children>
             </HBox>
             <Button fx:id="confirmButton" mnemonicParsing="false" onMouseClicked="#confirmClicked" text="CONFIRM">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </Button>
          </children>
       </VBox>
