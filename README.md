@@ -31,7 +31,7 @@ Questa schermata permette ai nuovi utenti di registrarsi al sistema creando un n
 
 #### Schermata dei Servizi
 ![Schermata Service](src/main/resources/img/app-service.png)
-Questa schermata fornisce una panoramica dei vari servizi disponibili, come la visualizzazione degli orari dei treni e la gestione delle prenotazioni.
+Questa schermata fornisce una panoramica dei vari servizi disponibili, come la prenotazione di biglietti, gli abbonamenti, la visualizzazione dei biglietti acquistati e la possibilità di effettuare il check-in di questi ultimi.
 
 #### Schermata dei Biglietti
 ![Schermata Ticket](src/main/resources/img/app-ticket.png)
