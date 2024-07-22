@@ -37,7 +37,7 @@ public class CheckInTable {
 
     public List<Ticket> getPersonTicket(String email) {
         String sql = "SELECT CodPercorso, StazionePartenza, StazioneArrivo, TipoTreno, OrarioPartenza, Prezzo, DataPartenza, CodServizio " +
-                "FROM Servizio WHERE Email = ?";
+                "FROM Servizio WHERE Email = ? AND OrarioPartenza IS NOT NULL AND Prezzo IS NOT NULL";
         List<Ticket> tickets = new LinkedList<>();
 
         try (Connection conn = dataSource.getMySQLConnection();
@@ -97,11 +97,10 @@ public class CheckInTable {
             ResultSet rsCheckInTime = pstmtCheckInTime.executeQuery();
 
             if (rsCheckInTime.next()) {
-                Time orarioPartenza = rsCheckInTime.getTime("OrarioPartenza");
-                LocalTime orarioPartenzaLocal = orarioPartenza.toLocalTime();
+                LocalTime orarioPartenza = rsCheckInTime.getTime("OrarioPartenza").toLocalTime();
                 LocalTime checkInTimeLimit = LocalTime.now().plusMinutes(5);
 
-                if (checkInTimeLimit.isBefore(orarioPartenzaLocal)) {
+                if (checkInTimeLimit.isBefore(orarioPartenza)) {
                     return true;
                 }
             }
@@ -111,6 +110,7 @@ public class CheckInTable {
 
         return false;
     }
+
 
 
 
